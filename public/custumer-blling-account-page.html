@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>E-bob</title>
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,700,800" rel="stylesheet">  
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="css/select2-bootstrap4.css">
+<link href="css/datepicker.css" rel="stylesheet">
+<link href="css/dropify.min.css" rel="stylesheet" type="text/css"/>
+<link href="css/dropzone.css" rel="stylesheet" type="text/css"/>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+  <body id="page-top">
+
+ 
+   
+    <nav class="navbar navbar-expand  static-top">
+    <a class="hamburger" href="#" id="sidebarToggle"><i class="fas fa-bars"></i></a>
+    <a class="_logo" href="index.html"><img src="images/sell-360.svg" alt=""/></a>
+
+ 
+      <ul class="navbar-nav ml-auto top_nav">
+        
+        <li class="nav-item TM_icon">
+          <a class="nav-link" href="#"><img src="images/q-link-icon.svg" alt=""/></a>
+        </li>
+        
+        <li class="nav-item TM_icon">
+          <a class="nav-link" href="#"><img src="images/settings-icon.svg" alt=""/></a>
+        </li>
+        
+        <li class="nav-item TM_icon">
+          <a class="nav-link" href="#">
+          <span class="badge">5</span>
+          <img src="images/bell-icon.svg" alt=""/></a>
+        </li>
+         
+         <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="images/profile-img.jpg" class="user_log" alt=""/>
+          <span class="uname">Saad Khan Saadi</span>
+            </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+           <span class="dropdown-item usernamelab">Saad Khan Saadi</span>
+            <a class="dropdown-item" href="#"><i class="fa fa-user"> </i> Profile</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-cogs"> </i> Settings</a>      
+            <a class="dropdown-item" href="#"><i class="fa fa-power-off"> </i> Logout</a> 
+          
+          </div>
+        </li>
+      </ul>
+
+    </nav>
+
+    <div id="wrapper">
+ 
+      <ul class="sidebar navbar-nav toggled">
+       
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <img src="images/icon-dash-board.svg" alt=""/>
+            <span>Dashboard</span>
+          </a>
+        </li>  
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/icon-organization.svg" alt=""/>
+		   <span><span class="_tb">Customer</span> Management</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navi-l1">           
+            <a class="dropdown-item" href="customer-active-list.html">Customer List</a>
+            <a class="dropdown-item" href="customer-add.html">Add Customer</a>
+            <a class="dropdown-item" href="customer-documents.html">Document List</a>            
+            <a class="dropdown-item" href="customer-types-management.html">Document Types</a>
+            <a class="dropdown-item" href="customer-prospects-list.html">Prospects List</a>
+            <a class="dropdown-item" href="customer-movement.html">Movement List</a>
+            
+            <a class="dropdown-item" href="churned-list.html">Churned List</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/icon-inv.svg" alt=""/>
+			  <span><span class="_tb">Product</span> Management</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navi-l2">           
+            <a class="dropdown-item" href="#">Add Product</a>
+          </div>
+        </li>
+                
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/supplier.svg" alt=""/>
+			  <span><span class="_tb">Supplier</span> Management</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navi-l3">           
+            <a class="dropdown-item" href="#">Supplier</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/icon-ecommerce.svg" alt=""/>
+			  <span><span class="_tb">Order</span> Management</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navi-l4">           
+            <a class="dropdown-item" href="#">Order</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+         
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/credit-card.svg" alt=""/>
+			  <span><span class="_tb">Payment</span> Management</span>
+          </a>
+          
+          <div class="dropdown-menu" aria-labelledby="navi-l6">           
+            <a class="dropdown-item" href="#">Payment</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navi-l7" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src="images/icon-categorie.svg" alt=""/>
+			  <span><span class="_tb">Invoices</span> Management</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navi-l8">           
+            <a class="dropdown-item" href="#">Invoices</a>
+          </div>
+        </li>
+
+ 
+      </ul>
+
+            <div id="content-wrapper">
+
+        <div class="container">     
+           
+        <div class="row mt-2 mb-3">        
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<h2 class="_head01">Customers <span>Management</span></h2>
+				</div>
+				
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<ol class="breadcrumb">
+						<li><a href="#"><span>Customers</span></a></li>
+						<li><span>Active</span></li>
+					</ol>
+				</div>
+		</div>
+		
+		<div class="row">
+		<div class="col-md-12">			    	
+			    	<div class="card">
+		    	 	<div class="header">
+		    	 	<h2>Active <span>Customers</span></h2>
+		    	 	</div>
+		    	 	
+					<div class="row">
+
+					<div class="col-lg-3 col-md-4 col-sm-12">
+					
+					<div class="nav flex-column nav-pills CB-account-tab" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				  
+					  <a class="nav-link active" id="v-pills-01-tab" data-toggle="pill" href="#v-pills-01" role="tab" aria-controls="v-pills-01" aria-selected="true">Start Date</a>
+					  <a class="nav-link" id="v-pills-02-tab" data-toggle="pill" href="#v-pills-02" role="tab" aria-controls="v-pills-02" aria-selected="false">Sell Rate</a>
+					  <a class="nav-link" id="v-pills-03-tab" data-toggle="pill" href="#v-pills-03" role="tab" aria-controls="v-pills-03" aria-selected="false">Apply Tax Rate</a>
+					  <a class="nav-link" id="v-pills-04-tab" data-toggle="pill" href="#v-pills-04" role="tab" aria-controls="v-pills-04" aria-selected="false">Membership Fee</a>
+					  <a class="nav-link" id="v-pills-05-tab" data-toggle="pill" href="#v-pills-05" role="tab" aria-controls="v-pills-05" aria-selected="false">Security Deposit</a>
+					  <a class="nav-link" id="v-pills-06-tab" data-toggle="pill" href="#v-pills-06" role="tab" aria-controls="v-pills-06" aria-selected="false">Credit Limit</a>
+					  <a class="nav-link" id="v-pills-07-tab" data-toggle="pill" href="#v-pills-07" role="tab" aria-controls="v-pills-07" aria-selected="false">Consumption</a>
+					  <a class="nav-link" id="v-pills-08-tab" data-toggle="pill" href="#v-pills-08" role="tab" aria-controls="v-pills-08" aria-selected="false">Delivery Details</a>
+					  <a class="nav-link" id="v-pills-09-tab" data-toggle="pill" href="#v-pills-09" role="tab" aria-controls="v-pills-09" aria-selected="false">Assets Issuance</a>
+					  <a class="nav-link" id="v-pills-10-tab" data-toggle="pill" href="#v-pills-10" role="tab" aria-controls="v-pills-10" aria-selected="false">Contract Copy</a>
+					</div>
+					
+
+				
+			 
+					
+					</div>
+					
+					
+					<div class="col-lg-6 col-md-8 col-sm-12 ml-800">
+				  <div class="tab-content" id="v-pills-tabContent">				  
+				  
+				  <div class="tab-pane fade show active" id="v-pills-01" role="tabpanel" aria-labelledby="v-pills-01-tab">
+					
+					    <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Start <span>Date</span></h2>
+								</div> 
+						 
+							
+								<div class="col-md-6">
+							    <label class="PT-10 font12">Start Date</label>
+					      		<div class="form-group" style="height: auto">
+								<input type="text" id="datepicker" class="form-control" placeholder="">
+								</div>
+							   </div>
+								
+								  
+							  </div>	
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+				   
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>
+					  
+				  </div>
+				  
+				  
+				  
+				  <div class="tab-pane fade" id="v-pills-02" role="tabpanel" aria-labelledby="v-pills-02-tab">
+				  	
+				  	<div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Sell <span>Rate</span></h2>
+								</div>
+								
+								 <div class="col-md-6">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="predefined" value='valuable' data-id="predefinedrate">
+									  <label class="custom-control-label" for="predefined">Select a Predefined Rate</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-6">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="customrate" value='valuable' data-id="customrate">
+									  <label class="custom-control-label" for="customrate">Custom Rate</label>
+								 </div>					   	
+							     </div> 
+							     
+								  <div class="col-md-12">	<hr></div>
+						 
+								
+								<div class="col-md-6">
+									<div class="form-s2">
+									  <select class="form-control formselect" placeholder="select Predefined Rate">
+										 <option>Select Predefined Rate</option>
+										<option>Type 1</option>
+										<option>Type 2</option>
+										<option>Type 3</option>
+										<option>Type 4</option>
+									  </select>
+									</div>
+								  </div>
+								
+								<div class="col-md-12 productRate-table">
+								  <table class="table table-hover dt-responsive nowrap" id="example" style="width:100%">
+								  <thead>
+									<tr>
+									  <th>Product Name</th>
+									  <th>Add Rate</th>
+									  <th>Action</th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+									  <td>Product Name 1</td>
+									  <td><input type="text" class="cu-Rate"></td>
+									  <td>
+										<button class="btn btn-default">Add</button></td>
+									</tr>
+									<tr>
+									  <td>Product Name 1</td>
+									  <td><input type="text" class="cu-Rate"></td>
+									  <td>
+										<button class="btn btn-default">Add</button></td>
+									</tr>
+									<tr>
+									  <td>Product Name 1</td>
+									  <td><input type="text" class="cu-Rate"></td>
+									  <td>
+										<button class="btn btn-default">Add</button></td>
+									</tr>
+									<tr>
+									  <td>Product Name 1</td>
+									  <td><input type="text" class="cu-Rate"></td>
+									  <td>
+										<button class="btn btn-default">Add</button></td>
+									</tr>
+									<tr>
+									  <td>Product Name 1</td>
+									  <td><input type="text" class="cu-Rate"></td>
+									  <td>
+										<button class="btn btn-default">Add</button></td>
+									</tr>
+								  </tbody>
+								</table>
+
+								</div>
+								
+							  </div>	
+						  						  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+							  						  
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>
+				  	
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-03" role="tabpanel" aria-labelledby="v-pills-03-tab">
+					 
+					   <div class="tab-pane fade show active" id="v-pills-01" role="tabpanel" aria-labelledby="v-pills-01-tab">
+					
+					    <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">APPLY  <span>TAX RATE</span></h2>
+								</div> 
+						 
+							
+								<div class="col-md-3">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="txt-rateY" value='valuable'>
+									  <label class="custom-control-label" for="txt-rateY">Yes</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-3">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="txt-ratN" value='valuable'>
+									  <label class="custom-control-label" for="txt-ratN">No</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-12"><hr class="mb-0"></div>
+							     <div class="col-md-6">
+								  <div class="form-group">
+									<label class="control-label mb-10">GST</label>
+									<input type="text" id="" class="form-control" placeholder="">
+								  </div>
+								</div>							
+								  
+							  </div>
+							  
+							  <div class="row m-0 PT-15">
+							  <button type="submit" class="btn btn-primary mr-2">Save</button>
+							  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+							  </div>	
+							   
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>
+					  
+				  </div>
+					  
+				  </div>
+				  
+				  
+				  <div class="tab-pane fade" id="v-pills-04" role="tabpanel" aria-labelledby="v-pills-04-tab">
+					<div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Membership  <span>Fee</span></h2>
+								</div> 
+						  
+							     <div class="col-md-6">
+								  <div class="form-group">
+									<label class="control-label mb-10">Membership Fee</label>
+									<input type="text" id="" class="form-control" placeholder="">
+								  </div>
+								</div>
+								  
+							  </div>	
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+				  
+				  			</div>
+						  </div>
+						</div>
+				  
+					  </div>	  
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-05" role="tabpanel" aria-labelledby="v-pills-05-tab">
+					<div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Security <span> Deposit</span></h2>
+								</div> 
+						  
+							     <div class="col-md-5">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="securitydeposit" value='valuable'>
+									  <label class="custom-control-label" for="securitydeposit">Flat Security Deposit</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-7">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="againstproducts" value='valuable'>
+									  <label class="custom-control-label" for="againstproducts">Security Deposit Against Products</label>
+								 </div>					   	
+							     </div>
+					        
+						         <div class="col-md-12"><hr></div>
+						        
+							       <div class="col-md-6">
+									<div  class="form-group">
+									  <label class="control-label mb-10">Flat Security Deposit</label>
+									  <input type="text" class="form-control">
+									</div>
+								  </div>
+								  
+								  <div class="col-md-12"><hr></div>
+								  
+								  <div class="col-md-12">
+								  <div class="form-s2">
+									<label class="PT-10 font12">Select Products</label>
+									<select class="form-control sd-type" multiple="multiple">
+									  <option>Product 1</option>
+									  <option>Product 2</option>
+									  <option>Product 3</option>
+									  <option>Product 4</option>
+									  <option>Product 5</option>
+									  <option>Product 6</option>
+									  <option>Product 7</option>
+									</select>
+								  </div>
+								</div>
+								  
+								  
+								  <div class="col-md-6">
+									<div  class="form-group">
+									  <label class="control-label mb-10">Product Quantity</label>
+									  <input type="text" class="form-control">
+									</div>
+								  </div>
+
+								  <div class="col-md-6">
+									<div  class="mt-10">
+									  <input type="text" class="val-placeholder" placeholder="25">
+									</div>
+								  </div>
+								  
+							  </div>	 
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+							  
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>	  
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-06" role="tabpanel" aria-labelledby="v-pills-06-tab">
+					  <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Credit <span> Limit</span></h2>
+								</div> 
+						  
+					 
+								  <div class="col-md-6">
+									<div  class="form-group">
+									  <label class="control-label mb-10">Total Amount</label>
+									  <input type="text" class="form-control">
+									</div>
+									</div>
+									<div class="col-md-6">
+										<div  class="form-group">
+												<label class="control-label mb-10">No. of Days</label>
+												<input type="number" class="form-control">
+										</div>
+								</div>
+							  </div>	
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+							    
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-07" role="tabpanel" aria-labelledby="v-pills-07-tab">
+					
+					<div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Consumption  <span></span></h2>
+								</div> 
+					 
+								  <div class="col-md-6">
+									<div  class="form-group">
+									  <label class="control-label mb-10">Enter a Limit of Bottles</label>
+									  <input type="text" class="form-control">
+									</div>
+								  </div>
+							  </div>	
+							  
+				 <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div> 
+				
+			    		</div>
+						  </div>
+						</div>
+				  
+					  </div>
+					    
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-08" role="tabpanel" aria-labelledby="v-pills-08-tab">
+				
+					  <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Delivery <span>Details</span></h2>
+								</div> 
+						  
+					  			 <div class="col-md-4">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="weekly" value='valuable'>
+									  <label class="custom-control-label" for="weekly">Weekly</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-4">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="biweekly" value='valuable'>
+									  <label class="custom-control-label" for="biweekly">Bi-weekly</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-4">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="monthly" value='valuable'>
+									  <label class="custom-control-label" for="monthly">Monthly</label>
+								 </div>					   	
+							     </div>
+							     
+							      <div class="col-md-12 mt-10">	
+							      <div class="form-s2">
+									 <label class="PT-10 font12">Week days</label>
+									  <select class="form-control sd-type" multiple="multiple">
+										<option>Monday</option>
+										<option>Tuesday</option> 
+										<option>Wednesday</option>
+										<option>Thursday</option>
+										<option>Friday</option>
+										<option>Saturday</option> 
+										<option>Sunday</option>
+									  </select>
+									  </div>
+								  </div>
+							      
+							  </div>	
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+							    
+							</div>
+						  </div>
+						</div>				  
+					  </div>
+					  	  
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-09" role="tabpanel" aria-labelledby="v-pills-09-tab">
+					 <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Assets <span> Issuance</span></h2>
+								</div> 
+						 
+							
+								<div class="col-md-3">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="assetsY" value='valuable'>
+									  <label class="custom-control-label" for="assetsY">Yes</label>
+								 </div>					   	
+							     </div>
+							     <div class="col-md-3">					   	
+								 <div class="custom-control custom-radio">
+									  <input class="custom-control-input" type="radio" name="txt-rate" id="assetsN" value='valuable'>
+									  <label class="custom-control-label" for="assetsN">No</label>
+								 </div>					   	
+							     </div>
+							     
+								 <div class="col-md-12"><hr></div>
+							     
+							     <div class="col-md-6">
+									<div class="form-s2">
+									  <select class="form-control formselect" placeholder="select Assets Type">
+										 <option>Select Assets Type</option>
+										<option>Assets Type 1</option>
+										<option>Assets Type 2</option>
+										<option>Assets Type 3</option>
+										<option>Assets Type 4</option>
+									  </select>
+									</div>
+								  </div>
+								
+								
+									<div class="col-md-12 productRate-table">
+									  <table class="table table-hover dt-responsive nowrap" id="example2" style="width:100%">
+										<thead>
+										  <tr>
+											<th>Qty.</th>
+											<th>Model No</th>
+											<th>Warranty start</th>
+											<th>Purchase Price</th>
+											<th>Action</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td>25</td>
+											<td>model02154ASD</td>
+											<td>1/02/2019</td>
+											<td>4250</td>
+											<td><button class="btn btn-default">Issue</button></td>
+										  </tr>
+										  <tr>
+											<td>25</td>
+											<td>model02154ASD</td>
+											<td>1/02/2019</td>
+											<td>4250</td>
+											<td><button class="btn btn-default">Issue</button></td>
+										  </tr>
+										  <tr>
+											<td>25</td>
+											<td>model02154ASD</td>
+											<td>1/02/2019</td>
+											<td>4250</td>
+											<td><button class="btn btn-default">Issue</button></td>
+										  </tr>
+										  <tr>
+											<td>25</td>
+											<td>model02154ASD</td>
+											<td>1/02/2019</td>
+											<td>4250</td>
+											<td><button class="btn btn-default">Issue</button></td>
+										  </tr>
+										  <tr>
+											<td>25</td>
+											<td>model02154ASD</td>
+											<td>1/02/2019</td>
+											<td>4250</td>
+											<td><button class="btn btn-default">Issue</button></td>
+										  </tr>
+										</tbody>
+									  </table>
+									</div>
+								
+								  
+							  </div>	
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+				   
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>  
+				  </div>
+				  
+				  <div class="tab-pane fade" id="v-pills-10" role="tabpanel" aria-labelledby="v-pills-10-tab">
+					 
+					  <div class="CB_info">
+						<div id="floating-label" class="card top_border mb-3">
+						  <div class="col-md-12">
+							<div class="form-wrap PT-10 PB-20">						  
+							  <div class="row">
+								<div class="col-md-12 pt-10 mb-10">
+								  <h2 class="_head04">Contract <span> Copy</span></h2>
+								</div> 
+							 
+									<div class="col-md-12">
+									<label class="font12">Documents Attachment</label>
+										<div class="">
+													<form action="#" class="dropzone" id="my-awesome-dropzone">
+														<div class="fallback">
+															<input name="file" type="file" multiple />
+														</div>
+													</form>
+												</div>
+									</div>  
+								  
+							  </div>
+							  
+				  <div class="row m-0 PT-15">
+				  <button type="submit" class="btn btn-primary mr-2">Save</button>
+				  <button type="submit" class="btn btn-cancel mr-2">Cancel</button>
+				  </div>
+				  
+				  		 
+							</div>
+						  </div>
+						</div>
+				  
+					  </div>  
+					  
+				  </div>
+				  
+ 
+				  
+				</div>
+				  
+					  
+					</div>
+					
+					<div class="col-lg-3 col-md-12 col-sm-12">
+					<div class="CBR_info">
+						<h2 class="_head04">Customer <span>Detail</span></h2> 
+						<div class="CBR_value"><strong>Rates:</strong> 2500</div>
+						<div class="CBR_value"><strong>Billing:</strong> 2500</div>
+						<div class="CBR_value"><strong>Assets Amount:</strong> 3500</div>
+						<div class="CBR_value"><strong>Rates:</strong> 2500</div>
+						<div class="CBR_value"><strong>Rates:</strong> 2500</div>
+					</div>	
+					</div>			 
+
+					</div>	
+							
+					</div>
+		
+		</div>
+			
+	 
+        </div>
+         
+ 
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              2019 Sell3sixty All rights reserved
+            </div>
+          </div>
+        </footer>
+
+      </div>
+     
+
+    </div>
+ 
+	  </div>
+
+ 
+
+<script src="js/jquery-3.3.1.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+ 
+<script type="text/javascript" src="js/datatables.min.js"></script>
+<script src="js/select2.min.js"></script>
+
+<script src="js/dropify.min.js"></script>
+<script src="js/form-file-upload-data.js"></script>
+
+<script src="js/dropzone.js"></script>
+<script src="js/dropzone-data.js"></script>
+
+<script src="js/bootstrap-datepicker.js"></script> 
+
+<script src="js/custom.js"></script>    
+    
+<script>$(document).ready(function() {
+    $('#example').DataTable();
+	 $('#example2').DataTable();
+} );
+
+	
+        $(document).ready(function () { 
+			
+			$('#pl-close, .overlay').on('click', function () {
+                $('#product-cl-sec').removeClass('active');
+                $('.overlay').removeClass('active');
+				$('body').toggleClass('no-scroll')
+            });
+
+            $('#productlist01').on('click', function () {
+                $('#product-cl-sec').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+				$('body').toggleClass('no-scroll')		
+            }); 
+			
+        });
+	
+$('.form-control').on('focus blur', function (e) {
+  $(this).parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+})
+.trigger('blur');
+	
+	
+      $(".formselect").select2();
+	
+ 
+$('.sd-type').select2({
+  createTag: function (params) {
+    var term = $.trim(params.term);
+
+    if (term === '') {
+      return null;
+    }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true // add additional parameters
+    }
+  }
+});
+
+$('#datepicker').datepicker({
+    format: 'mm-dd-yyyy'
+});
+</script>
+
+
+
+
+
+</body>
+
+</html>
