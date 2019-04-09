@@ -69,9 +69,9 @@ $(document).ready(function() {
              $('input[name="state"]').val("");
         }
 
-        if ($('#savePOCForm input[name="_method"]').length) {
-            $('#savePOCForm input[name="_method"]').remove();
-        }
+        // if ($('#savePOCForm input[name="_method"]').length) {
+        //     $('#savePOCForm input[name="_method"]').remove();
+        // }
         $('input[id="operation"]').val('add');
         $('#product-cl-sec').addClass('active');
         $('.overlay').addClass('active');
@@ -79,6 +79,8 @@ $(document).ready(function() {
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         $('body').toggleClass('no-scroll')
     });
+
+
 
 
     $(document).on('click', '.openDataSidebarForUpdateCustomer', function() {
@@ -169,9 +171,9 @@ $(document).ready(function() {
 
         var id = $(this).attr('id');
         $('input[name="product_updating_id"]').val(id)
-        if (!$('#savePOCForm input[name="_method"]').length) {
-            // $('#savePOCForm').append('<input name="_method" value="PUT" hidden />');
-        }
+        // if (!$('#savePOCForm input[name="_method"]').length) {
+        //     $('#savePOCForm').append('<input name="_method" value="PUT" hidden />');
+        // }
         $.ajax({
             type: 'GET',
             url: '/GetSelectedPOC/' + id,
@@ -309,9 +311,21 @@ $(document).ready(function() {
                     }, 3000);
 
                     if($('#operation').val() == 'add'){
-                        $('#saveCustomerForm').find('input').val('');
-                        $('#saveCustomerForm').find('select').val(0).trigger('change');
+                        // $('#saveCustomerForm').find('input').val('');
+                        // $('#saveCustomerForm').find('select').val(0).trigger('change');
                         $('#description').val('');
+                        $("input[name='compName']").val('');
+                        $("select[name='parent_company']").val('0').trigger('change');
+                        $("select[name='industry']").val('0').trigger('change');
+                        $("input[name='poc']").val('');
+                        $("input[name='jobTitle']").val('');
+                        $("input[name='bussinessPH']").val('');
+                        $("input[name='email']").val('');
+                        $("input[name='address']").val('');
+                        $("input[name='city']").val('');
+                        $("input[name='state']").val('');
+                        $("input[name='country']").val('');
+                        $("input[name='web_page']").val('');
                     }
                     
                 }
@@ -408,7 +422,15 @@ $(document).ready(function() {
                     }, 3000);
 
                     if($('#operation').val() == 'add'){
-                        $('#savePOCForm').find('input').val('');
+                        //$('#savePOCForm').find('input').val('');
+                        $("input[name='poc_name']").val('');
+                        $("input[name='company_name']").val('');
+                        $("input[name='jobTitle']").val('');
+                        $("input[name='businessPH']").val('');
+                        $("input[name='email']").val('');
+                        $("input[name='address']").val('');
+                        $("input[name='city']").val('');
+                        $("input[name='state']").val('');
                     }
                     
                 }else if(JSON.parse(response) == "already_exist"){
@@ -807,12 +829,12 @@ function fetchCompaniesList() {
         success: function(response) {
            //console.log(response);
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>POC</th><th>Country</th><th>Region</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>POC</th><th>City</th><th>Country</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['company_poc'] + '</td><td>' + element['country'] + '</td><td>' + "NA" + '</td><td>' + element['parent_company'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') +'</td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['company_poc'] + '</td><td>' + element['city'] + '</td><td>' + element['country'] + '</td><td>' + element['parent_company'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') +'</td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

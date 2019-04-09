@@ -225,6 +225,7 @@ $(document).ready(function() {
                     $('#saveEmployee').text('Save');
                     if ($('#operation').val() !== "update") {
                         $('#saveEmployeeForm').find("input[type=text], textarea").val("");
+                        $('#saveEmployeeForm').find("input[type=number], textarea").val("");
                         $('#saveEmployeeForm').find("input[type=email], textarea").val("");
                         $('#saveEmployeeForm').find("select").val("0").trigger('change');
                         $('.dropify-clear').click();

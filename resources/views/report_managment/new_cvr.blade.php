@@ -669,7 +669,7 @@
 
                                             <div class="col-12">
                                                 <button type="button" class="btn btn-primary mr-2 mb-10 save_cvr">Submit</button>
-                                                <button type="button" class="btn btn-primary mr-2 mb-10 preview_cvr">Preview</button>
+                                                {{-- <button type="button" class="btn btn-primary mr-2 mb-10 preview_cvr">Preview</button> --}}
                                                 <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button>
                                             </div>
 

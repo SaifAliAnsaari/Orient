@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use DB;
 use URL;
 use Auth;
+use Mail;
 use Illuminate\Support\Facades\Storage;
 use Validator;
+use App\Mail\SendMailable;
 
 class Customer extends ParentController
 {
@@ -113,7 +115,16 @@ class Customer extends ParentController
                 'message' => 'New Customer added',
                 'customer_id' => $customer->id
             ]);
-           echo json_encode('success');
+
+           $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+               
+            if(!$get_email_addresses->isEmpty()){
+                foreach($get_email_addresses as $email){
+                    $data = 'New Customer "'.$request->compName.'" has been added in Orient.';
+                        Mail::to($email->email)->send(new SendMailable($data));
+                }
+            }
+            echo json_encode('success');
         }else{
             echo json_encode("failed");
         }
@@ -174,6 +185,13 @@ class Customer extends ParentController
                 'message' => 'Customer updated',
                 'customer_id' => $id
             ]);
+            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+            if(!$get_email_addresses->isEmpty()){
+                foreach($get_email_addresses as $email){
+                    $data = 'Customer "'.$request->compName.'" has been updated in Orient.';
+                        Mail::to($email->email)->send(new SendMailable($data));
+                }
+            }
             echo json_encode('success');
             }
     }
@@ -362,50 +380,5 @@ class Customer extends ParentController
     }
     
 
-   
-
-    //Api Call
-    public function gcm_notification(Request $request){
-        $status = DB::table('users')->where('id', $request->user()->id)->update(['gcm_dev_token' => $request->device_token]);
-        $jar = new JsonApiResponse('success', '200', $status ? "Device token saved succesfully" : $status);
-        return $jar->apiResponse();
-    }
-
-    public function push_notification($devToken, $title, $status_code, $msg, $data){
-        $device_id = $devToken;
-        $url = 'https://fcm.googleapis.com/fcm/send';
-            $fields = array (
-                    'to' => $device_id,
-                    'notification' => array (
-                        "body" => $msg,
-                        'title'   => $title,
-                        "icon" => "myicon"
-                    ),
-                    'data' => array('status' => $status_code, "message" => $data)
-            );
-        $fields = json_encode ( $fields );
-        $headers = array (
-            //Yeh id sailaliansaari wali id say generate hoe hai
-            //AIzaSyDFOxv9p4LP1-8l4TClG9o6MHoDjFzjZpM
-
-            //Yeh Id Allomate wali id say generate hoe hai
-            //AIzaSyDNk-d0dLA-xVc7FeIoQWEGIGR1cje1AVI
-                'Authorization: key=' . "AIzaSyDNk-d0dLA-xVc7FeIoQWEGIGR1cje1AVI",
-                'Content-Type: application/json'
-        );
-
-        $ch = curl_init();
-        curl_setopt ( $ch, CURLOPT_URL, $url );
-        curl_setopt ( $ch, CURLOPT_POST, true );
-        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
-        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
-
-        $result = curl_exec ( $ch );
-        curl_close ( $ch );
-
-        $jar = new JsonApiResponse('success', '200', $result);
-        return $jar->apiResponse();
-    }
 
 }

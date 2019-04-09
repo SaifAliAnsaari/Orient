@@ -96,7 +96,6 @@
     {{--<script src="/js/dropzone-data.js"></script> --}}
     @if($controller == "Customer")
         <script src="/js/custom/customer.js?v=1.0" ></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuhmMCJmm69FrsFzQdhjq5B86AIDor9Q0">
         </script>
     @elseif($controller == "RegisterController")
         <script src="/js/custom/employee.js?v=1.0" ></script>

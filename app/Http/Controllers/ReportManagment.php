@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use URL;
 use Auth;
+use Mail;
+use App\Mail\SendMailable;
 
 class ReportManagment extends ParentController
 {
@@ -104,6 +106,13 @@ class ReportManagment extends ParentController
         ]);
 
         if($insert_core){
+            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+            if(!$get_email_addresses->isEmpty()){
+                foreach($get_email_addresses as $email){
+                    $data = 'New CVR has been added in Orient by "'.Auth::user()->name.'".';
+                        Mail::to($email->email)->send(new SendMailable($data));
+                }
+            }
             echo json_encode('success');
         }else{
             echo json_encode('failed');
@@ -139,7 +148,7 @@ class ReportManagment extends ParentController
             $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
             $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
             $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
-            return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions]);
+            return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions, 'id' => $id]);
         }else{
             return redirect('/');
         }
@@ -219,6 +228,13 @@ class ReportManagment extends ParentController
             ]);
     
             if($insert_core){
+                $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+                if(!$get_email_addresses->isEmpty()){
+                    foreach($get_email_addresses as $email){
+                        $data = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
+                            Mail::to($email->email)->send(new SendMailable($data));
+                    }
+                }
                 echo json_encode('success');
             }else{
                 echo json_encode('failed');
@@ -226,4 +242,34 @@ class ReportManagment extends ParentController
         //echo json_encode($request->cvr_id);
     }
 
+
+
+
+    //Download CVR PDF
+    public function download_pdf($id){
+           
+        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        if($core){
+            $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
+            $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
+            $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
+            
+
+
+            $data = [];
+            $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
+
+            // array_push($data['core'], $core);
+            // array_push($data, $products);
+            // array_push($data, $pocs);
+            // array_push($data, $competitions);
+            
+            $url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
+            if($url){
+                return redirect($url);
+            }
+        }else{
+            return redirect('/');
+        }
+    } 
 }
