@@ -181,6 +181,7 @@ class ReportManagment extends ParentController
     }
 
     public function update_cvr(Request $request){
+        try{
         $insert_core = DB::table('cvr_core')->where('id', $request->cvr_id)->update([
             'report_updated_at' => date('M d Y'),
             'report_updated_by' =>  Auth::user()->id,
@@ -227,18 +228,18 @@ class ReportManagment extends ParentController
                 'cvr_id' => $request->cvr_id
             ]);
     
-            if($insert_core){
-                $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
-                if(!$get_email_addresses->isEmpty()){
-                    foreach($get_email_addresses as $email){
-                        $data = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
-                            Mail::to($email->email)->send(new SendMailable($data));
-                    }
+            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+            if(!$get_email_addresses->isEmpty()){
+                foreach($get_email_addresses as $email){
+                    $data = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
+                        Mail::to($email->email)->send(new SendMailable($data));
                 }
-                echo json_encode('success');
-            }else{
-                echo json_encode('failed');
             }
+            echo json_encode('success');
+            
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            echo json_encode('failed'); 
+        }
         //echo json_encode($request->cvr_id);
     }
 
