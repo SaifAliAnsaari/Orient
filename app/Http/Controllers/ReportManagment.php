@@ -296,6 +296,8 @@ class ReportManagment extends ParentController
            
             $message = 'CVR Attachment';
             Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => $final_url]));
+            
+            return redirect('cvr_preview/'.$id);
         }else{
             return redirect('/');
         }
