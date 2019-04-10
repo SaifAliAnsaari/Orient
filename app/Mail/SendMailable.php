@@ -28,6 +28,13 @@ class SendMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('includes.mail', ['data' => $this->data]);
+        $email = $this->view('includes.mail', ['data' => $this->data["message"]])->subject($this->data["subject"]);
+
+        if(isset($this->data['attachment']) && $this->data['attachment']){
+            $email->attach($this->data['attachment']);
+            //$email->attach('http://orient.debug/images/mock1.jpg');
+        }
+
+        return $email;
     }
 }

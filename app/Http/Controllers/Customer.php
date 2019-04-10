@@ -120,8 +120,8 @@ class Customer extends ParentController
                
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $data = 'New Customer "'.$request->compName.'" has been added in Orient.';
-                        Mail::to($email->email)->send(new SendMailable($data));
+                    $message = 'New Customer "'.$request->compName.'" has been added in Orient.';
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
                 }
             }
             echo json_encode('success');
@@ -188,8 +188,9 @@ class Customer extends ParentController
             $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $data = 'Customer "'.$request->compName.'" has been updated in Orient.';
-                        Mail::to($email->email)->send(new SendMailable($data));
+                    $message = 'Customer "'.$request->compName.'" has been updated in Orient.';
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Updated"]));
+                    
                 }
             }
             echo json_encode('success');

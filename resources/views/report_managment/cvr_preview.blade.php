@@ -197,7 +197,7 @@
 
             <div align="center">
                 <a href="/download_pdf/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10">Save PDF</button></a>
-                <button type="submit" class="btn btn-primary mr-2 mb-10">Send Email</button>
+                <a href="/send_mail/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10 ">Send Email</button></a>
                 <button type="submit" class="btn btn-primary mr-2 mb-10 print_page">Print</button>
                 <button type="submit" class="btn btn-cancel mb-10">Cancel</button>
             </div>

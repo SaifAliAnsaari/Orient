@@ -109,8 +109,8 @@ class ReportManagment extends ParentController
             $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $data = 'New CVR has been added in Orient by "'.Auth::user()->name.'".';
-                        Mail::to($email->email)->send(new SendMailable($data));
+                    $message = 'New CVR has been added in Orient by "'.Auth::user()->name.'".';
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
                 }
             }
             echo json_encode('success');
@@ -231,8 +231,8 @@ class ReportManagment extends ParentController
             $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $data = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
-                        Mail::to($email->email)->send(new SendMailable($data));
+                    $message = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated"]));
                 }
             }
             echo json_encode('success');
@@ -273,4 +273,31 @@ class ReportManagment extends ParentController
             return redirect('/');
         }
     } 
+
+
+
+
+
+    //Send Mail
+    public function send_mail($id){
+        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        if($core){
+            $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
+            $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
+            $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
+            
+            $data = [];
+            $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
+            
+            $url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
+
+            $email_address = Auth::user()->email;
+            $final_url = URL::to('/').$url."&test.pdf";
+           
+            $message = 'CVR Attachment';
+            Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => $final_url]));
+        }else{
+            return redirect('/');
+        }
+    }
 }
