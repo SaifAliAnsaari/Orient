@@ -77,6 +77,7 @@ Route::get('/notif_pref_against_emp/{id}', 'NotificationCenter@notif_pref_agains
 Route::get('/GetEmployeeListForRights', 'AccessRights@GetEmployeeListForRights');
 Route::get('/GetCVRList', 'ReportManagment@GetCVRList');
 Route::get('/GetCurrentCvr/{id}', 'ReportManagment@GetCurrentCvr');
+Route::get('/get_cust_address', 'ReportManagment@get_cust_address');
 Route::get('/download_pdf/{id}', 'ReportManagment@download_pdf');
 Route::get('/send_mail/{id}', 'ReportManagment@send_mail');
 

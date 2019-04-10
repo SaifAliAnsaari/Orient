@@ -27,6 +27,35 @@ $(document).ready(function () {
     }
 
 
+    //Customer Selected
+    $(document).on('change', '#cvr_customers_list', function(){
+        id = $(this).val();
+        $('location').val('');
+        $('.cvr_poc_list').find('option').remove();
+        $('.cvr_poc_list').append('<option selected disabled value="0">Processing...</option>');
+
+        $.ajax({
+            type: 'GET',
+            url: '/get_cust_address',
+            data: {
+                _token: '{!! csrf_token() !!}',
+               id: id
+            },
+            success: function(response) {
+               // console.log(response); return;
+                var response = JSON.parse(response);
+                $('#location').val(response.address.address + ", " + response.address.city);
+                $('#location').focus();  
+                
+                $('.cvr_poc_list').find('option').remove();
+                $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
+                response.pocs.forEach(element => {
+                    $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
+                });
+            }
+        });
+    });
+
 
     //Open sidebaar to add customers
     $(document).on('click', '.add_new_cust', function () {
@@ -159,7 +188,8 @@ $(document).ready(function () {
 
 
     //Add poc from dropdown
-    $(document).on('click', '.add_old_poc', function () {
+    $(document).on('change', '.cvr_poc_list', function () {
+
         if ($('.cvr_poc_list').val() == 0 || $('.cvr_poc_list').val() == null) {
             $('#notifDiv').fadeIn();
             $('#notifDiv').css('background', 'red');
@@ -201,6 +231,8 @@ $(document).ready(function () {
         // console.log($('#hidden_poc_list').val());
     });
 
+    
+
     $(document).on('click', '.delete_one_poc', function () {
        // debugger;
         var id = $(this).attr('name');
@@ -211,8 +243,22 @@ $(document).ready(function () {
 
     //Add Poc From Modal
     $(document).on('click', '.add_poc_modal', function () {
+        var test = $('#cvr_customers_list').val();
+        if(!test || test == 0){
+           // debugger;
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please add customer first.');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+
         var thisRef = $(this);
         var verif = [];
+
         $('.required_modal').each(function () {
             if ($(this).val() == "") {
                 $(this).css("border", "1px solid red");
@@ -253,13 +299,10 @@ $(document).ready(function () {
             data: {
                 _token: $('input[name="_token"]').val(),
                 poc_name: $('#poc_name_modal').val(),
-                company_name: $('#company_name_modal').val(),
+                company_name: test,
                 job_title: $('#jobTitle_modal').val(),
                 phone: $('#businessPH_modal').val(),
                 email: $('#email_modal').val(),
-                address: $('#address_modal').val(),
-                city: $('#city_modal').val(),
-                state: $('#state_modal').val()
             },
             success: function (response) {
                 var response = JSON.parse(response);
@@ -282,7 +325,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    fetchCustomersforCVR();
+                    //fetchCustomersforCVR();
                     add_poc_list.push({
                         "poc_id": response,
                         "poc_name": $('#poc_name_modal').val()
@@ -425,15 +468,114 @@ $(document).ready(function () {
     //Save 
     $(document).on('click', '.save_cvr', function () {
 
-        if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null || $("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
+        // if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null || $("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
+        //     $('#notifDiv').fadeIn();
+        //     $('#notifDiv').css('background', 'red');
+        //     $('#notifDiv').text('Something Missing');
+        //     setTimeout(() => {
+        //         $('#notifDiv').fadeOut();
+        //     }, 3000);
+        //     return;
+        // }
+
+        var verif = [];
+        $('.required_core').each(function () {
+            if ($(this).val() == "") {
+                $(this).css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else if ($(this).val() == 0 || $(this).val() == null) {
+                $(this).parent().css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else {
+                verif.push(true);
+            }
+        });
+
+        if ($("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null ) {
             $('#notifDiv').fadeIn();
             $('#notifDiv').css('background', 'red');
-            $('#notifDiv').text('Something Missing');
+            $('#notifDiv').text('Please Select Opportunity');
             setTimeout(() => {
                 $('#notifDiv').fadeOut();
             }, 3000);
             return;
         }
+
+        if($("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Annual Bussiness Value');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if($("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Relationship');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+
+        if(purpose_array.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Purpose of Visit');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(products_array.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Prooducts');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(add_poc_list.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Add POC');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(add_competition_list.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Competition');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
 
 
         $('.save_cvr').text('Processing...');
@@ -487,11 +629,11 @@ $(document).ready(function () {
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
-                    $('#cvr_customers_list').val('0').trigger('change');
-                    $('#location').val('');
+                    //$('#cvr_customers_list').val('0').trigger('change');
+                    //$('#location').val('');
                     $('#time_spent').val('');
                     $("input[name='des_cvr']").text('');
-                    $('.cvr_poc_list').val('0').trigger('change');
+                   // $('.cvr_poc_list').val('0').trigger('change');
                     $('.purpose_checkboxes').prop('checked', false);
                     $('.checkboxes_products').prop('checked', false);
                     $("input[name='Opportunity']").prop('checked', false);
@@ -589,14 +731,17 @@ $(document).ready(function () {
 
     });
 
+
+
+
 });
 
 function fetchCustomersforCVR() {
     $('#cvr_customers_list').find('option').remove();
     $('#cvr_customers_list').append('<option selected disabled value="0">Processing...</option>');
 
-    $('.cvr_poc_list').find('option').remove();
-    $('.cvr_poc_list').append('<option selected disabled value="0">Processing...</option>');
+    // $('.cvr_poc_list').find('option').remove();
+    // $('.cvr_poc_list').append('<option selected disabled value="0">Processing...</option>');
 
     $.ajax({
         type: 'GET',
@@ -613,11 +758,11 @@ function fetchCustomersforCVR() {
                 $('#cvr_customers_list').append('<option value="' + element.id + '">' + element.company_name + '</option>');
             });
 
-            $('.cvr_poc_list').find('option').remove();
-            $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
-            response.poc.forEach(element => {
-                $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
-            });
+            // $('.cvr_poc_list').find('option').remove();
+            // $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
+            // response.poc.forEach(element => {
+            //     $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
+            // });
         }
     });
 }

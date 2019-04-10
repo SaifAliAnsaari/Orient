@@ -33,11 +33,25 @@
                                 <input type="text" id="" class="form-control required" value="{{ $poc->poc_name }}" name="poc_name" placeholder="Name" style="font-size:13px">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
+                        <div class="col-md-6 form-s2">
+                                <div>
+                                    <select class="form-control formselect" name="company_name" placeholder="Select Customer Type">
+                                        <option value="0" selected disabled>Select Company Name*</option>
+                                        @if(!empty($cust))
+                                            @foreach ($cust as $customers)
+                                                <?php if($poc->company_name == $customers->id){ ?>
+                                                    <option selected value="{{$customers->id}}">{{$customers->company_name}}</option> 
+                                                <?php }else{ ?>
+                                                <option value="{{$customers->id}}">{{$customers->company_name}}</option>
+                                                <?php } ?>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            {{-- <div class="form-group">
                                 <label class="control-label mb-10">Company Name</label>
                                 <input type="text" id="" class="form-control required" value="{{ $poc->company_name }}" name="company_name" placeholder="Company Name" style="font-size:13px">
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="col-md-6">
@@ -59,7 +73,7 @@
                                 <input type="email" id="" class="form-control required" value="{{ $poc->email }}" name="email" placeholder="" style="font-size:13px">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label mb-10">Address</label>
                                 <input type="text" id="" class="form-control required" value="{{ $poc->address }}" name="address" placeholder="" style="font-size:13px">
@@ -76,7 +90,7 @@
                                 <label class="control-label mb-10">State/Province</label>
                                 <input type="text" id="" class="form-control required" value="{{ $poc->state }}" name="state" placeholder="Punjab" style="font-size:13px">
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mt-5">
                             <button type="button" class="btn btn-primary mr-2 edit_poc_btn">Edit</button>

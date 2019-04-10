@@ -101,7 +101,8 @@ $(document).ready(function() {
             url: '/Customer/' + id,
             success: function(response) {
                 var response = JSON.parse(response);
-               // console.log(response);
+                console.log(response);
+               // return;
                 $('#dataSidebarLoader').hide();
                 $('._cl-bottom').show();
                 $('.pc-cartlist').show();
@@ -189,9 +190,7 @@ $(document).ready(function() {
                 $('input[name="poc_name"]').val(response.poc_name);
                 $('input[name="poc_name"]').blur();
 
-                $('input[name="company_name"]').focus();
-                $('input[name="company_name"]').val(response.company_name);
-                $('input[name="company_name"]').blur();
+                $('select[name="company_name"]').val(response.company_name).trigger('change');
 
                 $('input[name="jobTitle"]').focus();
                 $('input[name="jobTitle"]').val(response.job_title);
@@ -309,6 +308,7 @@ $(document).ready(function() {
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
+                    $('#pl-close').click();
 
                     if($('#operation').val() == 'add'){
                         // $('#saveCustomerForm').find('input').val('');
@@ -322,10 +322,7 @@ $(document).ready(function() {
                         $("input[name='bussinessPH']").val('');
                         $("input[name='email']").val('');
                         $("input[name='address']").val('');
-                        $("input[name='city']").val('');
-                        $("input[name='state']").val('');
-                        $("input[name='country']").val('');
-                        $("input[name='web_page']").val('');
+                        $("input[name='web_address']").val('');
                     }
                     
                 }
@@ -420,7 +417,8 @@ $(document).ready(function() {
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
-
+                    $('#pl-close').click();
+                    
                     if($('#operation').val() == 'add'){
                         //$('#savePOCForm').find('input').val('');
                         $("input[name='poc_name']").val('');
@@ -734,7 +732,7 @@ $(document).ready(function() {
          var thisRef = $(this);
          var currentcompany_name = $('.nam-title').text();
          var currentpoc = $('.con_info p:eq(0)').text();
-         var currentphone = $('.con_info p:eq(1)').text();
+         var currentaddress = $('.con_info p:eq(1)').text();
          var currentcity = $('.con_info p:eq(2)').text();
          var currentcountry = $('.con_info p:eq(3)').text();
          if(count_click_edit == 0){
@@ -751,7 +749,7 @@ $(document).ready(function() {
 
             $('.con_info p:eq(0)').append('<div class="form-group" ><input style="max-height: 30px; font-size:12px !important;" type="text" value="'+ currentpoc +'" id="profile_page_poc" name="profile_page_poc" class="form-control required_one"></div>');
 
-            $('.con_info p:eq(1)').append('<div class="form-group" ><input style="max-height: 30px; font-size:12px !important;" type="text" value="'+ currentphone +'" id="profile_page_phone" name="profile_page_phone" class="form-control required_one"></div>');
+            $('.con_info p:eq(1)').append('<div class="form-group" ><input style="max-height: 30px; font-size:12px !important;" type="text" value="'+ currentaddress +'" id="profile_page_address" name="profile_page_address" class="form-control required_one"></div>');
 
             $('.con_info p:eq(2)').append('<div class="form-group" ><input style="max-height: 30px; font-size:12px !important;" type="text" value="'+ currentcity +'" id="profile_page_city" name="profile_page_city" class="form-control required_one"></div>');
 
@@ -768,7 +766,7 @@ $(document).ready(function() {
                     id: $('#hidden_cust_id').val(),
                     company_name: $('#profile_page_company_page').val(),
                     poc: $('#profile_page_poc').val(),
-                    phone: $('#profile_page_phone').val(),
+                    address: $('#profile_page_address').val(),
                     city: $('#profile_page_city').val(),
                     country: $('#profile_page_country').val(),
                     _token: '{!! csrf_token() !!}'
@@ -806,7 +804,7 @@ function fetchCompanyInfoForUpdate(id) {
             $('.nam-title').text(response.info.company_name);
             $('.con_info strong').remove();
             $('.con_info p:eq(0)').append('<strong>' + response.info.company_poc + '</strong>');
-            $('.con_info p:eq(1)').append('<strong>' + (response.info.business_phone != null ? response.info.business_phone : "Na") + '</strong>');
+            $('.con_info p:eq(1)').append('<strong>' + (response.info.address != null ? response.info.address : "Na") + '</strong>');
             $('.con_info p:eq(2)').append('<strong>' + (response.info.city ? response.info.city : "NA") + '</strong>');
             $('.con_info p:eq(3)').append('<strong>' + (response.info.country).toUpperCase() + '</strong>');
 
@@ -829,12 +827,12 @@ function fetchCompaniesList() {
         success: function(response) {
            //console.log(response);
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>POC</th><th>City</th><th>Country</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>Address</th><th>City</th><th>Country</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['company_poc'] + '</td><td>' + element['city'] + '</td><td>' + element['country'] + '</td><td>' + element['parent_company'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') +'</td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['address'] + '</td><td>' + element['city'] + '</td><td>' + element['country'] + '</td><td>' + element['parent_company'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') +'</td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
@@ -853,12 +851,12 @@ function fetchPOCList(){
         success: function(response) {
            //console.log(response);
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>POC Name</th><th>Company Name</th><th>City</th><th>Email</th><th>State</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>POC Name</th><th>Company Name</th><th>Job Title</th><th>Email</th><th>Phone#</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['poc_name'] + '</td><td>' + element['company_name'] + '</td><td>' + element['city'] + '</td><td>' + element['email'] + '</td><td>' + element['state'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdatePOC">Edit</button>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn_poc" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn_poc">Activate</button>') +'<a href="/poc_detail/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Detail</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['poc_name'] + '</td><td>' + element['company'] + '</td><td>' + element['job_title'] + '</td><td>' + element['email'] + '</td><td>' + element['bussiness_ph'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdatePOC">Edit</button>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn_poc" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn_poc">Activate</button>') +'<a href="/poc_detail/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Detail</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

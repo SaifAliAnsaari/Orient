@@ -33,10 +33,13 @@
                                                 </div>
                                                 <div class="form-s2 col-md-12">
                                                     <div>
-                                                        <select class="form-control formselect required" name="parent_company" placeholder="Select Customer Type">
-                                                            <option value="0" selected disabled>Select Parent Company*</option>
-                                                            <option value="Parent Company 1">Parent Company 1</option>
-                                                            <option value="Parent Company 2">Parent Company 2</option>
+                                                        <select class="form-control formselect" name="parent_company" placeholder="Select Customer Type">
+                                                            <option value="0" selected disabled>Select Parent Company</option>
+                                                            @if(!empty($parent_comp))
+                                                                @foreach ($parent_comp as $comp)
+                                                                    <option value="{{$comp->id}}">{{$comp->company_name}}</option>
+                                                                @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
                                                 </div>
@@ -106,7 +109,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="control-label mb-10">State*</label>
+                                                        <label class="control-label mb-10">Province*</label>
                                                         <input type="text" name="state" class="form-control required" value="Sindh" placeholder="">
                                                     </div>
                                                 </div>

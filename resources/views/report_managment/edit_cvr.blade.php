@@ -396,9 +396,11 @@
                                         </div>
 
                                         <div class="col-md-12 PT-20">
-                                            <h3 class="_head03">POC Name <button type="button" class="btn btn-primary add-poc"
+                                            <h3 class="_head03">POC Name 
+                                                {{-- <button type="button" class="btn btn-primary add-poc"
                                                     data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i>
-                                                    Add POC</button></h3>
+                                                    Add POC</button> --}}
+                                                </h3>
                                         </div>
 
                                         <div class="col-md-12 mb-20 poc_show_list">

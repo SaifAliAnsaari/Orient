@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/select2-bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.1.2.3">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
     <link href="/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
@@ -95,10 +95,10 @@
      <script src="/js/dropzone.js"></script>
     {{--<script src="/js/dropzone-data.js"></script> --}}
     @if($controller == "Customer")
-        <script src="/js/custom/customer.js?v=1.0" ></script>
+        <script src="/js/custom/customer.js?v=1.1" ></script>
         </script>
     @elseif($controller == "RegisterController")
-        <script src="/js/custom/employee.js?v=1.0" ></script>
+        <script src="/js/custom/employee.js?v=1.1" ></script>
    @elseif($controller == "ReportManagment")
         <script src="/js/reports_managment/reports.js?v=1.0" ></script>
     @elseif($controller == "Categories")
@@ -106,7 +106,7 @@
     @elseif($controller == "NotificationCenter")
         <script src="/js/notif/notif_pref.js?v=1.0" ></script>
     @elseif($controller == "AccessRights")
-        <script src="/js/access_rights/access_rights.js?v=1.0" ></script>
+        <script src="/js/access_rights/access_rights.js?v=1.1" ></script>
     @endif
 
 </body>

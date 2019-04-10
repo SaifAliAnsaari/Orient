@@ -28,7 +28,7 @@
                     </div>
                     <div class="con_info">
                         <p><i class="fa fa-user"></i></p>
-                        <p><i class="fa fa-phone-square"></i></p>
+                        <p><i class="fa fa-map-marked-alt"></i></p>
                         <p><i class="fa fa-map-marked-alt"></i></p>
                         <p><i class="fa fa-globe"></i></p>
                         <a id="{{ $update_customer->id }}" class="btn-primary float-right edit_profile_btn" style="cursor: pointer; color: white !important">Edit</a>

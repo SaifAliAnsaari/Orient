@@ -31,7 +31,8 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        $parent_comp = DB::table('customers')->get();
+        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp]);
      }
 
     //Ajax Call from list-customers.js
@@ -80,7 +81,11 @@ class Customer extends ParentController
      */
     public function create()
     {
-        return view('customer.create');
+        // parent::get_notif_data();
+        // parent::VerifyRights();
+        // if($this->redirectUrl){return redirect($this->redirectUrl);}
+        // $parent_comp = DB::table('customers')->get();
+        // return view('customer.create', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp]);
     }
 
     /**
@@ -96,10 +101,10 @@ class Customer extends ParentController
         $customer->company_name = $request->compName;
         $customer->parent_company = $request->parent_company;
         $customer->industry = $request->industry;
-        $customer->company_poc = $request->poc;
-        $customer->job_title = $request->jobTitle;
-        $customer->business_phone = $request->bussinessPH;
-        $customer->email = $request->email;
+       // $customer->company_poc = $request->poc;
+        //$customer->job_title = $request->jobTitle;
+        //$customer->business_phone = $request->bussinessPH;
+        //$customer->email = $request->email;
         $customer->address = $request->address;
         $customer->city = $request->city;
         $customer->state = $request->state;
@@ -110,6 +115,15 @@ class Customer extends ParentController
 
         $status = $customer->save();
         if($status){
+            $add_poc = DB::table('poc')->insert([
+                'poc_name' => $request->poc,
+                'job_title' => $request->jobTitle,
+                'bussiness_ph' => $request->bussinessPH,
+                'email' => $request->email,
+                'company_name' => $customer->id,
+                'added_with_cust' => 1
+                ]);
+
             $insert_notification = DB::table('notifications_list')->insert([
                 'code' => 101,
                 'message' => 'New Customer added',
@@ -138,7 +152,7 @@ class Customer extends ParentController
      */
     public function show($id)
     {
-        echo json_encode(array('info' => DB::table('customers as cust')->selectRaw('`id`, `company_name`, `company_poc`, `job_title`, `business_phone`, `address`, `city`, `state`, `country`, `email`, `webpage`, `remarks`, `parent_company`, `industry`')->where('id', $id)->first(), 'base_url' => URL::to('/')));
+        echo json_encode(array('info' => DB::table('customers as cust')->selectRaw('`id`, `company_name`, `address`, `city`, `state`, `country`, `webpage`, `remarks`, `parent_company`, `industry`, (Select email from poc where company_name = "'.$id.'" AND added_with_cust = 1) as email, (Select job_title from poc where company_name = "'.$id.'" AND added_with_cust = 1) as job_title, (Select bussiness_ph from poc where company_name = "'.$id.'" AND added_with_cust = 1) as business_phone, (Select poc_name from poc where company_name = "'.$id.'" AND added_with_cust = 1) as company_poc')->where('id', $id)->first(), 'base_url' => URL::to('/')));
     }
 
     /**
@@ -166,10 +180,10 @@ class Customer extends ParentController
         $customer->company_name = $request->compName;
         $customer->parent_company = $request->parent_company;
         $customer->industry = $request->industry;
-        $customer->company_poc = $request->poc;
-        $customer->job_title = $request->jobTitle;
-        $customer->business_phone = $request->bussinessPH;
-        $customer->email = $request->email;
+        //$customer->company_poc = $request->poc;
+        //$customer->job_title = $request->jobTitle;
+        //$customer->business_phone = $request->bussinessPH;
+        //$customer->email = $request->email;
         $customer->address = $request->address;
         $customer->city = $request->city;
         $customer->state = $request->state;
@@ -180,6 +194,14 @@ class Customer extends ParentController
 
         $status = $customer->save();
         if($status){
+            $update_poc = DB::table('poc')->whereRaw('company_name = "'.$id.'" and added_with_cust = 1')->update([
+                'poc_name' => $request->poc,
+                'job_title' => $request->jobTitle,
+                'bussiness_ph' => $request->bussinessPH,
+                'email' => $request->email,
+                'added_with_cust' => 1
+                ]);
+
             $insert_notification = DB::table('notifications_list')->insert([
                 'code' => 101,
                 'message' => 'Customer updated',
@@ -231,7 +253,7 @@ class Customer extends ParentController
             DB::table('customers')->where('id', $request->id)->update([
                 'company_name' => $request->company_name,
                 'company_poc' => $request->poc,
-                'business_phone' => $request->phone,
+                'address' => $request->address,
                 'city' => $request->city,
                 'country' => $request->country
             ]);
@@ -247,7 +269,8 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('customer.poc_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        $customers = DB::table('customers')->get();
+        return view('customer.poc_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
     }
 
     //Save POC
@@ -305,7 +328,7 @@ class Customer extends ParentController
 
     //Get POC List
     public function GetPOCList(){
-        echo json_encode(DB::table('poc')->get());
+        echo json_encode(DB::table('poc as poc')->selectRaw('id, poc_name, bussiness_ph, company_name, job_title, email, (Select company_name from customers where id = poc.company_name) as company')->get());
     }
 
     //Activate POC
@@ -351,7 +374,8 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        $customers = DB::table('customers')->get();
+        return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
     }
 
     //Update POC from Detail Page

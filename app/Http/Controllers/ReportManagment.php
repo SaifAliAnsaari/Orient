@@ -27,17 +27,22 @@ class ReportManagment extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        $customers = DB::table('customers')->get();
+        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
     }
 
     //Get Customers AND POC List
     public function GetCustForCVR(){
         echo json_encode(array(
             'customers' => DB::table('customers')->get(),
-            'poc'  => DB::table('poc')->get()
+            'poc'  => ""
         ));
     }
 
+    //Get Customer Address
+    public function get_cust_address(Request $request){
+        echo json_encode(array('address' => DB::table('customers')->where('id', $request->id)->first(), 'pocs' => DB::table('poc')->where('company_name', $request->id)->get()));
+    }
 
     //Save Modal POC
     public function save_poc_from_modal(Request $request){
@@ -49,10 +54,7 @@ class ReportManagment extends ParentController
                 'company_name' => $request->company_name,
                 'job_title' => $request->jobTitle,
                 'bussiness_ph' => $request->businessPH,
-                'email' => $request->email,
-                'address' => $request->address,
-                'city' => $request->city,
-                'state' => $request->state
+                'email' => $request->email
             ]);
             if($insert){
                 echo json_encode($insert);

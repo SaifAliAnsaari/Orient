@@ -229,10 +229,9 @@ $(document).ready(function() {
                         $('#saveEmployeeForm').find("input[type=email], textarea").val("");
                         $('#saveEmployeeForm').find("select").val("0").trigger('change');
                         $('.dropify-clear').click();
-                        $('#saveEmployeeForm').find("input[name=city]").val("Karachi");
-                        $('#saveEmployeeForm').find("input[name=state]").val("Sindh");
                         //$('select[name="country"]').val(1).trigger('change');
                     }
+                    $('#pl-close').click();
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Employee have been added successfully');

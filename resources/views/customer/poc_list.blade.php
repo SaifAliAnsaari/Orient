@@ -31,11 +31,21 @@
                                                         <input type="text" name="poc_name" class="form-control required" placeholder="">
                                                     </div>
                                                 </div> 
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                                <div class="col-md-6 form-s2">
+                                                        <div>
+                                                            <select class="form-control formselect" name="company_name" placeholder="Select Customer Type">
+                                                                <option value="0" selected disabled>Select Company Name*</option>
+                                                                @if(!empty($cust))
+                                                                    @foreach ($cust as $customers)
+                                                                        <option value="{{$customers->id}}">{{$customers->company_name}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    {{-- <div class="form-group">
                                                         <label class="control-label mb-10">Company Name*</label>
                                                         <input type="text" name="company_name" class="form-control required" placeholder="">
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 
                                                 <div class="col-md-6">
@@ -56,7 +66,7 @@
                                                         <input type="email" name="email" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                {{-- <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
                                                         <input type="text" name="address" maxlength="13" class="form-control required" placeholder="">
@@ -73,7 +83,7 @@
                                                         <label class="control-label mb-10">State/Province*</label>
                                                         <input type="text" name="state"  class="form-control required" placeholder="">
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         

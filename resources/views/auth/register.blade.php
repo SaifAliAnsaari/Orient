@@ -52,13 +52,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" value ="Karachi" class="form-control required" placeholder="">
+                                                        <input type="text" name="city"  class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">State</label>
-                                                        <input type="text" name="state" value ="Sindh" class="form-control" placeholder="">
+                                                        <input type="text" name="state"  class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                                         <div class="form-s2 pt-10">
                                                             <div>
                                                                 <select name="designation" class="form-control formselect required" placeholder="select Designation">
-                                                                    <option value="0" selected>Select Designation*</option>
+                                                                    <option value="0" disabled selected>Select Designation*</option>
                                                                     <option value="1">Admin</option>
                                                                     <option value="2">Manager</option>
                                                                     <option value="3">Salesman</option>
@@ -133,11 +133,11 @@
                                                             <div>
                                                                 <select name="reporting" class="form-control formselect required" placeholder="Reporting To">
                                                                     <option value="0" disabled selected>Reporting To*</option>
-                                                                    <option value="1">Admin</option>
-                                                                    <option value="2">Manager</option>
-                                                                    <option value="3">Salesman</option>
-                                                                    <option value="4">Rider</option>
-                                                                    <option value="5">Cashier</option> 
+                                                                    @if(!empty($emp))
+                                                                        @foreach ($emp as $employee)
+                                                                            <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                                        @endforeach
+                                                                    @endif
                                                                 </select>
                                                             </div>
                                                         </div>

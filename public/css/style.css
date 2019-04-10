@@ -2150,6 +2150,16 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .add_button .fa {
     color: #f68606!important;
 }
+.acc-right{ padding:10px; margin: 0; list-style: none; width:33.33%}
+.acc-right li{margin-bottom: 10px }
+.acc-right ._head04{margin-bottom: 15px; margin-right:15px; font-size: 14px; letter-spacing: 1px; font-weight: 500; border-bottom:solid 1px #efefef}
+.ADD_Select{position: relative; margin-top: 5px; margin-bottom: 10px}
+.select2-container {width: 100%!important}
+
+
+
+
+
 
 
 
@@ -2435,7 +2445,7 @@ body.sidebar-toggled footer.sticky-footer {
     padding-left: 20px;
 }
 .ml-800{margin-left: -15px}
-
+.acc-right{ width:50%}
 }
 @media (max-width: 767px) {
 ._add-padd-btn{padding-top:0px; text-align: right}
@@ -2575,6 +2585,8 @@ body.sidebar-toggled footer.sticky-footer {
 .xsm-p-10{padding-top: 10px!important}
 .add-poc {top: -8px}
  .sm-mt15{margin-top: 15px}
+.acc-right{ width:100%}
+.acc-right ._head04 {margin-right:0px}
 }
 @media (max-width: 480px) {
 .card .header h2, .card ._head03, .modal-title {
@@ -2584,6 +2596,7 @@ body.sidebar-toggled footer.sticky-footer {
     height: 45px;
 }
 .top_nav .notiF, .Qlinks {width: 250px}
+.acc-right{ padding-left: 0px; padding-right:0px}
 }
 
 @media (max-width: 420px) {

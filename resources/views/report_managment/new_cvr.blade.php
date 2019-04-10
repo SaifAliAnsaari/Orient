@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('data-sidebar')
 
+
 <div id="product-cl-sec"> <a href="#" id="pl-close" class="close-btn-pl"></a>
     <div class="pro-header-text ml-0">Add <span>Customer</span></div>
     <div class="pc-cartlist">
@@ -28,8 +29,11 @@
                                                         <select class="form-control formselect required" name="parent_company"
                                                             placeholder="Select Customer Type">
                                                             <option value="0" selected disabled>Select Parent Company*</option>
-                                                            <option value="Parent Company 1">Parent Company 1</option>
-                                                            <option value="Parent Company 2">Parent Company 2</option>
+                                                            @if(!empty($cust))
+                                                                @foreach ($cust as $customers)
+                                                                    <option value="{{$customers->id}}">{{$customers->company_name}}</option>
+                                                                @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
                                                 </div>
@@ -151,6 +155,7 @@
 </div>
 
 
+{{-- Modal --}}
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content top_border">
@@ -170,13 +175,6 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10">POC Name*</label>
                                         <input type="text" id="poc_name_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">Company Name*</label>
-                                        <input type="text" id="company_name_modal" class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -202,27 +200,6 @@
                                             placeholder="">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">Address*</label>
-                                        <input type="text" id="address_modal" maxlength="13" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">City*</label>
-                                        <input type="text" id="city_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">State/Province*</label>
-                                        <input type="text" id="state_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
@@ -240,6 +217,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 <div class="modal fade competition-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -347,7 +328,7 @@
                                         <div class="col-md-4">
                                             <label class="font12">Date of Visit</label>
                                             <div class="position-relative">
-                                                    <input type="text" name="datepicker" id="datepicker" class="form-control" placeholder=""
+                                                    <input type="text" name="datepicker" id="datepicker" class="form-control required_core" placeholder=""
                                                     value="Select Date" style="font-size:13px">
                                             </div>
                                         </div>
@@ -356,26 +337,18 @@
                                             <label class="font12">Customer Visited</label>
                                             <div class="position-relative">
                                                 <div class="form-s2 selpluse">
-                                                    <select class="form-control formselect" name="cvr_customers_list"
+                                                    <div>
+                                                    <select class="form-control formselect required_core" name="cvr_customers_list"
                                                         id="cvr_customers_list" placeholder="Select">
 
                                                     </select>
+                                                    </div>
                                                 </div>
                                                 <a class="btn plus_button po-ab productlist01 add_new_cust"><i class="fa fa-plus"></i></a>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label class="font12">POC List</label>
-                                            <div class=" position-relative">
-                                                <div class="form-s2 selpluse">
-                                                    <select class="form-control formselect cvr_poc_list" placeholder="Select">
-
-                                                    </select>
-                                                </div>
-                                                <a class="btn plus_button po-ab productlist01 add_old_poc"><i class="fa fa-plus"></i></a>
-                                            </div>
-                                        </div>
+                                        
 
                                     </div>
 
@@ -384,7 +357,7 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Location</label>
-                                                <input type="text" id="location" name="location" class="form-control"
+                                                <input type="text" id="location" name="location" class="form-control required_core"
                                                     style="font-size:13px">
                                             </div>
                                         </div>
@@ -392,28 +365,53 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Time Spent</label>
-                                                <input type="text" id="time_spent" name="time_spent" class="form-control"
+                                                <input type="text" id="time_spent" name="time_spent" class="form-control required_core"
                                                     style="font-size:13px">
                                             </div>
                                         </div>
 
+                                        {{-- <a id="open_poc_modal" data-toggle="modal"
+                                                            data-target=".bd-example-modal-lg">Test</a> --}}
+
                                         <div class="col-md-12 PT-20">
-                                            <h3 class="_head03">POC Name <button type="button" class="btn btn-primary add-poc"
+                                            <h3 class="_head03">POC Name
+                                                    
+                                                {{-- <button type="button" class="btn btn-primary add-poc"
                                                     data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i>
-                                                    Add POC</button></h3>
+                                                    Add POC</button> --}}
+                                                </h3>
                                         </div>
+                                        <div class="col-md-12 mb-20">
 
-                                        <div class="col-md-12 mb-20 poc_show_list">
+												<div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class=" position-relative">
+                                                            <div class="form-s2 selpluse">
+                                                                <div>
+                                                                <select class="form-control formselect cvr_poc_list" placeholder="Select">
+            
+                                                                </select>
+                                                                </div>
+                                                            </div>
+                                                            <a class="btn plus_button po-ab productlist01 add_another_poc" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></a>
+                                                            
+                                                        </div>
+                                                    </div>
 
+													<div class="col-md-8 poc_show_list">
 
-                                            {{-- <div class="alert fade show alert-color _add-secon" role="alert">
-                                                Zaid Khan
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div> --}}
+														{{-- <div class="alert fade show alert-color _add-secon" role="alert">
+															Fahad Ali
+															<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>--}}
 
-                                        </div>
+													</div>
+
+												</div>
+
+											</div>
 
 
                                         <div class="col-md-12 PB-10">
@@ -664,7 +662,7 @@
                                             </div>
 
                                             <div class="col-md-12 mb-15">
-                                                <textarea id="des_cvr" name="des_cvr" rows="6" style="font-size:13px"></textarea>
+                                                <textarea id="des_cvr" class="required_core" name="des_cvr" rows="6" style="font-size:13px"></textarea>
                                             </div>
 
                                             <div class="col-12">
