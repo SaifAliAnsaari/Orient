@@ -6,7 +6,7 @@ class PDF extends FPDF
 {
 
     function header(){
-        $this->Image('orient.png', 90, 15, 30);
+        $this->Image('orient.png', 90, 5, 16);
     }
 
     function Footer()
@@ -55,8 +55,8 @@ $sql = "SELECT `id`, `category_id`, (Select `name` from sub_categories where id 
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($pro_id, $pro_cat_id, $pro_cat_name);
-$stmt->fetch();
 $pro_count = 0;
+$products = [];
 while($stmt->fetch()){
     $products[$pro_count] = array('pro_id' => $pro_id, 'pro_category_id' => $pro_cat_id, 'pro_cat_name' => $pro_cat_name);
     $pro_count ++;
@@ -70,8 +70,8 @@ $sql = "SELECT `id`, `poc_id`, (Select `poc_name` from poc where id = c_p.poc_id
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($poc_id, $poc_cvr_poc, $poc_name);
-$stmt->fetch();
 $counter = 0;
+$poc = [];
 while($stmt->fetch()){
     $poc[$counter] = array('poc_id' => $poc_id, 'poc_poc_id' => $poc_cvr_poc, 'poc_name' => $poc_name);
     $counter ++;
@@ -85,44 +85,44 @@ $sql = "SELECT `name`, `strength` from cvr_competition where cvr_id = ".$_GET['i
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($com_name, $com_strength);
-$stmt->fetch();
-$com_counter = 0;
+$competition = [];
 while($stmt->fetch()){
-    $competition[$com_counter] = array('com_name' => $com_name, 'com_strength' => $com_strength);
-    $com_counter ++;
+    $competition[] = array('com_name' => $com_name, 'com_strength' => $com_strength);
 }
 $stmt->close();
 
 
 
 
-// echo "<pre>"; print_r($core['report_created_at']); die;
+// echo "<pre>"; print_r($competition); die;
 // die;
 
 $pdf = new PDF();
 $pdf->AddPage("P", "A4");
 
+$pdf->SetAutoPageBreak(false);
+
 /* Starting Billed To Section */
-$pdf->SetXY(10,40);
+$pdf->SetXY(10,12);
 $pdf->SetFont('Arial','B',13);
 $pdf->Cell(100, 40, 'Date of Report:', 0, 1);
 
 
-$pdf->SetXY(46,60);
+$pdf->SetXY(46,32);
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(0,0,($core['report_created_at'] != null ? $core['report_created_at'] : "--"),0,0);
 
-$pdf->SetXY(120,60);
+$pdf->SetXY(120,32);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'Report Prepared By:',0,0);
 
-$pdf->SetXY(164,60);
+$pdf->SetXY(164,32);
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(0,0,($core['created_by'] != null ? $core['created_by'] : "--"),0,0);
 
 
 
-$pdf->SetY(65);
+$pdf->SetY(37);
 $pdf->setFillColor(237,238,239); 
 $pdf->SetTextColor(0,0,0); 
 $pdf->SetDrawColor(255,255,255);
@@ -130,7 +130,7 @@ $pdf->SetFont('Arial','B',10);
 $pdf->Cell(95,10,' Date of Visit:  ',1,0,'L',1);
 $pdf->Cell(95,10,' Customer Visited:  ',1,0,'L',1);
 
-$pdf->SetY(75);
+$pdf->SetY(47);
 $pdf->setFillColor(237,238,239); 
 $pdf->SetTextColor(0,0,0); 
 $pdf->SetFont('Arial','B',10);
@@ -138,32 +138,32 @@ $pdf->Cell(95,10,' Location:  ',1,0,'L',1);
 $pdf->Cell(95,10,' Time Spent:  ',1,0,'L',1);
 
 
-$pdf->SetXY(35,70);
+$pdf->SetXY(35,42);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(0,0,($core['date_of_visit'] != null ? $core['date_of_visit'] : "--"),0,0);
-$pdf->SetXY(140,70);
+$pdf->SetXY(140,42);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(0,0,($core['customer_name'] != null ? $core['customer_name'] : "--"),0,0);
 
-$pdf->SetXY(30,80);
+$pdf->SetXY(30,52);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(0,0,($core['location'] != null ? $core['location'] : "--"),0,0);
-$pdf->SetXY(130,80);
+$pdf->SetXY(130,52);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(0,0,($core['time_spent'] != null ? $core['time_spent'] : "--"),0,0);
 
 
 
 
-$pdf->SetY(95);
+$pdf->SetY(65);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(0,0,'POC Name  ',0,0);
 
-$pdf->SetY(99);
+$pdf->SetY(69);
 $pdf->SetFont('Arial','B',0);
 $pdf->Cell(0,0.5,'',0,0,'L',1);
 
-$height_poc = 100;
+$height_poc = 70;
 $poc_counter = 0;
 if($poc){
     foreach($poc as $pocs){
@@ -257,7 +257,7 @@ if($products){
 if(sizeof($test) > 3){
     $height_opportunity = $height_products;
 }else{
-    $height_opportunity = $height_products += 15;
+    $height_opportunity = $height_products += 10;
 }
 
 
@@ -294,10 +294,17 @@ $pdf->SetY($height += 5);
 $pdf->SetFont('Arial','B',0);
 $pdf->Cell(0,0.5,'',0,0,'L',1);
 
+unset($stmt);
+
 $height = $height += 1;
 $counter = 0;
 if($competition){
     foreach($competition as $competitions){
+
+        if($height > 280){
+            $pdf->AddPage("P", "A4");
+            $height = 30;
+        }
         $pdf->SetY($height);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(95,10,' Competition Name: ',0,0);
@@ -310,7 +317,7 @@ if($competition){
         $pdf->SetXY(146,$height);
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(90,10,$competitions['com_strength'],0,0);
-       
+        
         if($counter < sizeof($competition)-1){
             $height += 8;
         }
@@ -333,7 +340,7 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $pdf->SetY($height_summary+=1);
 $pdf->SetFont('Arial','',10);
-$pdf->Cell(200,10,($core['description'] != null ? $core['description'] : "--"),0,0);
+$pdf->MultiCell(180,5,($core['description'] != null ? $core['description'] : "--"),1);
 
 
 

@@ -178,13 +178,6 @@
                                             placeholder="">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">Company Name*</label>
-                                        <input type="text" id="company_name_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -204,27 +197,6 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10">Email ID*</label>
                                         <input type="email" id="email_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">Address*</label>
-                                        <input type="text" id="address_modal" maxlength="13"
-                                            class="form-control required_modal" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">City*</label>
-                                        <input type="text" id="city_modal" class="form-control required_modal"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10">State/Province*</label>
-                                        <input type="text" id="state_modal" class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
