@@ -51,7 +51,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <img src="/images/icon-customer-management.svg" alt="" />
+                <img src="/images/report.svg" alt="" />
                 <span>Report Management</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
@@ -68,7 +68,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <img src="/images/icon-customer-management.svg" alt="" />
+                <img src="/images/categ-icon.svg" alt="" />
                 <span>Categories</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
@@ -85,7 +85,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <img src="/images/icon-customer-management.svg" alt="" />
+                <img src="/images/notifications.svg" alt="" />
                 <span>Notification Center</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">

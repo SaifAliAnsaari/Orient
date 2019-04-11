@@ -1,6 +1,6 @@
 <?php
 require('fpdf.php');
-// echo '<pre>'; print_r($_GET['id']); 
+// echo '<pre>'; print_r($_POST['core']); 
 // die;
 class PDF extends FPDF
 {
@@ -29,76 +29,6 @@ class PDF extends FPDF
 
 }
 
-
-$servername = "localhost";
-$username = "junaid";
-$password = "Snakebite76253";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, 'orient');
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-$sql = "SELECT `id`, `report_created_at`, `report_created_by`, `date_of_visit`, `customer_visited`, `location`, `time_spent`, `purpose_of_visit`, `opportunity`, `bussiness_value`, `relationship`, `description`, (Select `name` from users where id = cc.report_created_by) as created_by, (Select `company_name` from customers where id = cc.customer_visited) as customer_name from cvr_core as cc where id = ".$_GET['id'];
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($id, $report_created_at, $report_created_by, $date_of_visit, $customer_visited, $location, $time_spent, $purpose_of_visit, $opportunity, $bussiness_value, $relationship, $description, $created_by, $customer_name);
-$stmt->fetch();
-$core = array('report_created_at' => $report_created_at, 'report_created_by' => $report_created_by, 'date_of_visit' => $date_of_visit, 'customer_visited' => $customer_visited, 'location' => $location, 'time_spent' => $time_spent, 'purpose_of_visit' => $purpose_of_visit, 'opportunity' => $opportunity, 'bussiness_value' => $bussiness_value, 'relationship' => $relationship, 'description' => $description, 'created_by' => $created_by, 'customer_name' => $customer_name);
-$stmt->close();
-
-
-$sql = "SELECT `id`, `category_id`, (Select `name` from sub_categories where id = cp.category_id) as cat_name from cvr_products as cp where cvr_id = ".$_GET['id'];
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($pro_id, $pro_cat_id, $pro_cat_name);
-$stmt->fetch();
-$pro_count = 0;
-while($stmt->fetch()){
-    $products[$pro_count] = array('pro_id' => $pro_id, 'pro_category_id' => $pro_cat_id, 'pro_cat_name' => $pro_cat_name);
-    $pro_count ++;
-}
-$stmt->close();
-
-
-
-
-$sql = "SELECT `id`, `poc_id`, (Select `poc_name` from poc where id = c_p.poc_id) as poc_name from cvr_poc as c_p where cvr_id = ".$_GET['id'];
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($poc_id, $poc_cvr_poc, $poc_name);
-$stmt->fetch();
-$counter = 0;
-while($stmt->fetch()){
-    $poc[$counter] = array('poc_id' => $poc_id, 'poc_poc_id' => $poc_cvr_poc, 'poc_name' => $poc_name);
-    $counter ++;
-}
-$stmt->close();
-
-
-
-
-$sql = "SELECT `name`, `strength` from cvr_competition where cvr_id = ".$_GET['id'];
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($com_name, $com_strength);
-$stmt->fetch();
-$com_counter = 0;
-while($stmt->fetch()){
-    $competition[$com_counter] = array('com_name' => $com_name, 'com_strength' => $com_strength);
-    $com_counter ++;
-}
-$stmt->close();
-
-
-
-
-// echo "<pre>"; print_r($core['report_created_at']); die;
-// die;
-
 $pdf = new PDF();
 $pdf->AddPage("P", "A4");
 
@@ -110,7 +40,9 @@ $pdf->Cell(100, 40, 'Date of Report:', 0, 1);
 
 $pdf->SetXY(46,60);
 $pdf->SetFont('Arial','',12);
-$pdf->Cell(0,0,($core['report_created_at'] != null ? $core['report_created_at'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['report_created_at'] != null ? $_POST['core']['report_created_at'] : "--"),0,0);
+
+
 
 $pdf->SetXY(120,60);
 $pdf->SetFont('Arial','B',12);
@@ -118,7 +50,7 @@ $pdf->Cell(0,0,'Report Prepared By:',0,0);
 
 $pdf->SetXY(164,60);
 $pdf->SetFont('Arial','',12);
-$pdf->Cell(0,0,($core['created_by'] != null ? $core['created_by'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['created_by'] != null ? $_POST['core']['created_by'] : "--"),0,0);
 
 
 
@@ -140,17 +72,17 @@ $pdf->Cell(95,10,' Time Spent:  ',1,0,'L',1);
 
 $pdf->SetXY(35,70);
 $pdf->SetFont('Arial','',9);
-$pdf->Cell(0,0,($core['date_of_visit'] != null ? $core['date_of_visit'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['date_of_visit'] != null ? $_POST['core']['date_of_visit'] : "--"),0,0);
 $pdf->SetXY(140,70);
 $pdf->SetFont('Arial','',9);
-$pdf->Cell(0,0,($core['customer_name'] != null ? $core['customer_name'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['customer_name'] != null ? $_POST['core']['customer_name'] : "--"),0,0);
 
 $pdf->SetXY(30,80);
 $pdf->SetFont('Arial','',9);
-$pdf->Cell(0,0,($core['location'] != null ? $core['location'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['location'] != null ? $_POST['core']['location'] : "--"),0,0);
 $pdf->SetXY(130,80);
 $pdf->SetFont('Arial','',9);
-$pdf->Cell(0,0,($core['time_spent'] != null ? $core['time_spent'] : "--"),0,0);
+$pdf->Cell(0,0,($_POST['core']['time_spent'] != null ? $_POST['core']['time_spent'] : "--"),0,0);
 
 
 
@@ -165,13 +97,13 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $height_poc = 100;
 $poc_counter = 0;
-if($poc){
-    foreach($poc as $pocs){
+if($_POST['pocs']){
+    foreach($_POST['pocs'] as $poc){
         $pdf->SetY($height_poc);
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(95,10,' POC Name  ',0,0);
-        $pdf->Cell(95,10,$pocs['poc_name'],0,0);
-        if($poc_counter < sizeof($poc)-1){
+        $pdf->Cell(95,10,$poc['poc_name'],0,0);
+        if($poc_counter < sizeof($_POST["pocs"])-1){
             $height_poc += 8;
         }
         
@@ -183,7 +115,7 @@ if($poc){
 
 $height_purpose = $height_poc + 15;
 
-$purposes = explode (",", $core['purpose_of_visit']);
+$purposes = explode (",", $_POST['core']['purpose_of_visit']);
 
 $pdf->SetY($height_purpose);
 $pdf->SetFont('Arial','B',12);
@@ -237,15 +169,15 @@ $pdf->SetY($height_products += 5);
 $pdf->SetFont('Arial','',10);
 $counter_pro = 0;
 $height_products += 5;
-$test = $products;
-if($products){
+$test = $_POST['products'];
+if($_POST['products']){
     for($i = 0; $i < sizeof($test); $i++){
         if($counter_pro == 2){
-            $pdf->Cell(70,10,$test[$i]['pro_cat_name'],0,1);
+            $pdf->Cell(70,10,$test[$i]['cat_name'],0,1);
             $height_products += 20;
             $counter_pro = 0;
         }else{
-            $pdf->Cell(70,10,$test[$i]['pro_cat_name'],0,0);
+            $pdf->Cell(70,10,$test[$i]['cat_name'],0,0);
             $counter_pro++;
         }
     }
@@ -278,9 +210,9 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $pdf->SetY($height_opportunity + 6);
 $pdf->SetFont('Arial','',10);
-$pdf->Cell(70,10,($core['opportunity'] != null ? $core['opportunity'] : "--"),0,0);
-$pdf->Cell(70,10,($core['bussiness_value'] != null ? $core['bussiness_value'] : "--"),0,0);
-$pdf->Cell(70,10,($core['relationship'] != null ? $core['relationship'] : "--"),0,0);
+$pdf->Cell(70,10,($_POST['core']['opportunity'] != null ? $_POST['core']['opportunity'] : "--"),0,0);
+$pdf->Cell(70,10,($_POST['core']['bussiness_value'] != null ? $_POST['core']['bussiness_value'] : "--"),0,0);
+$pdf->Cell(70,10,($_POST['core']['relationship'] != null ? $_POST['core']['relationship'] : "--"),0,0);
 
 
 
@@ -296,8 +228,8 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $height = $height += 1;
 $counter = 0;
-if($competition){
-    foreach($competition as $competitions){
+if($_POST['competitions']){
+    foreach($_POST['competitions'] as $competition){
         $pdf->SetY($height);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(95,10,' Competition Name: ',0,0);
@@ -305,13 +237,13 @@ if($competition){
         
         $pdf->SetXY(45,$height);
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(90,10,$competitions['com_name'],0,0);
+        $pdf->Cell(90,10,$competition['name'],0,0);
         
         $pdf->SetXY(146,$height);
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(90,10,$competitions['com_strength'],0,0);
+        $pdf->Cell(90,10,$competition['strength'],0,0);
        
-        if($counter < sizeof($competition)-1){
+        if($counter < sizeof($_POST["competitions"])-1){
             $height += 8;
         }
         
@@ -333,7 +265,7 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $pdf->SetY($height_summary+=1);
 $pdf->SetFont('Arial','',10);
-$pdf->Cell(200,10,($core['description'] != null ? $core['description'] : "--"),0,0);
+$pdf->Cell(200,10,($_POST['core']['description'] != null ? $_POST['core']['description'] : "--"),0,0);
 
 
 

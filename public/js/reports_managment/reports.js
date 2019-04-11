@@ -20,7 +20,6 @@ $(document).ready(function () {
         fetchCvrList();
     }else if(action == 'edit_cvr'){
         fetchCustomersforCVR();
-        
         setTimeout(() => {
             fetchCurrentCvrData();
         }, 500); 
@@ -420,6 +419,52 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('change', '#comp_dropdwn', function(){
+        if($(this).val() == '0' || $(this).val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Competition First');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+       // debugger;
+// alert($("#comp_dropdwn :selected").attr('name')); return;
+            var name = $("#comp_dropdwn :selected").text();
+            var strength = $('#comp_dropdwn').find('option:selected').attr('name');
+
+            //return;
+
+            var competition_id_found = false;
+            add_competition_list.find(x => {
+                //debugger;
+                if (x.name == name && x.strength == strength) {
+                    competition_id_found = true;
+                    find_secondary_cust = true;
+                    return;
+                }
+            });
+
+            if (!competition_id_found) {
+                add_competition_list.push({
+                    "strength": strength,
+                    "name": name
+                });
+                find_secondary_cust = true;
+            }
+
+            if (add_competition_list != "") {
+                $('.competition_list_div').empty();
+                $('#hidden_competition_list').val('');
+                $('#hidden_competition_list').val(add_competition_list);
+                add_competition_list.forEach(element => {
+                    $('.competition_list_div').append('<div class="col-md-6"><div class="alert fade show alert-color _add-secon w-100 mr-0" role="alert"><div class="row"><div class="col-md-6"><strong>Name: &nbsp;</strong>' + element.name + '</div><div class="col-md-6"><strong>Strength: &nbsp;</strong>' + element.strength + '</div><button id="' + element.name + '-' + element.strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>');
+                });
+            }
+            console.log(add_competition_list);
+    });
+
     $(document).on('click', '.delete_one_competitor', function () {
         //debugger;
         var id = $(this).attr('id').split('-');
@@ -445,9 +490,6 @@ $(document).ready(function () {
         //console.log($('#purpose_hidden_array').val());
     });
 
-
-
-
     //Products
     $(document).on('click', '.checkboxes_products', function () {
         //debugger;
@@ -462,8 +504,20 @@ $(document).ready(function () {
         }
         // console.log($('#products_hidden_list').val());
     });
-
-
+    
+    $(document).on('click', '#sendEmailButton', function () {
+        const data = JSON.parse($('#pdfData').text());
+        debugger;
+        // console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: '/fpdf',
+            data: data,
+            success: function(response){
+                console.log(response);
+            }
+        });
+    });
 
     //Save 
     $(document).on('click', '.save_cvr', function () {
@@ -632,7 +686,7 @@ $(document).ready(function () {
                     //$('#cvr_customers_list').val('0').trigger('change');
                     //$('#location').val('');
                     $('#time_spent').val('');
-                    $("input[name='des_cvr']").text('');
+                    $("textarea[name='des_cvr']").text('');
                    // $('.cvr_poc_list').val('0').trigger('change');
                     $('.purpose_checkboxes').prop('checked', false);
                     $('.checkboxes_products').prop('checked', false);
@@ -645,6 +699,7 @@ $(document).ready(function () {
                     add_competition_list = [];
                     $('.poc_show_list').empty();
                     $('.competition_list_div').empty();
+                    //$('#comp_dropdwn').val('0').trigger('change');
                 }
             }
         });

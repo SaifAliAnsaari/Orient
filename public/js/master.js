@@ -73,6 +73,15 @@ $(document).ready(function () {
         }
         });
     });
+
+    //Print CVR for Customer
+    $(document).on('click', '.print_page_cust', function(){
+        var printContents = document.getElementById('printResult').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    });
     
     
 });

@@ -7,7 +7,9 @@ use DB;
 use URL;
 use Auth;
 use Mail;
+use File;
 use App\Mail\SendMailable;
+use Illuminate\Support\Facades\Storage;
 
 class ReportManagment extends ParentController
 {
@@ -28,7 +30,8 @@ class ReportManagment extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
-        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
+        $competitions = DB::table('cvr_competition')->get();
+        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'competitions' => $competitions]);
     }
 
     //Get Customers AND POC List
@@ -150,7 +153,10 @@ class ReportManagment extends ParentController
             $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
             $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
             $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
-            return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions, 'id' => $id]);
+
+            $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
+
+            return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions, 'id' => $id, 'testData' => $data]);
         }else{
             return redirect('/');
         }
@@ -167,8 +173,9 @@ class ReportManagment extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $core = DB::table('cvr_core as cc')->where('id', $id)->first();
+        $competitions = DB::table('cvr_competition')->get();
         if($core){
-            return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id]);
+            return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions]);
         }else{
             return redirect('/');
         }
@@ -250,30 +257,34 @@ class ReportManagment extends ParentController
 
     //Download CVR PDF
     public function download_pdf($id){
-           
-        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
-        if($core){
-            $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
-            $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
-            $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
-            
 
+        $cvr_id = array('id' => $id);
 
-            $data = [];
-            $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
-
-            // array_push($data['core'], $core);
-            // array_push($data, $products);
-            // array_push($data, $pocs);
-            // array_push($data, $competitions);
-            
-            $url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
-            if($url){
-                return redirect($url);
-            }
-        }else{
-            return redirect('/');
+        $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+        if($url){
+            return redirect($url);
         }
+           
+        // $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        // if($core){
+        //     $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
+        //     $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
+        //     $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
+
+        //     $data = [];
+        //     $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
+            
+        //     //$url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
+            
+        //     $cvr_id = array('id' => $id);
+
+        //     $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+        //     if($url){
+        //         return redirect($url);
+        //     }
+        // }else{
+        //     return redirect('/');
+        // }
     } 
 
 
@@ -282,26 +293,74 @@ class ReportManagment extends ParentController
 
     //Send Mail
     public function send_mail($id){
-        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
-        if($core){
-            $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
-            $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
-            $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
-            
-            $data = [];
-            $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
-            
-            $url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
 
-            $email_address = Auth::user()->email;
-            $final_url = URL::to('/').$url."&test.pdf";
-           
-            $message = 'CVR Attachment';
-            Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => $final_url]));
-            
-            return redirect('cvr_preview/'.$id);
-        }else{
-            return redirect('/');
+        // $unique_token = $this->random_string(100);
+        // //echo URL::to('/').'/'."send_mail/".$unique_token; die;
+        // //$test;
+        // if(DB::table('cvr_mail_key')->where('token' , $unique_token)->first()){
+        //     header("Refresh:0");
+        // }else{
+        //     $insert_token = DB::table('cvr_mail_key')->insert([
+        //         'token' => $unique_token,
+        //         'cvr_id' => $id,
+        //         'created_at' => date('Y-m-d H:i:s')
+        //     ]);
+        //     $message = URL::to('/').'/'."save_cvr_pdf/".$unique_token;
+        //     // $client_email = DB::table('customers')->where('id', $id)->first();
+        //     Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR "]));
+        //     return redirect('cvr_preview/'.$id);
+        // }
+
+        $cvr_id = array('id' => $id);
+
+        $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+        $email_address = Auth::user()->email;
+        $final_url = URL::to('/').$url;
+
+        $file_name = "cvr".time().".pdf";
+        file_put_contents($file_name, fopen($final_url, 'r'));
+
+        $message = 'CVR Attachment';
+        Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
+
+        if(is_file(public_path($file_name))){
+            File::delete($file_name);
         }
+        
+        return redirect('cvr_preview/'.$id);
+        
+        // die;
+
+        // $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        // if($core){
+        //     $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
+        //     $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
+        //     $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
+            
+        //     $data = [];
+        //     $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
+            
+            // $url = '/fpdf?'.http_build_query(json_decode(json_encode($data), true));
+
+            // $email_address = Auth::user()->email;
+            // $final_url = URL::to('/').$url;
+
+            // $file_name = "cvr".time().".pdf";
+            // file_put_contents($file_name, fopen($final_url, 'r'));
+
+            // $message = 'CVR Attachment';
+            // Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
+
+            // if(is_file(public_path($file_name))){
+            //     File::delete($file_name);
+            // }
+            
+            // return redirect('cvr_preview/'.$id);
+        // }else{
+        //     return redirect('/');
+        // }
     }
+
+
+
 }
