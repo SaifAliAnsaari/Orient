@@ -19,14 +19,23 @@
         <div class="card">
 
             <div class="body">
-                  @if(!empty($all_notif))
+                @if(!empty($unread_notif))
+                    @foreach($unread_notif as $notif)
+                        <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
+                            <img src="{{'/images/profile-img--.jpg'}}" class="NU-img float-none mb-0" alt="">
+                            <strong class="notifications_list_all" id="{{$notif->id}}">({{ $notif->approval_by_name }}) </strong> {{ "CVR (".$notif->cvr_id.") has been ". ($notif->approval == 1 ? "approved" : "disapproved") .". Reamrks: " .$notif->remarks }}
+                        </div>
+                    @endforeach
+                @endif
+                @if(!empty($all_notif))
                     @foreach($all_notif as $notifications)
                         <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
                             <img src="{{'/images/profile-img--.jpg'}}" class="NU-img float-none mb-0" alt="">
                             <strong class="notifications_list_all" id="{{$notifications->id}}">({{$notifications->customer_nameOrCvr}}) </strong> {{ $notifications->message }}
                         </div>
                     @endforeach
-                  @endif
+                @endif
+
 
             </div>
 

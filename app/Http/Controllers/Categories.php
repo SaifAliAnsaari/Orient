@@ -24,7 +24,7 @@ class Categories extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-         return view('categories.main_category', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+         return view('categories.main_category', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
      }
 
      public function save_main_cat(Request $request){
@@ -76,7 +76,7 @@ class Categories extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('categories.sub_category', ['main_cat' => DB::table('main_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        return view('categories.sub_category', ['main_cat' => DB::table('main_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     public function save_sub_cat(Request $request){
@@ -131,7 +131,7 @@ class Categories extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('categories.product_category', ['sub_cat' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        return view('categories.product_category', ['sub_cat' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     public function save_product_cat(Request $request){

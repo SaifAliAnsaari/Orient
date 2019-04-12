@@ -26,7 +26,7 @@ class NotificationCenter extends ParentController
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $employees = DB::table('users')->get();
         $notifications_name = DB::table('notifications_code')->get();
-        return view('notif.notification_pref', ['emp' => $employees, 'notifications_code' => $notifications_name, 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        return view('notif.notification_pref', ['emp' => $employees, 'notifications_code' => $notifications_name, 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     public function notif_pref_against_emp($id){
@@ -83,6 +83,7 @@ class NotificationCenter extends ParentController
     }
 
     public function read_notif_four(Request $request){
+        DB::table('approval_notif')->where('notif_to', Auth::user()->id)->update(['read_notif' => 1]);
         if($request->notif_ids != ""){
             foreach($request->notif_ids as $notifications){
                 DB::table('notification_read_status')->whereRaw('notif_id = "'.$notifications.'" AND emp_id = '.Auth::user()->id)->delete();
@@ -98,7 +99,16 @@ class NotificationCenter extends ParentController
         parent::VerifyRights();
         parent::get_notif_data();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('notif.notifications', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        $read_all_basic_apprval = DB::table('approval_notif')->where('notif_to', Auth::user()->id)->update(['read_notif' => 1]);
+        if(!empty($this->all_notification)){
+            foreach($this->all_notification as $notif){
+                DB::table('notification_read_status')->insert([
+                    'notif_id' => $notif->id,
+                    'emp_id' => Auth::user()->id
+                ]);
+            }
+        }
+        return view('notif.notifications', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
         
     }
 }

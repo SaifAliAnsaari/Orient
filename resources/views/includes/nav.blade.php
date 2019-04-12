@@ -13,28 +13,41 @@
         @csrf
             <li class="nav-item TM_icon dropdown no-arrow"> 
                 <a class="nav-link dropdown-toggle" href="#" id="NotiFications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="badge">
-                    @if($notifications_counts != "")
-                        {{ $notifications_counts->counts }}
+                    @if($notifications_counts != "" && !empty($approval_notif))
+                        {{ $notifications_counts->counts + sizeof($approval_notif) }}
                     @endif
-                    @if($notifications_counts == "")
-                        {{ 0 }}
+                    @if(!empty($approval_notif) && empty($notifications_counts))
+                        {{ sizeof($approval_notif) }}
                     @endif
+                    
                 </span> <img src="{{ URL::to('/images/bell-icon.svg') }}" alt=""/></a>
                 <div class="dropdown-menu dropdown-menu-right notiF" aria-labelledby="NotiFications">
                 <h4 class="notiF-title">Notification </h4>
                     @if(!empty($notif_data))
-                    @foreach($notif_data as $notifications)
-                    <a href="#"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
-                        <?php 
+                        @foreach($notif_data as $notifications)
+                        <a href="#"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
+                            <?php 
+                                    $datetime1 = new DateTime(date('Y-m-d H:i:s'));//start time
+                                    $datetime2 = new DateTime($notifications->created_at);//end time
+                                    $interval = $datetime1->diff($datetime2);
+                                    echo $interval->format('%d days %H hours %i minutes %s seconds ago');
+                                ?>
+                        </p></a>
+                        @endforeach     
+                    @endif
+                    @if(!empty($approval_notif))
+                        @foreach($approval_notif as $notifications)
+                        <a href="#"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{'CVR ('.$notifications->cvr_id.') has been '. ($notifications->approval == 1 ? "approved" : "disapproved") }} </strong><p>
+                            <?php 
                                 $datetime1 = new DateTime(date('Y-m-d H:i:s'));//start time
                                 $datetime2 = new DateTime($notifications->created_at);//end time
                                 $interval = $datetime1->diff($datetime2);
                                 echo $interval->format('%d days %H hours %i minutes %s seconds ago');
-                            ?>
-                    </p></a>
-                    @endforeach     
+                                ?>
+                        </p></a>
+                        @endforeach     
                     @endif
-                    <a href="/notifications" class="all-NF">View All ( {{ sizeof($all_notif) }} )</a>
+                    <a href="/notifications" class="all-NF">View All ( {{ sizeof($all_notif) + sizeof($unread_notif) }} )</a>
                 </div> 
             </li>
 

@@ -14,6 +14,9 @@ class ParentController extends Controller
     public $notif_counts = 0;
     public $notif_data;
     public $all_notification;
+    public $approval_notif_counts = 0;
+    public $unread_notif_approval;
+    public $approval_notif;
 
     public function __construct(){
     }
@@ -34,6 +37,10 @@ class ParentController extends Controller
 
         $check = DB::table('subscribed_notifications as sn')->selectRaw('GROUP_CONCAT(notification_code_id) as notifications_codes')->whereRaw('web = 1 AND emp_id = '. Auth::user()->id)->first();
         //print_r($check); die;
+        $this->approval_notif = DB::table('approval_notif as an')->selectRaw('id, cvr_id, notif_to, approval_by, approval, remarks, read_notif, created_at, (Select name from users where id = an.approval_by) as approval_by_name')->whereRaw('notif_to = "'.Auth::user()->id.'" AND read_notif = 0')->get();
+
+        $this->unread_notif_approval = DB::table('approval_notif as an')->selectRaw('id, cvr_id, notif_to, approval_by, approval, remarks, read_notif, created_at, (Select name from users where id = an.approval_by) as approval_by_name')->whereRaw('notif_to = "'.Auth::user()->id.'"')->get();
+        //echo "<pre>"; print_r($this->approval_notif); die;
         if($check->notifications_codes){
 
             //Counts

@@ -82,7 +82,7 @@ class RegisterController extends ParentController
         parent::VerifyRights();if($this->redirectUrl){return redirect($this->redirectUrl);}
         $employees = User::all();
 
-        return view('auth.register', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'emp' => $employees]);
+        return view('auth.register', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'emp' => $employees, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     /**
@@ -140,6 +140,6 @@ class RegisterController extends ParentController
         if($id != Auth::id()){
             return redirect('/');
         }
-        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'unread_notif' => $this->unread_notif_approval]);
     }
 }

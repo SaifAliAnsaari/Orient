@@ -32,7 +32,7 @@ class Customer extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $parent_comp = DB::table('customers')->get();
-        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp]);
+        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
      }
 
     //Ajax Call from list-customers.js
@@ -245,7 +245,7 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
+        return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     public function updateClientFromProfile(Request $request){
@@ -270,7 +270,7 @@ class Customer extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
-        return view('customer.poc_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
+        return view('customer.poc_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     //Save POC
@@ -375,7 +375,7 @@ class Customer extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
-        return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers]);
+        return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
     //Update POC from Detail Page

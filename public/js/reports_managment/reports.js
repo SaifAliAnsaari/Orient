@@ -905,7 +905,7 @@ function fetchCvrList(type){
             var response = JSON.parse(response);
             response.info.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': "") +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>' : "")) +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
