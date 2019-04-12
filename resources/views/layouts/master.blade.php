@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/select2-bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
     <link href="/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
@@ -100,7 +100,7 @@
     @elseif($controller == "RegisterController")
         <script src="/js/custom/employee.js?v=1.1" ></script>
    @elseif($controller == "ReportManagment")
-        <script src="/js/reports_managment/reports.js?v=1.1" ></script>
+        <script src="/js/reports_managment/reports.js?v=1.2" ></script>
     @elseif($controller == "Categories")
         <script src="/js/categories/categories.js?v=1.0" ></script>
     @elseif($controller == "NotificationCenter")

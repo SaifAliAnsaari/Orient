@@ -70,20 +70,38 @@ class ReportManagment extends ParentController
 
     //Save CVR
     public function save_cvr(Request $request){
-        $insert_core = DB::table('cvr_core')->insertGetId([
-            'report_created_at' => date('M d Y'),
-            'report_created_by' =>  Auth::user()->id,
-            'date_of_visit' => $request->date,
-            'customer_visited' => $request->customer_id,
-            'location' => $request->location,
-            'time_spent' => $request->time_spent,
-            'purpose_of_visit' => $request->purpose,
-            'opportunity' => $request->opportunity,
-            'bussiness_value' => $request->annualBusiness,
-            'relationship' => $request->relationship,
-            'description' => $request->description
-            //'created_at' =>  date('Y-m-d H:i:s')
-            ]);
+        if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+            $insert_core = DB::table('cvr_core')->insertGetId([
+                'report_created_at' => date('M d Y'),
+                'report_created_by' =>  Auth::user()->id,
+                'date_of_visit' => $request->date,
+                'customer_visited' => $request->customer_id,
+                'location' => $request->location,
+                'time_spent' => $request->time_spent,
+                'purpose_of_visit' => $request->purpose,
+                'opportunity' => $request->opportunity,
+                'bussiness_value' => $request->annualBusiness,
+                'relationship' => $request->relationship,
+                'description' => $request->description,
+                'is_approved' => 1
+                ]);
+        }else{
+            $insert_core = DB::table('cvr_core')->insertGetId([
+                'report_created_at' => date('M d Y'),
+                'report_created_by' =>  Auth::user()->id,
+                'date_of_visit' => $request->date,
+                'customer_visited' => $request->customer_id,
+                'location' => $request->location,
+                'time_spent' => $request->time_spent,
+                'purpose_of_visit' => $request->purpose,
+                'opportunity' => $request->opportunity,
+                'bussiness_value' => $request->annualBusiness,
+                'relationship' => $request->relationship,
+                'description' => $request->description
+                //'created_at' =>  date('Y-m-d H:i:s')
+                ]);
+        }
+        
         foreach($request->poc_list as $poc){
             $insert_poc = DB::table('cvr_poc')->insert([
                 'poc_id' => $poc["poc_id"],
@@ -112,12 +130,29 @@ class ReportManagment extends ParentController
 
         if($insert_core){
             $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+            
+            $cvr_id = array('id' => $insert_core);
+            $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+            $final_url = URL::to('/').$url;
+            $file_name = "cvr".time().".pdf";
+            file_put_contents($file_name, fopen($final_url, 'r'));
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
                     $message = 'New CVR has been added in Orient by "'.Auth::user()->name.'".';
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
+                    //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
+            $path = public_path()."/". $file_name;
+            if(file_exists($path)) {
+                unlink($path);
+            }
+            // if(is_file(public_path($file_name))){
+            //     File::delete($file_name);
+            // }
+            
+            //return redirect('cvr_preview/'.$id);
+
             echo json_encode('success');
         }else{
             echo json_encode('failed');
@@ -136,8 +171,37 @@ class ReportManagment extends ParentController
         return view('report_managment.cvr_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights]);
     }
 
-    public function GetCVRList(){
-        echo json_encode(DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->get());
+    public function GetCVRList(Request $request){
+        //echo json_encode($request->type); die;
+        if($request->type == '1'){
+            //Admin or Manager
+            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->get(), 'editable' => 1));
+            }else{
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('report_created_by', Auth::user()->id)->get(), 'editable' => 0));
+            }
+        }else if($request->type == '2'){
+            //Admin or Manager
+            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 1)->get(), 'editable' => 1));
+            }else{
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 1')->get(), 'editable' => 0));
+            }
+        }else if($request->type == '3'){
+            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 2)->get(), 'editable' => 1));
+            }else{
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 2')->get(), 'editable' => 0));
+            }
+        }else if($request->type == '4'){
+            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 0)->get(), 'editable' => 1));
+            }else{
+                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 0')->get(), 'editable' => 0));
+            }
+        }
+        
+        
     }
 
 
@@ -148,7 +212,7 @@ class ReportManagment extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
         if($core){
             $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
             $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
@@ -237,13 +301,34 @@ class ReportManagment extends ParentController
                 'cvr_id' => $request->cvr_id
             ]);
     
-            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+
+
+
+            $cvr_id = array('id' => $request->cvr_id);
+            $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+            $final_url = URL::to('/').$url;
+            $file_name = "cvr".time().".pdf";
+            file_put_contents($file_name, fopen($final_url, 'r'));
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
                     $message = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated"]));
+                    //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
+            $path = public_path()."/". $file_name;
+            if(file_exists($path)) {
+                unlink($path);
+            }
+
+
+            // if(!$get_email_addresses->isEmpty()){
+            //     foreach($get_email_addresses as $email){
+            //         $message = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
+            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated"]));
+            //     }
+            // }
             echo json_encode('success');
             
         }catch(\Illuminate\Database\QueryException $ex){ 
@@ -323,8 +408,12 @@ class ReportManagment extends ParentController
         $message = 'CVR Attachment';
         Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
 
-        if(is_file(public_path($file_name))){
-            File::delete($file_name);
+        // if(is_file(public_path($file_name))){
+        //     File::delete($file_name);
+        // }
+        $path = public_path()."/". $file_name;
+        if(file_exists($path)) {
+            unlink($path);
         }
         
         return redirect('cvr_preview/'.$id);
@@ -361,6 +450,32 @@ class ReportManagment extends ParentController
         // }
     }
 
+
+
+
+    //Save CVR Approval
+    public function save_cvr_approval(Request $request){
+
+        
+        $insert = DB::table('cvr_approval')->insert([
+            'cvr_id' => $request->id,
+            'approval' => $request->approval,
+            'remarks' => $request->remarks,
+            'approval_by' => Auth::user()->id,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        if($insert){
+            if($request->approval == '1'){
+                DB::table('cvr_core')->where('id', $request->id)->update(['is_approved' => 1]);
+            }else{
+                DB::table('cvr_core')->where('id', $request->id)->update(['is_approved' => 2]);
+            }
+            
+            echo json_encode('success');
+        }else{
+            echo json_encode('failed');
+        }
+    }
 
 
 }

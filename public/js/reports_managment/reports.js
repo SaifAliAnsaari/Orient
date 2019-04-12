@@ -17,7 +17,9 @@ $(document).ready(function () {
     if (action == 'new_cvr') {
         fetchCustomersforCVR();
     }else if(action == 'cvr_list'){
-        fetchCvrList();
+        var type = "1";
+        $('.select_cvr_type').val('1').trigger('change');
+        fetchCvrList(type);
     }else if(action == 'edit_cvr'){
         fetchCustomersforCVR();
         setTimeout(() => {
@@ -462,7 +464,7 @@ $(document).ready(function () {
                     $('.competition_list_div').append('<div class="col-md-6"><div class="alert fade show alert-color _add-secon w-100 mr-0" role="alert"><div class="row"><div class="col-md-6"><strong>Name: &nbsp;</strong>' + element.name + '</div><div class="col-md-6"><strong>Strength: &nbsp;</strong>' + element.strength + '</div><button id="' + element.name + '-' + element.strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>');
                 });
             }
-            console.log(add_competition_list);
+            //console.log(add_competition_list);
     });
 
     $(document).on('click', '.delete_one_competitor', function () {
@@ -686,7 +688,7 @@ $(document).ready(function () {
                     //$('#cvr_customers_list').val('0').trigger('change');
                     //$('#location').val('');
                     $('#time_spent').val('');
-                    $("textarea[name='des_cvr']").text('');
+                    $("textarea[name='des_cvr']").val('');
                    // $('.cvr_poc_list').val('0').trigger('change');
                     $('.purpose_checkboxes').prop('checked', false);
                     $('.checkboxes_products').prop('checked', false);
@@ -789,6 +791,71 @@ $(document).ready(function () {
 
 
 
+
+    //Save Approval
+    $(document).on('click', '.save_approval', function(){
+        if($('textarea[name=remarks]').val() == ''){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Enter Remarks!');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        var approval = $("input[name='approval_radio']:checked").val();
+        var id = $(this).attr('id');
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $('.cancel_modal').attr('disabled', 'disabled');
+
+        $.ajax({
+            type: 'POST',
+            url: '/save_cvr_approval',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                id: id,
+                approval: approval,
+                remarks: $('textarea[name=remarks]').val()
+            },
+            success: function (response) {
+                var response = JSON.parse(response);
+                thisRef.text('Save');
+                thisRef.removeAttr('disabled');
+                $('.cancel_modal').removeAttr('disabled');
+                if (response == 'failed') {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add Approval at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else {
+                    location.reload();
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Added Successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                   
+                }
+            }
+        });
+    });
+
+
+
+
+    //Select CVR Type
+    $(document).on('change', '.select_cvr_type', function(){
+        $('.body').empty();
+        $('#tblLoader').show();
+        fetchCvrList($('.select_cvr_type').val());
+    });
+
 });
 
 function fetchCustomersforCVR() {
@@ -822,22 +889,23 @@ function fetchCustomersforCVR() {
     });
 }
 
-function fetchCvrList(){
+function fetchCvrList(type){
     $.ajax({
         type: 'GET',
         url: '/GetCVRList',
         data: {
-            _token: '{!! csrf_token() !!}'
+            _token: '{!! csrf_token() !!}',
+            type: type
         },
         success: function(response) {
-           //console.log(response);
+            //console.log(response); return;
             $('.body').empty();
             $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Sales Engineer</th><th>Customer</th><th>Date Of Report</th><th>Date Of Visit</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
-            response.forEach(element => {
+            response.info.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td><a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': "") +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

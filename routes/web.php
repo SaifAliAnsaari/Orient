@@ -56,6 +56,7 @@ Route::post('/update_cvr', 'ReportManagment@update_cvr');
 Route::post('/save_pref_against_emp', 'NotificationCenter@save_pref_against_emp');
 Route::post('/read_notif_four', 'NotificationCenter@read_notif_four');
 Route::post('/saveAccessRights', 'AccessRights@saveAccessRights');
+Route::post('/save_cvr_approval', 'ReportManagment@save_cvr_approval');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');

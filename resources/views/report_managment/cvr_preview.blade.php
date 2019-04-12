@@ -1,6 +1,54 @@
 @extends('layouts.master')
 @section('data-sidebar')
 
+{{-- Modal --}}
+<div class="modal fade competition-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content top_border">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Approve <span> CVR</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row form-wrap p-0 PT-10">
+                    <div class="col-3">
+                        <div class="custom-control custom-radio">
+                            <input checked class="custom-control-input" type="radio" name="approval_radio" id="txt-rateY"
+                                value='1'>
+                            <label class="custom-control-label" for="txt-rateY">Approve</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" name="approval_radio" id="txt-ratN" value='2'>
+                            <label class="custom-control-label" for="txt-ratN">Disapprove</label>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <label class="PT-20 font12">Remarks</label>
+                        <textarea name="remarks" rows="5"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="submit" class="btn btn-cancel cancel_modal" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="button" class="btn btn-primary save_approval" id="{{$id}}">Save</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
 <div class="row mt-2 mb-3">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <h2 class="_head01">CUSTOMER <span>VISIT REPORT</span></h2>
@@ -194,17 +242,40 @@
 
                 </div>
             </div>
+           
 
-            <div align="center">
-                <a href="/download_pdf/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10">Save PDF</button></a>
-                <a href="/send_mail/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10 ">Send Email</button></a>
-                <button type="submit" class="btn btn-primary mr-2 mb-10 print_page">Print</button>
-                <button type="submit" class="btn btn-cancel mb-10">Cancel</button>
-            </div>
+            <table class="report-preview" border="0" align="center" cellpadding="3" cellspacing="3">
+                <tbody>
+                    <tr>
+                        <td align="left">
+                            @if($core->is_approved != 1)
+                                @if(Auth::user()->designation == '1' || Auth::user()->designation == '2')
+                                    <button type="button" class="btn btn-primary mb-10" data-toggle="modal"
+                                        data-target=".competition-lg">Approve CVR</button>
+                                @endif
+                            @endif
+                            <button type="submit" class="btn btn-cancel mb-10" style="margin-left:5px;">Cancel</button>
+                        </td>
+                        <td align="right">
+                            <a href="/download_pdf/{{$id}}"><button type="button" class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button></a>
+                            <a href="/send_mail/{{$id}}"><button type="button" class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a> 
+                            <button type="button" class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button></td>
+                    </tr>
 
-        </div>
-
+                </tbody>
+            </table>
+            {{-- <div align="center">
+                <a href="/download_pdf/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10">Save
+                PDF</button></a>
+            <a href="/send_mail/{{$id}}"><button type="submit" class="btn btn-primary mr-2 mb-10 ">Send
+                    Email</button></a>
+            <button type="submit" class="btn btn-primary mr-2 mb-10 print_page">Print</button>
+            <button type="submit" class="btn btn-cancel mb-10">Cancel</button>
+        </div> --}}
 
     </div>
 
-    @endsection
+
+</div>
+
+@endsection

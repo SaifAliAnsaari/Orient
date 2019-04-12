@@ -19,6 +19,13 @@
         <div class="card">
             <div class="header">
                 <h2>CVR <span> List</span></h2>
+                <select class="custom-select custom-select-sm select_cvr_type" style="float:right; width:150px;">
+                        <option selected disabled>Please Select CVR Type</option>
+                        <option value="1" selected>All CVRs</option>
+                        <option value="2">Approved</option>
+                        <option value="3">Disapproved</option>
+                        <option value="4">Pending</option>
+                    </select>
             </div>
             <div style="min-height: 400px" id="tblLoader">
                 <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">

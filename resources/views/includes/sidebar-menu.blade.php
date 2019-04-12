@@ -47,7 +47,7 @@
             </div>
         </li>
     @endif
-    @if(in_array("/new_cvr", $test_array))
+    @if(in_array("/new_cvr", $test_array) || in_array("/cvr_list", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">

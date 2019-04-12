@@ -31,8 +31,8 @@ class PDF extends FPDF
 
 
 $servername = "localhost";
-$username = "junaid";
-$password = "Snakebite76253";
+$username = "root";
+$password = "";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, 'orient');

@@ -2156,6 +2156,68 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .ADD_Select{position: relative; margin-top: 5px; margin-bottom: 10px}
 .select2-container {width: 100%!important}
 
+.L_btn-line {
+	background-color: #fff;
+	color: #003176;
+	border: solid 1px #003176;
+	font-size: 12px;
+    padding: 5px 16px;
+    letter-spacing: 0.5px;
+}
+.L_btn-line:HOVER, .L_btn-line:focus {
+	color: #fff;
+	background-color: #003176;
+}
+.box-sec {
+	background-color: #fff;
+	border-top: 3px solid #fff;
+	padding: 20px;
+	border-radius: 0px;
+	min-height: 245px;
+	text-align: center;
+	margin-bottom: 30px;
+    -webkit-box-shadow: 2px 2px 10px 0 rgba(79,79,79,.2);
+    -moz-box-shadow: 2px 2px 10px 0 rgba(79,79,79,.2);
+    box-shadow: 2px 2px 10px 0 rgba(79,79,79,.2);
+	display: block;
+	font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+	color: #898f95;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.box-sec:HOVER {
+	border-top: 3px solid #f68606;
+    color: #003176;
+	text-decoration: none;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+    -webkit-box-shadow: 2px 2px 20px 0 rgba(79,79,79,.3);
+    -moz-box-shadow: 2px 2px 20px 0 rgba(79,79,79,.3);
+    box-shadow: 2px 2px 20px 0 rgba(79,79,79,.3); margin-top: -10px
+}
+.box-sec strong{font-weight: 600}
+.box-sec span {
+	clear: both;
+	font-size: 80px;
+	color: #003176;
+	margin:20px;
+	display: block;
+	margin-top:10px
+}
+.align-center {
+	text-align: center
+}
+.box-sec .img-svg img {
+    width: 70px;
+    height: auto;
+}
+
+
+
+
+
+
 
 
 
