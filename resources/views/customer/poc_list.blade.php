@@ -31,7 +31,8 @@
                                                         <input type="text" style="font-size: 13px" name="poc_name" class="form-control required" placeholder="">
                                                     </div>
                                                 </div> 
-                                                <div class="col-md-6 form-s2">
+                                                <div class="col-md-6 form-s2 pt-19">
+                                                    
                                                         <div>
                                                             <select class="form-control formselect" name="company_name" placeholder="Select Customer Type">
                                                                 <option value="0" selected disabled>Select Company Name*</option>

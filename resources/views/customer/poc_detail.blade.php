@@ -33,7 +33,7 @@
                                 <input type="text" id="" style="font-size: 13px" class="form-control required" value="{{ $poc->poc_name }}" name="poc_name" placeholder="Name" style="font-size:13px">
                             </div>
                         </div>
-                        <div class="col-md-6 form-s2">
+                        <div class="col-md-6 form-s2" style="padding-top:30px;">
                                 <div>
                                     <select class="form-control formselect" name="company_name" placeholder="Select Customer Type">
                                         <option value="0" selected disabled>Select Company Name*</option>

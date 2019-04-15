@@ -838,7 +838,8 @@ table.dataTable {
 	-khtml-border-radius: 0;
 	font-size: 13px;
 	color: #282828;
-	background-color: #f5f5f5;/*max-width: 330px;*/
+	background-color: #f5f5f5;
+	width: 100%;
 }
 .auth-form a.txt-danger:hover {
 	color: #f12300

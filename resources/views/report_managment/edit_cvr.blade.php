@@ -123,15 +123,15 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="control-label mb-10">Web Page Address*</label>
+                                                        <label class="control-label mb-10">Web Page Address</label>
                                                         <input type="text" name="web_address" style="font-size: 13px"
-                                                            class="form-control required" placeholder="">
+                                                            class="form-control " placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label class="PT-10 font12">Remarks*</label>
+                                                    <label class="PT-10 font12">Remarks</label>
                                                     <div class="form-group mb-0">
-                                                        <textarea name="description" class="required" rows="8" style="font-size: 13px"
+                                                        <textarea name="description" class="" rows="8" style="font-size: 13px"
                                                             id="description" style="font-size:13px"></textarea>
                                                     </div>
                                                 </div>

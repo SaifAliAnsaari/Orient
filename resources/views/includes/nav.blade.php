@@ -5,9 +5,7 @@
         <li class="nav-item TM_icon">
             <a class="nav-link" href="#"><img src="/images/q-link-icon.svg" alt="" /></a>
         </li>
-        <li class="nav-item TM_icon">
-            <a class="nav-link" href="#"><img src="/images/settings-icon.svg" alt="" /></a>
-        </li>
+       
 
 
         @csrf
@@ -55,7 +53,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{ URL::to(Auth::user()->picture) }}" class="user_log" alt="" />
-                <span>{{ Auth::user()->name }}</span>
+                <span class="uname">{{ Auth::user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <span class="dropdown-item usernamelab">{{ Auth::user()->name }}</span>

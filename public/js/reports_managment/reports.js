@@ -841,7 +841,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    location.reload();
+                    window.location.replace("/cvr_list");
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Added Successfully');
