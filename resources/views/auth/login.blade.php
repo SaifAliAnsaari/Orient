@@ -33,7 +33,7 @@
                                             @csrf
                                             <div class="form-group">
                                                 <div class="user"> <span class="fa fa-user-alt"></span>
-                                                    <input style="font-size: 13px" id="username" type="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Username" required autofocus>
+                                                    <input style="font-size: 13px; " id="username" type="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Username" required autofocus>
                                                     @if ($errors->has('username'))
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $errors->first('username') }}</strong>
@@ -44,7 +44,7 @@
                                             <div class="form-group">
                                                 <div class="clearfix"></div>
                                                 <div class="pass"> <span class="fa fa-unlock"></span>
-                                                    <input style="font-size: 13px" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="password" required>
+                                                    <input id="password" type="password" class="form-group" name="password" placeholder="password" style="font-size: 13px" required>
 
                                                     @if ($errors->has('password'))
                                                         <span class="invalid-feedback" role="alert">

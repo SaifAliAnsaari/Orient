@@ -6,11 +6,11 @@
 <div id="product-cl-sec">
     <a href="" id="pl-close" class="close-btn-pl close_customer_form"></a>
     <div class="pro-header-text">New <span>Category</span></div>
-    <div style="min-height: 400px" id="dataSidebarLoader" style="display: none">
+    <div style="min-height: 400px; display: none" id="dataSidebarLoader">
         <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">
     </div>
     <div class="pc-cartlist">
-        <form style="display: flex;" id="saveSubCategotyForm" style="width:100%">
+        <form style="display: flex; width:100%;" id="saveSubCategotyForm">
             {!! Form::hidden('tokenForAjaxReq', csrf_token()) !!}
             @csrf
             <input type="text" name="hidden_sub_cat_id" hidden/>

@@ -16,6 +16,7 @@ $(document).ready(function() {
     var lastOp = "add";
 
     $(document).on('click', '.openDataSidebarForAddingEmployee', function() {
+        //$('#dataSidebarLoader').hide();
         if (lastOp == "update") {
 
             $('input[name="name"]').val("");

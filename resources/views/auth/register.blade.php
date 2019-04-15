@@ -3,7 +3,7 @@
 <div id="product-cl-sec">
     <a href="#" id="pl-close" class="close-btn-pl"></a>
     <div class="pro-header-text">New <span>Employee</span></div>
-    <div style="min-height: 400px" id="dataSidebarLoader" style="display: none">
+    <div style="min-height: 400px; display: none;" id="dataSidebarLoader" >
         <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">
     </div>
     <div class="pc-cartlist">
