@@ -24,13 +24,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Full Name*</label>
-                                                        <input type="text" name="name" class="form-control required" placeholder="">
+                                                        <input type="text" name="name" style="font-size: 13px" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Phone No</label>
-                                                        <input type="number" name="phone" class="form-control" placeholder="">
+                                                        <input type="number" name="phone" style="font-size: 13px" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -38,13 +38,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email ID*</label>
-                                                        <input type="email" name="email" class="form-control required" placeholder="">
+                                                        <input type="email" name="email" style="font-size: 13px" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">CNIC No</label>
-                                                        <input type="number" name="cnic" maxlength="13" class="form-control" placeholder="">
+                                                        <input type="number" name="cnic" style="font-size: 13px" maxlength="13" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,13 +52,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city"  class="form-control required" placeholder="">
+                                                        <input type="text" name="city" style="font-size: 13px" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="control-label mb-10">State</label>
-                                                        <input type="text" name="state"  class="form-control" placeholder="">
+                                                        <label class="control-label mb-10">Province</label>
+                                                        <input type="text" name="state" style="font-size: 13px" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address</label>
-                                                        <input type="text" name="address" class="form-control" placeholder="">
+                                                        <input type="text" name="address" style="font-size: 13px" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,11 +85,11 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Username*</label>
-                                                        <input type="text" name="username" class="form-control required" placeholder="">
+                                                        <input type="text" name="username" style="font-size: 13px"  class="form-control required" placeholder="">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Password*</label>
-                                                        <input type="password" name="password" class="form-control" placeholder="">
+                                                        <input type="password" name="password" style="font-size: 13px" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -105,13 +105,13 @@
                                                     <div class="col-md-6">
                                                         <label class="font12">Hiring Date*</label>
                                                         <div class="form-group" style="height: auto!important">
-                                                            <input type="text" name="hiring" id="datepicker" class="form-control required" placeholder="">
+                                                            <input type="text" name="hiring" style="font-size: 13px" id="datepicker" class="form-control required" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="control-label mb-10">Salary</label>
-                                                            <input type="number" name="salary" class="form-control" placeholder="">
+                                                            <input type="number" name="salary" style="font-size: 13px" class="form-control" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">

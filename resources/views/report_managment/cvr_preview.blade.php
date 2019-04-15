@@ -186,7 +186,7 @@
                                                 </td>
                                                 <td width="33%">
                                                     <h3 class="_head03">Annual Business Value</h3>
-                                                    <i class="fa fa-check"></i> {{ $core->bussiness_value }}
+                                                    <i class="fa fa-check"></i> {{ ($core->bussiness_value == '2500K+' ? '> 2500K' : $core->bussiness_value) }}
                                                 </td>
                                                 <td width="33%">
                                                     <h3 class="_head03">Relationship With Customer</h3>

@@ -138,7 +138,7 @@ class Customer extends ParentController
                     Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
                 }
             }
-            echo json_encode('success');
+            echo json_encode($customer->id);
         }else{
             echo json_encode("failed");
         }
@@ -245,7 +245,12 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        if(DB::table('customers')->where('id', $customerId)->first()){
+            return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        }else{
+            return redirect('/');
+        }
+        
     }
 
     public function updateClientFromProfile(Request $request){
@@ -374,8 +379,13 @@ class Customer extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        $customers = DB::table('customers')->get();
-        return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        if(DB::table('poc')->where('id', $id)->first()){
+            $customers = DB::table('customers')->get();
+            return view('customer.poc_detail', ['poc' => DB::table('poc')->where('id', $id)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        }else{
+            return redirect('/');
+        }
+       
     }
 
     //Update POC from Detail Page

@@ -21,7 +21,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Company Name*</label>
-                                                        <input type="text" name="compName"
+                                                        <input type="text" name="compName" style="font-size: 13px"
                                                             class="form-control required">
                                                     </div>
                                                 </div>
@@ -72,14 +72,14 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">POC*</label>
-                                                        <input type="text" name="poc" class="form-control required"
+                                                        <input type="text" name="poc" style="font-size: 13px" class="form-control required"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Job Title*</label>
-                                                        <input type="text" name="jobTitle" class="form-control required"
+                                                        <input type="text" name="jobTitle" style="font-size: 13px" class="form-control required"
                                                             placeholder="">
                                                     </div>
                                                 </div>
@@ -87,35 +87,35 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Bussiness Phone*</label>
-                                                        <input type="number" name="bussinessPH"
+                                                        <input type="number" name="bussinessPH" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email Address*</label>
-                                                        <input type="email" name="email" class="form-control required"
+                                                        <input type="email" name="email"  style="font-size: 13px" class="form-control required"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
-                                                        <input type="text" name="address" class="form-control required"
+                                                        <input type="text" name="address" style="font-size: 13px" class="form-control required"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" maxlength="13" value="Karachi"
+                                                        <input type="text" name="city" style="font-size: 13px" maxlength="13" value="Karachi"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="control-label mb-10">State*</label>
-                                                        <input type="text" name="state" class="form-control required"
+                                                        <label class="control-label mb-10">Province*</label>
+                                                        <input type="text" name="state" style="font-size: 13px" class="form-control required"
                                                             value="Sindh" placeholder="">
                                                     </div>
                                                 </div>
@@ -123,20 +123,20 @@
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Country*</label>
                                                         <input type="text" name="country" value="Pakistan"
-                                                            class="form-control required" placeholder="">
+                                                            class="form-control required" style="font-size: 13px" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Web Page Address*</label>
-                                                        <input type="text" name="web_address"
+                                                        <input type="text" name="web_address" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label class="PT-10 font12">Remarks*</label>
                                                     <div class="form-group mb-0">
-                                                        <textarea name="description" class="required" rows="8"
+                                                        <textarea name="description" style="font-size: 13px" class="required" rows="8"
                                                             id="description" style="font-size:13px"></textarea>
                                                     </div>
                                                 </div>
@@ -179,7 +179,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">POC Name*</label>
-                                        <input type="text" id="poc_name_modal" class="form-control required_modal"
+                                        <input type="text" id="poc_name_modal" style="font-size: 13px" class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -187,21 +187,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Job Title*</label>
-                                        <input type="text" id="jobTitle_modal" class="form-control required_modal"
+                                        <input type="text" id="jobTitle_modal" style="font-size: 13px"  class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Business Phone*</label>
-                                        <input type="number" id="businessPH_modal" class="form-control required_modal"
+                                        <input type="number" style="font-size: 13px" id="businessPH_modal" class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Email ID*</label>
-                                        <input type="email" id="email_modal" class="form-control required_modal"
+                                        <input type="email" style="font-size: 13px" id="email_modal" class="form-control required_modal"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -245,7 +245,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Competition Name</label>
-                                        <input type="text" id="competition_name"
+                                        <input type="text" id="competition_name" style="font-size: 13px"
                                             class="form-control required_competition" style="font-size:13px">
                                     </div>
                                 </div>
@@ -320,7 +320,7 @@
 
                             <div class="form-wrap _w90 p-0">
                                 <div class="row">
-                                    <div class="col-md-6 top-date"><strong>Date Of Report: </strong>{{ date('M d Y') }}
+                                    <div class="col-md-6 top-date"><strong>Date Of Report: </strong>{{ date('Y-m-d') }}
                                     </div>
                                     <div class="col-md-6 top-date rep-name"><strong>Report Prepared By: </strong>{{
                                         Auth::user()->name }}</div>
@@ -337,7 +337,7 @@
                                         <div class="col-md-4">
                                             <label class="font12">Date of Visit</label>
                                             <div class="position-relative">
-                                                <input type="text" name="datepicker" id="datepicker"
+                                                <input type="text" name="datepicker" id="datepicker" style="font-size: 13px"
                                                     class="form-control required_core" placeholder=""
                                                     value="Select Date" style="font-size:13px">
                                             </div>
@@ -369,7 +369,7 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Location</label>
-                                                <input type="text" id="location" name="location"
+                                                <input type="text" id="location" name="location" style="font-size: 13px"
                                                     class="form-control required_core" style="font-size:13px">
                                             </div>
                                         </div>
@@ -377,7 +377,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Time Spent</label>
-                                                <input type="text" id="time_spent" name="time_spent"
+                                                <input type="text" id="time_spent" name="time_spent" style="font-size: 13px"
                                                     class="form-control required_core" style="font-size:13px">
                                             </div>
                                         </div>
@@ -609,7 +609,7 @@
                                                     <div class="col-md-3">
                                                         <div class="custom-control custom-radio">
                                                             <input class="custom-control-input" type="radio"
-                                                                name="AnnualBusiness" id="Rb-004" value='> 2500K'
+                                                                name="AnnualBusiness" id="Rb-004" value='2500K+'
                                                                 data-id="Rb-004" style="font-size:13px">
                                                             <label class="custom-control-label" for="Rb-004">>
                                                                 2500K</label>
@@ -725,7 +725,7 @@
                                             </div>
 
                                             <div class="col-md-12 mb-15">
-                                                <textarea id="des_cvr" class="required_core" name="des_cvr" rows="6"
+                                                <textarea id="des_cvr" class="required_core" style="font-size: 13px" name="des_cvr" rows="6"
                                                     style="font-size:13px"></textarea>
                                             </div>
 

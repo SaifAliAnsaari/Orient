@@ -27,7 +27,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Full Name*</label>
-                                    <input type="text" value="{{ old('name') }}" name="name" class="form-control" required autofocus>
+                                    <input type="text" value="{{ old('name') }}" style="font-size: 13px" name="name" class="form-control" required autofocus>
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -38,7 +38,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Phone No</label>
-                                    <input type="text" value="{{ old('phone') }}" name="phone" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('phone') }}" style="font-size: 13px" name="phone" class="form-control" placeholder="">
                                     @if ($errors->has('phone'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
                                             <strong>{{ $errors->first('phone') }}</strong>
@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Email ID*</label>
-                                    <input type="email" value="{{ old('email') }}" name="email" class="form-control" required autofocus>
+                                    <input type="email" value="{{ old('email') }}" style="font-size: 13px" name="email" class="form-control" required autofocus>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -63,7 +63,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">CNIC No</label>
-                                    <input type="text" value="{{ old('cnic') }}" name="cnic" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('cnic') }}" style="font-size: 13px" name="cnic" class="form-control" placeholder="">
 
                                     @if ($errors->has('cnic'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -77,7 +77,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">City</label>
-                                    <input type="text" value="{{ old('city') }}" name="city" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('city') }}" style="font-size: 13px" name="city" class="form-control" placeholder="">
 
                                     @if ($errors->has('city'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -89,7 +89,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">State</label>
-                                    <input type="text" value="{{ old('state') }}" name="state" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('state') }}" style="font-size: 13px" name="state" class="form-control" placeholder="">
 
                                     @if ($errors->has('state'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -103,7 +103,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Country</label>
-                                    <input type="text" value="{{ old('country') }}" name="country" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('country') }}" style="font-size: 13px" name="country" class="form-control" placeholder="">
 
                                     @if ($errors->has('country'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -115,7 +115,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Address</label>
-                                    <input type="text" value="{{ old('address') }}" name="address" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('address') }}" style="font-size: 13px" name="address" class="form-control" placeholder="">
 
                                     @if ($errors->has('address'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -146,7 +146,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Hiring Date</label>
-                                    <input type="text" id="datepicker" name="hiring" class="form-control" placeholder="">
+                                    <input type="text" id="datepicker" style="font-size: 13px" name="hiring" class="form-control" placeholder="">
 
                                     @if ($errors->has('hiring'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -158,7 +158,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Salary</label>
-                                    <input type="text" value="{{ old('salary') }}" name="salary" class="form-control" placeholder="">
+                                    <input type="text" value="{{ old('salary') }}" style="font-size: 13px" name="salary" class="form-control" placeholder="">
 
                                     @if ($errors->has('salary'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -377,7 +377,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Username*</label>
-                                    <input type="text" value="{{ old('username') }}" name="username" class="form-control" required autofocus>
+                                    <input type="text" value="{{ old('username') }}" style="font-size: 13px" name="username" class="form-control" required autofocus>
 
                                     @if ($errors->has('username'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -389,7 +389,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Password* <br> <small>(Minimum 6 alphanumeric characters)</small></label>
-                                    <input type="password" value="{{ old('password') }}" name="password" class="form-control" required autofocus>
+                                    <input type="password" value="{{ old('password') }}" style="font-size: 13px" name="password" class="form-control" required autofocus>
 
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" style="display: block" role="alert">
@@ -401,7 +401,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Confirm Password*</label>
-                                    <input type="password" id="password-confirm" value="{{ old('password') }}" name="password_confirmation" class="form-control" required autofocus>
+                                    <input type="password" id="password-confirm" style="font-size: 13px" value="{{ old('password') }}" name="password_confirmation" class="form-control" required autofocus>
                                 </div>
                             </div>
                         </div>

@@ -28,7 +28,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Category Name*</label>
-                                                        <input type="text" name="product_cat_name" class="form-control required">
+                                                        <input type="text" style="font-size: 13px" name="product_cat_name" class="form-control required">
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12">

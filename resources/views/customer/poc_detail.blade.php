@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label mb-10">POC Name</label>
-                                <input type="text" id="" class="form-control required" value="{{ $poc->poc_name }}" name="poc_name" placeholder="Name" style="font-size:13px">
+                                <input type="text" id="" style="font-size: 13px" class="form-control required" value="{{ $poc->poc_name }}" name="poc_name" placeholder="Name" style="font-size:13px">
                             </div>
                         </div>
                         <div class="col-md-6 form-s2">
@@ -57,20 +57,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label mb-10">Job Title</label>
-                                <input type="text" id="" class="form-control required" value="{{ $poc->job_title }}" name="job_title" placeholder="Job Title" style="font-size:13px">
+                                <input type="text" id="" style="font-size: 13px" class="form-control required" value="{{ $poc->job_title }}" name="job_title" placeholder="Job Title" style="font-size:13px">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label mb-10">Business Phone</label>
-                                <input type="text" id="" class="form-control required" value="{{ $poc->bussiness_ph }}" name="bussiness_ph" placeholder="000000" style="font-size:13px">
+                                <input type="text" id="" style="font-size: 13px" class="form-control required" value="{{ $poc->bussiness_ph }}" name="bussiness_ph" placeholder="000000" style="font-size:13px">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label mb-10">Email ID</label>
-                                <input type="email" id="" class="form-control required" value="{{ $poc->email }}" name="email" placeholder="" style="font-size:13px">
+                                <input type="email" id="" style="font-size: 13px" class="form-control required" value="{{ $poc->email }}" name="email" placeholder="" style="font-size:13px">
                             </div>
                         </div>
                         {{-- <div class="col-md-6">

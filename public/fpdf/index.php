@@ -31,8 +31,8 @@ class PDF extends FPDF
 
 
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "junaid";
+$password = "Snakebite76253";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, 'orient');
@@ -279,7 +279,7 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 $pdf->SetY($height_opportunity + 6);
 $pdf->SetFont('Arial','',10);
 $pdf->Cell(70,10,($core['opportunity'] != null ? $core['opportunity'] : "--"),0,0);
-$pdf->Cell(70,10,($core['bussiness_value'] != null ? $core['bussiness_value'] : "--"),0,0);
+$pdf->Cell(70,10,($core['bussiness_value'] == null ? "--" : ($core['bussiness_value'] == '2500K+' ? '> 2500K' : $core['bussiness_value'])),0,0);
 $pdf->Cell(70,10,($core['relationship'] != null ? $core['relationship'] : "--"),0,0);
 
 

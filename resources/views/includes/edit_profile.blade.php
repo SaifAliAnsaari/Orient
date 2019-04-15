@@ -155,14 +155,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Current Password*</label>
-                                    <input type="password" name="current_password" id="current_password" class="form-control" placeholder=""  value=""> 
+                                    <input style="font-size: 13px" type="password" name="current_password" id="current_password" class="form-control" placeholder=""  value=""> 
                                 </div>
                             </div>
                                 <div class="col-md-12"><hr></div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">New Password*</label>
-                                    <input type="password" class="form-control" id="new_password" placeholder=""  value=""> 
+                                    <input style="font-size: 13px" type="password" class="form-control" id="new_password" placeholder=""  value=""> 
                                 </div>
                             </div>
                             <div class="col-md-6 _ch-pass-p">
@@ -172,7 +172,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label mb-10">Confirm Password*</label>
-                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder=""  value=""> 
+                                    <input style="font-size: 13px" type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder=""  value=""> 
                                 </div>
                             </div>	
                             <div class="col-md-12 PT-10">

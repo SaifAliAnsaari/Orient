@@ -297,7 +297,7 @@ $(document).ready(function() {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                     
-                } else if(JSON.parse(response) == "success"){
+                } else {
                     fetchCompaniesList();
                     $('#saveCustomer').removeAttr('disabled');
                     $('#cancelCustomer').removeAttr('disabled');

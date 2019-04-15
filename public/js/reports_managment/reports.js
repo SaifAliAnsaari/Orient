@@ -14,14 +14,17 @@ $(document).ready(function () {
         format: 'yyyy-mm-dd'
     });
 
+    
+
+
     if (action == 'new_cvr') {
-        fetchCustomersforCVR();
+        fetchCustomersforCVR('0');
     }else if(action == 'cvr_list'){
         var type = "1";
         $('.select_cvr_type').val('1').trigger('change');
         fetchCvrList(type);
     }else if(action == 'edit_cvr'){
-        fetchCustomersforCVR();
+        fetchCustomersforCVR('0');
         setTimeout(() => {
             fetchCurrentCvrData();
         }, 500); 
@@ -147,8 +150,9 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
 
-                } else if (JSON.parse(response) == "success") {
-                    fetchCustomersforCVR();
+                } else {
+                    var cust_id = JSON.parse(response);
+                    fetchCustomersforCVR(cust_id);
                     $('.saveCustomer_CVR').removeAttr('disabled');
                     $('#cancelCustomer').removeAttr('disabled');
                     $('.saveCustomer_CVR').text('Save');
@@ -170,6 +174,10 @@ $(document).ready(function () {
                     $('[name="state"]').val('');
                     $('[name="country"]').val('');
                     $('[name="web_address"]').val('');
+                    $('#pl-close').click();
+                    // setTimeout(() => {
+                    //     $('cvr_customers_list').val(cust_id).trigger('change');
+                    // }, 1000);
                 }
 
             },
@@ -858,7 +866,7 @@ $(document).ready(function () {
 
 });
 
-function fetchCustomersforCVR() {
+function fetchCustomersforCVR(cust_id) {
     $('#cvr_customers_list').find('option').remove();
     $('#cvr_customers_list').append('<option selected disabled value="0">Processing...</option>');
 
@@ -877,9 +885,13 @@ function fetchCustomersforCVR() {
             $('#cvr_customers_list').find('option').remove();
             $('#cvr_customers_list').append('<option selected disabled value="0">Select Customer</option>');
             response.customers.forEach(element => {
-                $('#cvr_customers_list').append('<option value="' + element.id + '">' + element.company_name + '</option>');
+                $('#cvr_customers_list').append('<option value="' + element.id + '" '+ (element.id == cust_id ? "selected" : '') +'>' + element.company_name + '</option>');
             });
 
+            
+            setTimeout(() => {
+                $('#cvr_customers_list').val(cust_id+"").trigger('change');
+            }, 500);
             // $('.cvr_poc_list').find('option').remove();
             // $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
             // response.poc.forEach(element => {

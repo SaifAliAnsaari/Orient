@@ -25,7 +25,7 @@
                 <h4 class="notiF-title">Notification </h4>
                     @if(!empty($notif_data))
                         @foreach($notif_data as $notifications)
-                        <a href="#"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
+                        <a href="{{ $notifications->cvr_id ? '/cvr_preview'.'/'.$notifications->cvr_id : '/CustomerProfile'.'/'.$notifications->customer_id }}"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
                             <?php 
                                     $datetime1 = new DateTime(date('Y-m-d H:i:s'));//start time
                                     $datetime2 = new DateTime($notifications->created_at);//end time
@@ -37,7 +37,7 @@
                     @endif
                     @if(!empty($approval_notif))
                         @foreach($approval_notif as $notifications)
-                        <a href="#"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{'CVR ('.$notifications->cvr_id.') has been '. ($notifications->approval == 1 ? "approved" : "disapproved") }} </strong><p>
+                        <a href='/cvr_preview/{{$notifications->cvr_id}}'><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{'CVR ('.$notifications->cvr_id.') has been '. ($notifications->approval == 1 ? "approved" : "disapproved") }} </strong><p>
                             <?php 
                                 $datetime1 = new DateTime(date('Y-m-d H:i:s'));//start time
                                 $datetime2 = new DateTime($notifications->created_at);//end time

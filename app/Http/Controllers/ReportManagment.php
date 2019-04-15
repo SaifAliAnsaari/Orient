@@ -72,7 +72,7 @@ class ReportManagment extends ParentController
     public function save_cvr(Request $request){
         if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
             $insert_core = DB::table('cvr_core')->insertGetId([
-                'report_created_at' => date('M d Y'),
+                'report_created_at' => date('Y-m-d'),
                 'report_created_by' =>  Auth::user()->id,
                 'date_of_visit' => $request->date,
                 'customer_visited' => $request->customer_id,
@@ -87,7 +87,7 @@ class ReportManagment extends ParentController
                 ]);
         }else{
             $insert_core = DB::table('cvr_core')->insertGetId([
-                'report_created_at' => date('M d Y'),
+                'report_created_at' => date('Y-m-d'),
                 'report_created_by' =>  Auth::user()->id,
                 'date_of_visit' => $request->date,
                 'customer_visited' => $request->customer_id,

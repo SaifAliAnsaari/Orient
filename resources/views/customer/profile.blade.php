@@ -4,7 +4,7 @@
 <div style="min-height: 400px" id="tblLoader">
     <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">
 </div>
-<input type="text" id="companyIdForUpdate" value="{{ $update_customer->id }}" hidden>
+<input type="text" style="font-size: 13px" id="companyIdForUpdate" value="{{ $update_customer->id }}" hidden>
 <div id="contentDiv" style="display: none">
     <div class="row mt-2 mb-3">
         <div class="col-lg-6 col-md-6 col-sm-6">

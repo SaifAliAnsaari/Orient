@@ -28,7 +28,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Company Name*</label>
-                                                        <input type="text" name="compName" class="form-control required">
+                                                        <input type="text" name="compName" style="font-size: 13px" class="form-control required">
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12">
@@ -73,56 +73,56 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">POC*</label>
-                                                        <input type="text" name="poc" class="form-control required" placeholder="">
+                                                        <input type="text" name="poc" style="font-size: 13px" class="form-control required" placeholder="">
                                                     </div>
                                                 </div> 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Job Title*</label>
-                                                        <input type="text" name="jobTitle" class="form-control required" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="jobTitle" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Bussiness Phone*</label>
-                                                        <input type="number" name="bussinessPH" class="form-control required" placeholder="">
+                                                        <input type="number" style="font-size: 13px" name="bussinessPH" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email Address*</label>
-                                                        <input type="email" name="email" class="form-control required" placeholder="">
+                                                        <input type="email" style="font-size: 13px" name="email" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
-                                                        <input type="text" name="address" class="form-control required" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="address" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" maxlength="13" value="Karachi" class="form-control required" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="city" maxlength="13" value="Karachi" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Province*</label>
-                                                        <input type="text" name="state" class="form-control required" value="Sindh" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="state" class="form-control required" value="Sindh" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Country*</label>
-                                                        <input type="text" name="country" value="Pakistan" class="form-control required" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="country" value="Pakistan" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Web Page Address*</label>
-                                                        <input type="text" name="web_address" class="form-control required" placeholder="">
+                                                        <input type="text" style="font-size: 13px" name="web_address" class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">

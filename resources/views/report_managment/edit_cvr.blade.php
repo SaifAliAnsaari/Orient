@@ -20,7 +20,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Company Name*</label>
-                                                        <input type="text" name="compName"
+                                                        <input type="text" name="compName" style="font-size: 13px"
                                                             class="form-control required">
                                                     </div>
                                                 </div>
@@ -67,14 +67,14 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">POC*</label>
-                                                        <input type="text" name="poc" class="form-control required"
+                                                        <input type="text" name="poc" class="form-control required" style="font-size: 13px"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Job Title*</label>
-                                                        <input type="text" name="jobTitle" class="form-control required"
+                                                        <input type="text" name="jobTitle" class="form-control required" style="font-size: 13px"
                                                             placeholder="">
                                                     </div>
                                                 </div>
@@ -82,56 +82,56 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Bussiness Phone*</label>
-                                                        <input type="number" name="bussinessPH"
+                                                        <input type="number" name="bussinessPH" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email Address*</label>
-                                                        <input type="email" name="email" class="form-control required"
+                                                        <input type="email" name="email" class="form-control required" style="font-size: 13px"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
-                                                        <input type="text" name="address" class="form-control required"
+                                                        <input type="text" name="address" class="form-control required" style="font-size: 13px"
                                                             placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" maxlength="13" value="Karachi"
+                                                        <input type="text" name="city" maxlength="13" value="Karachi" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">State*</label>
-                                                        <input type="text" name="state" class="form-control required"
+                                                        <input type="text" name="state" class="form-control required" style="font-size: 13px"
                                                             value="Sindh" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Country*</label>
-                                                        <input type="text" name="country" value="Pakistan"
+                                                        <input type="text" name="country" value="Pakistan" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Web Page Address*</label>
-                                                        <input type="text" name="web_address"
+                                                        <input type="text" name="web_address" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label class="PT-10 font12">Remarks*</label>
                                                     <div class="form-group mb-0">
-                                                        <textarea name="description" class="required" rows="8"
+                                                        <textarea name="description" class="required" rows="8" style="font-size: 13px"
                                                             id="description" style="font-size:13px"></textarea>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">POC Name*</label>
-                                        <input type="text" id="poc_name_modal" class="form-control required_modal"
+                                        <input type="text" id="poc_name_modal" class="form-control required_modal" style="font-size: 13px"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -182,21 +182,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Job Title*</label>
-                                        <input type="text" id="jobTitle_modal" class="form-control required_modal"
+                                        <input type="text" id="jobTitle_modal" class="form-control required_modal" style="font-size: 13px"
                                             placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Business Phone*</label>
-                                        <input type="number" id="businessPH_modal" class="form-control required_modal"
+                                        <input type="number" id="businessPH_modal" class="form-control required_modal" style="font-size: 13px"
                                             placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Email ID*</label>
-                                        <input type="email" id="email_modal" class="form-control required_modal"
+                                        <input type="email" id="email_modal" class="form-control required_modal" style="font-size: 13px"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Competition Name</label>
-                                        <input type="text" id="competition_name"
+                                        <input type="text" id="competition_name" style="font-size: 13px"
                                             class="form-control required_competition" style="font-size:13px">
                                     </div>
                                 </div>
@@ -329,7 +329,7 @@
                                         <div class="col-md-4">
                                             <label class="font12">Date of Visit</label>
                                             <div class="position-relative">
-                                                <input type="text" name="datepicker" id="datepicker"
+                                                <input type="text" name="datepicker" id="datepicker" style="font-size: 13px"
                                                     class="form-control" placeholder="" value="Select Date"
                                                     style="font-size:13px">
                                             </div>
@@ -368,7 +368,7 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Location</label>
-                                                <input type="text" id="location" name="location" class="form-control"
+                                                <input type="text" id="location" name="location" class="form-control" style="font-size: 13px"
                                                     style="font-size:13px">
                                             </div>
                                         </div>
@@ -376,7 +376,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Time Spent</label>
-                                                <input type="text" id="time_spent" name="time_spent"
+                                                <input type="text" id="time_spent" name="time_spent" style="font-size: 13px"
                                                     class="form-control" style="font-size:13px">
                                             </div>
                                         </div>
@@ -608,7 +608,7 @@
                                                         <div class="custom-control custom-radio">
                                                             <input class="custom-control-input bussiness_annual"
                                                                 type="radio" name="AnnualBusiness" id="Rb-004"
-                                                                value='> 2500K' data-id="Rb-004" style="font-size:13px">
+                                                                value='2500K+' data-id="Rb-004" style="font-size:13px">
                                                             <label class="custom-control-label" for="Rb-004">>
                                                                 2500K</label>
                                                         </div>
