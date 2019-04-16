@@ -725,7 +725,7 @@
                                             </div>
 
                                             <div class="col-md-12 mb-15">
-                                                <textarea id="des_cvr" class="required_core" style="font-size: 13px" name="des_cvr" rows="6"
+                                                <textarea id="des_cvr" class="" style="font-size: 13px" name="des_cvr" rows="6"
                                                     style="font-size:13px"></textarea>
                                             </div>
 

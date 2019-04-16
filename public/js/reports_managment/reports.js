@@ -698,11 +698,11 @@ $(document).ready(function () {
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
-                    //$('#cvr_customers_list').val('0').trigger('change');
-                    //$('#location').val('');
+                    $('#cvr_customers_list').val('0').trigger('change');
+                    $('#location').val('');
                     $('#time_spent').val('');
                     $("textarea[name='des_cvr']").val('');
-                   // $('.cvr_poc_list').val('0').trigger('change');
+                    $('.cvr_poc_list').find('option').remove();
                     $('.purpose_checkboxes').prop('checked', false);
                     $('.checkboxes_products').prop('checked', false);
                     $("input[name='Opportunity']").prop('checked', false);

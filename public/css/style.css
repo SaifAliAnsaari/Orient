@@ -838,8 +838,7 @@ table.dataTable {
 	-khtml-border-radius: 0;
 	font-size: 13px;
 	color: #282828;
-	background-color: #f5f5f5;
-	width: 100%;
+	background-color: #f5f5f5;/*max-width: 330px;*/
 }
 .auth-form a.txt-danger:hover {
 	color: #f12300
@@ -2155,7 +2154,7 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .acc-right li{margin-bottom: 10px }
 .acc-right ._head04{margin-bottom: 15px; margin-right:15px; font-size: 14px; letter-spacing: 1px; font-weight: 500; border-bottom:solid 1px #efefef}
 .ADD_Select{position: relative; margin-top: 5px; margin-bottom: 10px}
-.select2-container {width: 100%!important}
+.modal .select2-container {width: 100%!important}
 
 .L_btn-line {
 	background-color: #fff;
@@ -2280,6 +2279,9 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .p-30 {
 	padding: 30px!important
 }
+.pt-5 {
+	padding-top: 5px!important
+}
 .pt-10 {
 	padding-top: 10px!important
 }
@@ -2305,8 +2307,14 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .font12 {font-size: 12px}
 .font13 {font-size: 13px}
 .sm-mt15{margin: 0px}
-
-
+.lab-line {
+	color: #282828;
+	border: solid 1px #e7e7e7; padding: 2px 5px; margin-right: 5px; margin-bottom: 4px; display: inline-block
+}
+.lab-pending {
+	color: #282828;
+	border: solid 1px #f68606;  padding: 2px 5px; margin-right: 5px; margin-bottom: 4px; display: inline-block
+}
 
 
 
