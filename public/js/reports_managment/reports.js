@@ -46,16 +46,21 @@ $(document).ready(function () {
                id: id
             },
             success: function(response) {
-               // console.log(response); return;
+                //console.log(response); return;
                 var response = JSON.parse(response);
-                $('#location').val(response.address.address + ", " + response.address.city);
-                $('#location').focus();  
-                
+               
                 $('.cvr_poc_list').find('option').remove();
                 $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
-                response.pocs.forEach(element => {
-                    $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
-                });
+                if(response.pocs != ''){
+                    $('#location').val(response.address.address + ", " + response.address.city);
+                    $('#location').focus();  
+                    response.pocs.forEach(element => {
+                        $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
+                    });
+                }else{
+
+                }
+               
             }
         });
     });
@@ -864,6 +869,14 @@ $(document).ready(function () {
         fetchCvrList($('.select_cvr_type').val());
     });
 
+
+
+
+    //Cancel buttons
+    $(document).on('click', '.cancel_cvr', function(){
+        location.href = '/cvr_list';
+    });
+
 });
 
 function fetchCustomersforCVR(cust_id) {
@@ -887,11 +900,14 @@ function fetchCustomersforCVR(cust_id) {
             response.customers.forEach(element => {
                 $('#cvr_customers_list').append('<option value="' + element.id + '" '+ (element.id == cust_id ? "selected" : '') +'>' + element.company_name + '</option>');
             });
-
+            //debugger;
             
             setTimeout(() => {
                 $('#cvr_customers_list').val(cust_id+"").trigger('change');
             }, 500);
+            // $('.cvr_poc_list').find('option').remove();
+            // $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
+            
             // $('.cvr_poc_list').find('option').remove();
             // $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
             // response.poc.forEach(element => {

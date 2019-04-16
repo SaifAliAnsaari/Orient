@@ -37,7 +37,7 @@ class Customer extends ParentController
 
     //Ajax Call from list-customers.js
     public function CustomersList(Request $request){
-        echo json_encode(DB::table('customers')->get());
+        echo json_encode(DB::table('customers as cust')->selectRaw('id, company_name, address, city, country, (Select company_name from customers where id = cust.parent_company) as parent_company')->get());
     }
 
     public function activate_customer(Request $request){

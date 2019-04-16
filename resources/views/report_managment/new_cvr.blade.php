@@ -27,9 +27,9 @@
                                                 </div>
                                                 <div class="form-s2 col-md-12">
                                                     <div>
-                                                        <select class="form-control formselect required"
+                                                        <select class="form-control formselect"
                                                             name="parent_company" placeholder="Select Customer Type">
-                                                            <option value="0" selected disabled>Select Parent Company*
+                                                            <option value="0" selected disabled>Select Parent Company
                                                             </option>
                                                             @if(!empty($cust))
                                                             @foreach ($cust as $customers)

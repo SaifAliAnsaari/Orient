@@ -254,7 +254,7 @@
                                         data-target=".competition-lg">Approve CVR</button>
                                 @endif
                             @endif
-                            <button type="submit" class="btn btn-cancel mb-10" style="margin-left:5px;">Cancel</button>
+                            <button type="submit" class="btn btn-cancel mb-10 cancel_cvr" style="margin-left:5px;">Cancel</button>
                         </td>
                         <td align="right">
                             <a href="/download_pdf/{{$id}}"><button type="button" class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button></a>

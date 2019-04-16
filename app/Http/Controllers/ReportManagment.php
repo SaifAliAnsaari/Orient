@@ -237,18 +237,19 @@ class ReportManagment extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $core = DB::table('cvr_core as cc')->where('id', $id)->first();
+        $customers = DB::table('customers')->get();
         $competitions = DB::table('cvr_competition')->get();
         if($core){
             if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
                 if($core){
-                    return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif]);
+                    return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
                 }else{
                     return redirect('/');
                 }
             }else{
                 if($core->report_created_by == Auth::user()->id && $core->is_approved == 2){
                     if($core){
-                        return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif]);
+                        return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
                     }else{
                         return redirect('/');
                     }

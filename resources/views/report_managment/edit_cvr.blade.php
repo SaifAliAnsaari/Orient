@@ -26,13 +26,17 @@
                                                 </div>
                                                 <div class="form-s2 col-md-12">
                                                     <div>
-                                                        <select class="form-control formselect required"
-                                                            name="parent_company" placeholder="Select Customer Type">
-                                                            <option value="0" selected disabled>Select Parent Company*
-                                                            </option>
-                                                            <option value="Parent Company 1">Parent Company 1</option>
-                                                            <option value="Parent Company 2">Parent Company 2</option>
-                                                        </select>
+                                                        <select class="form-control formselect"
+                                                        name="parent_company" placeholder="Select Customer Type">
+                                                        <option value="0" selected disabled>Select Parent Company
+                                                        </option>
+                                                        @if(!empty($cust))
+                                                        @foreach ($cust as $customers)
+                                                        <option value="{{$customers->id}}">
+                                                            {{$customers->company_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12 pt-10">

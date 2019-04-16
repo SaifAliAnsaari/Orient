@@ -94,8 +94,8 @@ $stmt->close();
 
 
 
-// echo "<pre>"; print_r($competition); die;
-// die;
+//  echo "<pre>"; print_r($poc); die;
+//  die;
 
 $pdf = new PDF();
 $pdf->AddPage("P", "A4");
@@ -163,25 +163,46 @@ $pdf->SetY(69);
 $pdf->SetFont('Arial','B',0);
 $pdf->Cell(0,0.5,'',0,0,'L',1);
 
-$height_poc = 70;
-$poc_counter = 0;
-if($poc){
-    foreach($poc as $pocs){
-        $pdf->SetY($height_poc);
-        $pdf->SetFont('Arial','',10);
-        $pdf->Cell(95,10,' POC Name  ',0,0);
-        $pdf->Cell(95,10,$pocs['poc_name'],0,0);
-        if($poc_counter < sizeof($poc)-1){
-            $height_poc += 8;
-        }
+// $height_poc = 70;
+//  $poc_counter = 0;
+// if($poc){
+//     foreach($poc as $pocs){
+//         $pdf->SetY($height_poc);
+//         $pdf->SetFont('Arial','',10);
+//         $pdf->Cell(95,10,' POC Name : ',0,0);
+//         $pdf->Cell(95,10,$pocs['poc_name'],0,0);
+//         if($poc_counter < sizeof($poc)-1){
+//             $height_poc += 8;
+//         }
         
-        $poc_counter++;
+//         $poc_counter++;
+//     }
+// }
+$poc_counter = 0;
+$height_poc = 70;
+$pdf->SetY($height_poc);
+$pdf->SetFont('Arial','',10);
+// $pdf->Cell(95,10,'Test',0,0);
+// $pdf->Cell(95,10,'Test',0,0);
+// unset($stmt);
+
+if($poc){
+    for($i = 0; $i < sizeof($poc); $i++){
+        if($poc_counter == 4){
+            $pdf->Cell(42,10,$poc[$i]['poc_name'],0,1);
+            $height_poc += 15;
+            $poc_counter = 0;
+        }else{
+            $pdf->Cell(42,10,$poc[$i]['poc_name'],0,0);
+            $poc_counter++;
+        }
     }
-}
+ }
 
 
 
-$height_purpose = $height_poc + 15;
+
+$height_purpose = $height_poc += 15;
 
 $purposes = explode (",", $core['purpose_of_visit']);
 
