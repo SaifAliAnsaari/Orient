@@ -28,6 +28,7 @@ class ReportManagment extends ParentController
     public function new_cvr(){
         parent::get_notif_data();
         parent::VerifyRights();
+
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
         $competitions = DB::table('cvr_competition')->get();
@@ -129,7 +130,8 @@ class ReportManagment extends ParentController
         ]);
 
         if($insert_core){
-            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+            $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+            $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
             
             $cvr_id = array('id' => $insert_core);
             $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
@@ -138,9 +140,12 @@ class ReportManagment extends ParentController
             file_put_contents($file_name, fopen($final_url, 'r'));
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $message = 'New CVR has been added in Orient by "'.Auth::user()->name.'".';
-                    //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
+
+                    // $message = array('first_line' => 'Dear '.$email->name, 'second_line' => "A new CVR has been added for the customer: ".$cust_name->company_name." by: ".Auth::user()->name.".", 'third_line' => 'Attached is the complete Customer visit report for your reference.');
+                    $message = 'Dear <strong>'.$email->name. '</strong> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> Attached is the complete Customer visit report for your reference.";
+
+
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->id, "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
             $path = public_path()."/". $file_name;
@@ -319,8 +324,8 @@ class ReportManagment extends ParentController
                 'cvr_id' => $request->cvr_id
             ]);
     
-            $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
-
+            $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+            $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
 
 
             $cvr_id = array('id' => $request->cvr_id);
@@ -330,7 +335,7 @@ class ReportManagment extends ParentController
             file_put_contents($file_name, fopen($final_url, 'r'));
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $message = 'CVR has been updated in Orient by "'.Auth::user()->name.'".';
+                    $message = 'Dear <strong>'.$email->name. '</strong> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> Attached is the complete Customer visit report for your reference.";
                     //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
                     Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
                 }

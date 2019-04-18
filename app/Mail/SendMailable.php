@@ -28,6 +28,11 @@ class SendMailable extends Mailable
      */
     public function build()
     {
+        $test = $this->data["message"];
+        // foreach($test as $abc){
+        //     $test2 = $abc;
+        // }
+        //$test2 = $test->first_line;
         $email = $this->view('includes.mail', ['data' => $this->data["message"]])->subject($this->data["subject"]);
 
         if(isset($this->data['attachment']) && $this->data['attachment']){
