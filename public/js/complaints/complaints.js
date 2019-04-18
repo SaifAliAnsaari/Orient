@@ -362,11 +362,12 @@ function fetchcomplain_List() {
                 console.log(JSON.parse(element['assign_to']));
                 JSON.parse(element['assign_to']).map(function (idx, ele) {
                     if(idx == response.id){
+
                         var timeSinceComplain = find_difference(element['created_at'], current_date_time);
                         var valuestop = moment.duration(element['tat']+":00", "HH:mm");
                         var difference = valuestop.subtract(timeSinceComplain);
         
-                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${(difference.minutes() > 0 || difference.hours() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled')}>Resolve</button> </td></tr>`);
+                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (difference.hours() > 0 ? (difference.minutes() >= 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled') : ( difference.minutes() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled' )) }>Resolve</button> </td></tr>`);
                     }
                     //console.log(idx);
                  });
@@ -390,7 +391,6 @@ function fetchcomplain_List() {
 function find_difference(start_actual_time, end_actual_time) {
     // var start_actual_time  =  "2019-04-17 11:20";
     // var end_actual_time    =  "2019-04-17 12:30";
-    //debugger;
     start_actual_time = new Date(start_actual_time);
     end_actual_time = new Date(end_actual_time);
 

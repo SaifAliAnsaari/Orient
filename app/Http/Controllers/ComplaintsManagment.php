@@ -30,9 +30,9 @@ class ComplaintsManagment extends ParentController
 
     public function save_complain_type(Request $request){
         if($request->operation == 'update'){
-            if(DB::table('complain_type')->where('complain_head', $request->head)->first()){
-                echo json_encode('already exist');
-            }else{
+            // if(DB::table('complain_type')->where('complain_head', $request->head)->first()){
+            //     echo json_encode('already exist');
+            // }else{
                 $test = $request->id;
                 $update = DB::table('complain_type')->where('id', $request->id)->update([
                     'complain_updated_by' =>  Auth::user()->id,
@@ -46,11 +46,11 @@ class ComplaintsManagment extends ParentController
                 }else{
                     echo json_encode('failed');
                 }
-            }
+           // }
         }else{
-            if(DB::table('complain_type')->where('complain_head', $request->head)->first()){
-                echo json_encode('already exist');
-            }else{
+            // if(DB::table('complain_type')->where('complain_head', $request->head)->first()){
+            //     echo json_encode('already exist');
+            // }else{
                 $insert = DB::table('complain_type')->insert([
                     'complain_added_by' =>  Auth::user()->id,
                     'complain_head' => $request->head,
@@ -64,7 +64,7 @@ class ComplaintsManagment extends ParentController
                     echo json_encode('failed');
                 }
             } 
-        }
+        //}
         
     }
 

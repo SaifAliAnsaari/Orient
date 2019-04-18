@@ -110,7 +110,7 @@
     @elseif($controller == "AccessRights")
         <script src="/js/access_rights/access_rights.js?v=1.0.1" ></script>
     @elseif($controller == "ComplaintsManagment")
-        <script src="/js/complaints/complaints.js?v=1.0.1" ></script>
+        <script src="/js/complaints/complaints.js?v=1.0.2" ></script>
     @endif
 
 </body>
