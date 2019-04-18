@@ -221,11 +221,11 @@ $height_purpose += 5;
 if($purposes){
     for($i = 0; $i < sizeof($purposes); $i++){
         if($counter == 4){
-            $pdf->Cell(42,10,$purposes[$i],0,1);
+            $pdf->Cell(42,10,"- ".$purposes[$i],0,1);
             $height_purpose += 20;
             $counter = 0;
         }else{
-            $pdf->Cell(42,10,$purposes[$i],0,0);
+            $pdf->Cell(42,10,"- ".$purposes[$i],0,0);
             $counter++;
         }
     }
@@ -262,11 +262,11 @@ $test = $products;
 if($products){
     for($i = 0; $i < sizeof($test); $i++){
         if($counter_pro == 2){
-            $pdf->Cell(70,10,$test[$i]['pro_cat_name'],0,1);
+            $pdf->Cell(70,10,"- ".$test[$i]['pro_cat_name'],0,1);
             $height_products += 20;
             $counter_pro = 0;
         }else{
-            $pdf->Cell(70,10,$test[$i]['pro_cat_name'],0,0);
+            $pdf->Cell(70,10,"- ".$test[$i]['pro_cat_name'],0,0);
             $counter_pro++;
         }
     }
@@ -299,9 +299,9 @@ $pdf->Cell(0,0.5,'',0,0,'L',1);
 
 $pdf->SetY($height_opportunity + 6);
 $pdf->SetFont('Arial','',10);
-$pdf->Cell(70,10,($core['opportunity'] != null ? $core['opportunity'] : "--"),0,0);
-$pdf->Cell(70,10,($core['bussiness_value'] == null ? "--" : ($core['bussiness_value'] == '2500K+' ? '> 2500K' : $core['bussiness_value'])),0,0);
-$pdf->Cell(70,10,($core['relationship'] != null ? $core['relationship'] : "--"),0,0);
+$pdf->Cell(70,10,($core['opportunity'] != null ? "- ".$core['opportunity'] : "--"),0,0);
+$pdf->Cell(70,10,($core['bussiness_value'] == null ? "--" : ($core['bussiness_value'] == '2500K+' ? '> - 2500K' : "- ".$core['bussiness_value'])),0,0);
+$pdf->Cell(70,10,($core['relationship'] != null ? "- ".$core['relationship'] : "--"),0,0);
 
 
 

@@ -142,10 +142,10 @@ class ReportManagment extends ParentController
                 foreach($get_email_addresses as $email){
 
                     // $message = array('first_line' => 'Dear '.$email->name, 'second_line' => "A new CVR has been added for the customer: ".$cust_name->company_name." by: ".Auth::user()->name.".", 'third_line' => 'Attached is the complete Customer visit report for your reference.');
-                    $message = 'Dear <strong>'.$email->name. '</strong> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> Attached is the complete Customer visit report for your reference.";
+                    $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
 
 
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->id, "attachment" => URL::to('/').'/'.$file_name]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".$cust_name->company_name, "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
             $path = public_path()."/". $file_name;
@@ -335,9 +335,9 @@ class ReportManagment extends ParentController
             file_put_contents($file_name, fopen($final_url, 'r'));
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $message = 'Dear <strong>'.$email->name. '</strong> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> Attached is the complete Customer visit report for your reference.";
+                    $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
                     //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR", "attachment" => URL::to('/').'/'.$file_name]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".$cust_name->company_name, "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
             $path = public_path()."/". $file_name;
