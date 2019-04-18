@@ -27,8 +27,8 @@
                                                 </div>
                                                 <div class="form-s2 col-md-12">
                                                     <div>
-                                                        <select class="form-control formselect"
-                                                            name="parent_company" placeholder="Select Customer Type">
+                                                        <select class="form-control formselect" name="parent_company"
+                                                            placeholder="Select Customer Type">
                                                             <option value="0" selected disabled>Select Parent Company
                                                             </option>
                                                             @if(!empty($cust))
@@ -72,15 +72,15 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">POC*</label>
-                                                        <input type="text" name="poc" style="font-size: 13px" class="form-control required"
-                                                            placeholder="">
+                                                        <input type="text" name="poc" style="font-size: 13px"
+                                                            class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Job Title*</label>
-                                                        <input type="text" name="jobTitle" style="font-size: 13px" class="form-control required"
-                                                            placeholder="">
+                                                        <input type="text" name="jobTitle" style="font-size: 13px"
+                                                            class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
 
@@ -94,36 +94,38 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email Address*</label>
-                                                        <input type="email" name="email"  style="font-size: 13px" class="form-control required"
-                                                            placeholder="">
+                                                        <input type="email" name="email" style="font-size: 13px"
+                                                            class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
-                                                        <input type="text" name="address" style="font-size: 13px" class="form-control required"
-                                                            placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" id="city" style="font-size: 13px" maxlength="13" value="Karachi"
+                                                        <input type="text" name="address" style="font-size: 13px"
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label class="control-label mb-10">City*</label>
+                                                        <input type="text" name="city" id="city" style="font-size: 13px"
+                                                            maxlength="13" value="Karachi" class="form-control required"
+                                                            placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
                                                         <label class="control-label mb-10">Province*</label>
-                                                        <input type="text" name="state" style="font-size: 13px" class="form-control required"
-                                                            value="Sindh" placeholder="">
+                                                        <input type="text" name="state" style="font-size: 13px"
+                                                            class="form-control required" value="Sindh" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Country*</label>
                                                         <input type="text" name="country" value="Pakistan"
-                                                            class="form-control required" style="font-size: 13px" placeholder="">
+                                                            class="form-control required" style="font-size: 13px"
+                                                            placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -136,8 +138,8 @@
                                                 <div class="col-md-12">
                                                     <label class="PT-10 font12">Remarks</label>
                                                     <div class="form-group mb-0">
-                                                        <textarea name="description" style="font-size: 13px" class="" rows="8"
-                                                            id="description" style="font-size:13px"></textarea>
+                                                        <textarea name="description" style="font-size: 13px" class=""
+                                                            rows="8" id="description" style="font-size:13px"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -179,30 +181,30 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">POC Name*</label>
-                                        <input type="text" id="poc_name_modal" style="font-size: 13px" class="form-control required_modal"
-                                            placeholder="">
+                                        <input type="text" id="poc_name_modal" style="font-size: 13px"
+                                            class="form-control required_modal" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Job Title*</label>
-                                        <input type="text" id="jobTitle_modal" style="font-size: 13px"  class="form-control required_modal"
-                                            placeholder="">
+                                        <input type="text" id="jobTitle_modal" style="font-size: 13px"
+                                            class="form-control required_modal" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Business Phone*</label>
-                                        <input type="number" style="font-size: 13px" id="businessPH_modal" class="form-control required_modal"
-                                            placeholder="">
+                                        <input type="number" style="font-size: 13px" id="businessPH_modal"
+                                            class="form-control required_modal" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Email ID*</label>
-                                        <input type="email" style="font-size: 13px" id="email_modal" class="form-control required_modal"
-                                            placeholder="">
+                                        <input type="email" style="font-size: 13px" id="email_modal"
+                                            class="form-control required_modal" placeholder="">
                                     </div>
                                 </div>
 
@@ -228,7 +230,7 @@
 {{-- Competition Modal --}}
 <div class="modal fade competition-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content top_border">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Competition <span> Details</span></h5>
@@ -242,28 +244,14 @@
                     <div id="floating-label" class="pl-15 pr-15">
                         <div class="form-wrap p-0">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Competition Name</label>
-                                        <input type="text" id="competition_name" style="font-size: 13px"
+                                        <input type="text" id="competition_name"
                                             class="form-control required_competition" style="font-size:13px">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
 
-                                    <div class="form-s2 pt-19">
-                                        <div>
-                                            <select class="form-control formselect required_competition"
-                                                id="competition_strength" placeholder="Competitor’s Strength">
-                                                <option value="0" disabled selected>Select Strength</option>
-                                                <option value="Very Good">Very Good</option>
-                                                <option value="Good">Good</option>
-                                                <option value="Poor">Poor</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
 
                             </div>
                         </div>
@@ -337,9 +325,9 @@
                                         <div class="col-md-4">
                                             <label class="font12">Date of Visit</label>
                                             <div class="position-relative">
-                                                <input type="text" name="datepicker" id="datepicker" style="font-size: 13px"
-                                                    class="form-control required_core" placeholder=""
-                                                    value="Select Date" style="font-size:13px">
+                                                <input type="text" name="datepicker" id="datepicker"
+                                                    style="font-size: 13px" class="form-control required_core"
+                                                    placeholder="" value="Select Date" style="font-size:13px">
                                             </div>
                                         </div>
 
@@ -377,8 +365,9 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Time Spent*</label>
-                                                <input type="text" id="time_spent" name="time_spent" style="font-size: 13px"
-                                                    class="form-control required_core" style="font-size:13px">
+                                                <input type="text" id="time_spent" name="time_spent"
+                                                    style="font-size: 13px" class="form-control required_core"
+                                                    style="font-size:13px">
                                             </div>
                                         </div>
 
@@ -680,8 +669,7 @@
                                                                         Competition</option>
                                                                     @if(!empty($competitions))
                                                                     @foreach ($competitions as $comp)
-                                                                    <option name="{{$comp->strength}}"
-                                                                        value="{{$comp->id}}">{{$comp->name}}</option>
+                                                                    <option value="{{$comp->id}}">{{$comp->name}}</option>
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
@@ -693,7 +681,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-8">
 
                                                         <div class="row competition_list_div">
                                                             {{-- <div class="col-md-6">
@@ -717,6 +705,40 @@
 
                                             </div>
 
+                                            <div class="col-md-12 PB-10 PT-10">
+                                                <h3 class="_head03">Competitor’s Strength</h3>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="row _checkbox-padd mb-15">
+
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-009"
+                                                                value='Very Good' data-id="Rb-009" style="font-size:13px">
+                                                            <label class="custom-control-label" for="Rb-009">Very Good</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-010"
+                                                                value='Good' data-id="Rb-010" style="font-size:13px">
+                                                            <label class="custom-control-label" for="Rb-010">Good</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-011"
+                                                                value='Poor' data-id="Rb-011" style="font-size:13px">
+                                                            <label class="custom-control-label" for="Rb-011">Poor</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
 
 
 
@@ -725,8 +747,8 @@
                                             </div>
 
                                             <div class="col-md-12 mb-15">
-                                                <textarea id="des_cvr" class="" style="font-size: 13px" name="des_cvr" rows="6"
-                                                    style="font-size:13px"></textarea>
+                                                <textarea id="des_cvr" class="" style="font-size: 13px" name="des_cvr"
+                                                    rows="6" style="font-size:13px"></textarea>
                                             </div>
 
                                             <div class="col-12">

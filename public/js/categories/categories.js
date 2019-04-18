@@ -536,7 +536,7 @@ function fetchMainCats(){
             var response = JSON.parse(response);
             response.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['name'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateMainCat">Edit</button><a id="' + element['id'] + '" class="btn btn-default red-bg delete_main_cat">Delete</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['name'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateMainCat">Edit</button><a id="' + element['id'] + '" class="btn btn-default red-bg delete_main_cat" style="background: #e20000!important; color: #fff!important">Delete</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
@@ -560,7 +560,7 @@ function fetchSubCats(){
             var response = JSON.parse(response);
             response.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['main_cat_name'] + '</td><td>' + element['name'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateSubCat">Edit</button><a id="' + element['id'] + '" class="btn btn-default red-bg delete_sub_cat">Delete</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['main_cat_name'] + '</td><td>' + element['name'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateSubCat">Edit</button><a id="' + element['id'] + '" class="btn btn-default red-bg delete_sub_cat" style="background: #e20000!important; color: #fff!important;">Delete</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

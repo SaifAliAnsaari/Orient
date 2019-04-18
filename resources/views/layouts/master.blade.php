@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 
-    <title>Orient</title>
+    <title>Orient Engineering Services</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,700,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/css/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/select2-bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.2">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
     <link href="/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
@@ -102,9 +102,9 @@
     @elseif($controller == "RegisterController")
         <script src="/js/custom/employee.js?v=1.0.1" ></script>
    @elseif($controller == "ReportManagment")
-        <script src="/js/reports_managment/reports.js?v=1.0.3" ></script>
+        <script src="/js/reports_managment/reports.js?v=1.0.4" ></script>
     @elseif($controller == "Categories")
-        <script src="/js/categories/categories.js?v=1.0.1" ></script>
+        <script src="/js/categories/categories.js?v=1.0.2" ></script>
     @elseif($controller == "NotificationCenter")
         <script src="/js/notif/notif_pref.js?v=1.0.1" ></script>
     @elseif($controller == "AccessRights")

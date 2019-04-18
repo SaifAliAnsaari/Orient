@@ -68,7 +68,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <img src="/images/report.svg" alt="" />
+                <img src="/images/comment.svg" alt="" />
                 <span>Complaints & Suggestions</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">

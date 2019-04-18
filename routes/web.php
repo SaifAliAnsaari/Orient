@@ -48,6 +48,7 @@ Route::get('/complaints_settings', 'ComplaintsManagment@complaints_settings');
 Route::get('/generate_complaints', 'ComplaintsManagment@generate_complaints');
 Route::get('/complaints_list', 'ComplaintsManagment@complaints_list');
 Route::get('/resolved_complains', 'ComplaintsManagment@resolved_complains');
+Route::get('/disapproved_detail/{id}', 'ReportManagment@disapproved_detail');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');

@@ -394,21 +394,26 @@ $(document).ready(function () {
             }
 
             var name = $('#competition_name').val();
-            var strength = $('#competition_strength').find('option:selected').val();
+            //var strength = $('#competition_strength').find('option:selected').val();
 
             var competition_id_found = false;
             add_competition_list.find(x => {
                 //debugger;
-                if (x.name == name && x.strength == strength) {
+                if (x.name == name) {
                     competition_id_found = true;
                     find_secondary_cust = true;
                     return;
                 }
+                // if (x.name == name && x.strength == strength) {
+                //     competition_id_found = true;
+                //     find_secondary_cust = true;
+                //     return;
+                // }
             });
 
             if (!competition_id_found) {
                 add_competition_list.push({
-                    "strength": strength,
+                    //"strength": strength,
                     "name": name
                 });
                 find_secondary_cust = true;
@@ -419,7 +424,8 @@ $(document).ready(function () {
                 $('#hidden_competition_list').val('');
                 $('#hidden_competition_list').val(add_competition_list);
                 add_competition_list.forEach(element => {
-                    $('.competition_list_div').append('<div class="col-md-6"><div class="alert fade show alert-color _add-secon w-100 mr-0" role="alert"><div class="row"><div class="col-md-6"><strong>Name: &nbsp;</strong>' + element.name + '</div><div class="col-md-6"><strong>Strength: &nbsp;</strong>' + element.strength + '</div><button id="' + element.name + '-' + element.strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>');
+                
+                    $('.competition_list_div').append('<div class="alert fade show alert-color _add-secon" role="alert"><strong>Name: &nbsp;</strong>' + element.name + '<button id="' + element.name +'" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 });
             }
             //console.log(add_competition_list);
@@ -437,17 +443,13 @@ $(document).ready(function () {
             }, 3000);
             return;
         }
-       // debugger;
-// alert($("#comp_dropdwn :selected").attr('name')); return;
             var name = $("#comp_dropdwn :selected").text();
-            var strength = $('#comp_dropdwn').find('option:selected').attr('name');
-
-            //return;
+           // var strength = $('#comp_dropdwn').find('option:selected').attr('name');
 
             var competition_id_found = false;
             add_competition_list.find(x => {
                 //debugger;
-                if (x.name == name && x.strength == strength) {
+                if (x.name == name) {
                     competition_id_found = true;
                     find_secondary_cust = true;
                     return;
@@ -456,7 +458,7 @@ $(document).ready(function () {
 
             if (!competition_id_found) {
                 add_competition_list.push({
-                    "strength": strength,
+                    //"strength": strength,
                     "name": name
                 });
                 find_secondary_cust = true;
@@ -467,7 +469,7 @@ $(document).ready(function () {
                 $('#hidden_competition_list').val('');
                 $('#hidden_competition_list').val(add_competition_list);
                 add_competition_list.forEach(element => {
-                    $('.competition_list_div').append('<div class="col-md-6"><div class="alert fade show alert-color _add-secon w-100 mr-0" role="alert"><div class="row"><div class="col-md-6"><strong>Name: &nbsp;</strong>' + element.name + '</div><div class="col-md-6"><strong>Strength: &nbsp;</strong>' + element.strength + '</div><button id="' + element.name + '-' + element.strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>');
+                    $('.competition_list_div').append('<div class="alert fade show alert-color _add-secon" role="alert"><strong>Name: &nbsp;</strong>' + element.name + '<button id="' + element.name +'" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 });
             }
             //console.log(add_competition_list);
@@ -475,10 +477,12 @@ $(document).ready(function () {
 
     $(document).on('click', '.delete_one_competitor', function () {
         //debugger;
-        var id = $(this).attr('id').split('-');
-        var name = id[0];
-        var strength = id[1];
-        add_competition_list.splice(add_competition_list.findIndex(x => x.name == name && x.strength == strength), 1);
+        ///var id = $(this).attr('id').split('-');
+        var id = $(this).attr('id');
+        var name = id;
+        //var strength = id[1];
+        add_competition_list.splice(add_competition_list.findIndex(x => x.name == name), 1);
+        //add_competition_list.splice(add_competition_list.findIndex(x => x.name == name && x.strength == strength), 1);
         // console.log(add_competition_list);
     });
 
@@ -601,6 +605,16 @@ $(document).ready(function () {
             return;
         }
 
+        if($("input[name='competitions_strength']:checked").val() == "" || $("input[name='competitions_strength']:checked").val() == "undefined" || $("input[name='competitions_strength']:checked").val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Competitor Strength');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
 
         if(purpose_array.length == 0){
             $('#notifDiv').fadeIn();
@@ -665,6 +679,7 @@ $(document).ready(function () {
                 opportunity: $("input[name='Opportunity']:checked").val() + "",
                 annualBusiness: $("input[name='AnnualBusiness']:checked").val() + "",
                 relationship: $("input[name='relationship']:checked").val() + "",
+                competitions_strength: $("input[name='competitions_strength']:checked").val() + "",
                 description: $('#des_cvr').val()
             },
             success: function (response) {
@@ -704,6 +719,7 @@ $(document).ready(function () {
                     $('.checkboxes_products').prop('checked', false);
                     $("input[name='Opportunity']").prop('checked', false);
                     $("input[name='AnnualBusiness']").prop('checked', false);
+                    $("input[name='competitions_strength']").prop('checked', false);
                     $("input[name='relationship']").prop('checked', false);
                     purpose_array = [];
                     products_array = [];
@@ -729,7 +745,7 @@ $(document).ready(function () {
 
     //Update CVR
     $(document).on('click', '.update_cvr', function(){
-        if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null || $("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
+        if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null || $("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || $("input[name='competitions_strength']:checked").val() == "" || $("input[name='competitions_strength']:checked").val() == "undefined" || $("input[name='competitions_strength']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
             $('#notifDiv').fadeIn();
             $('#notifDiv').css('background', 'red');
             $('#notifDiv').text('Something Missing');
@@ -761,6 +777,7 @@ $(document).ready(function () {
                 opportunity: $("input[name='Opportunity']:checked").val() + "",
                 annualBusiness: $("input[name='AnnualBusiness']:checked").val() + "",
                 relationship: $("input[name='relationship']:checked").val() + "",
+                competitions_strength: $("input[name='competitions_strength']:checked").val() + "",
                 description: $('#des_cvr').val()
             },
             success: function (response) {
@@ -930,7 +947,7 @@ function fetchCvrList(type){
             var response = JSON.parse(response);
             response.info.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>' : "")) +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default">View Detail</button></a>' : "")) +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
@@ -967,6 +984,7 @@ function fetchCurrentCvrData(){
             $('.relationship').filter(function(){
                 return this.value === response.core.relationship ;
             }).prop('checked', true);
+            
             $('#des_cvr').text(response.core.description);
             if (response.core.purpose_of_visit.indexOf(',') > -1){
                 var array = response.core.purpose_of_visit.split(",");
@@ -1011,13 +1029,18 @@ function fetchCurrentCvrData(){
             });
 
             $('.competition_list_div').empty();
+            var competitor_strength = '';
             $.each(response.competitions,function(i){
-                $('.competition_list_div').append('<div class="col-md-6"><div class="alert fade show alert-color _add-secon w-100 mr-0" role="alert"><div class="row"><div class="col-md-6"><strong>Name: &nbsp;</strong>' + response.competitions[i].name + '</div><div class="col-md-6"><strong>Strength: &nbsp;</strong>' + response.competitions[i].strength + '</div><button id="' + response.competitions[i].name + '-' + response.competitions[i].strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div></div>');
+                competitor_strength = response.competitions[i].strength;
+                $('.competition_list_div').append('<div class="alert fade show alert-color _add-secon" role="alert"><strong>Name: &nbsp;</strong>' + response.competitions[i].name + '<button id="' + response.competitions[i].name + '-' + response.competitions[i].strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 add_competition_list.push({
-                    "strength": response.competitions[i].strength,
+                    //"strength": response.competitions[i].strength,
                     "name": response.competitions[i].name
                 });
             });
+            $('input[name="competitions_strength"]').filter(function(){
+                return this.value === competitor_strength;
+            }).prop('checked', true);
 
             // console.log(purpose_array);
             // console.log(products_array);

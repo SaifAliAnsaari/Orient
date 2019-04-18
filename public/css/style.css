@@ -171,7 +171,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 .sidebar {
 	width: 90px !important;
-	min-height: calc(100vh - 80px);
+	min-height:100vh;
 	transition: width 0.5s;
 	background: linear-gradient(90deg, #0b3e85 0%, #003176 100%);
 	z-index: 5;
@@ -1217,8 +1217,9 @@ color:#777
 	background-color: #f6f6f6;
 	color: #282828;
 	box-shadow: none;
-	font-size: 12px;
+	font-size: 12px; resize: none!important
 }
+textarea {resize: none!important}
 .PT-10 {
 	padding-top: 10px!important
 }
@@ -1685,7 +1686,7 @@ table.dataTable.nowrap td {
 }
 .pro-header-text {
 	width: auto;
-	margin-left: -15px;
+	margin-left: 0px;
 	margin-right: -15px
 }
 .dis-larg {
@@ -2074,11 +2075,13 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 .val-place{margin-top: -14px}
 .bg-color{color: #fff!important; background: linear-gradient(0deg, #003176 0%, #003176 50%)!important}
 
-.report-preview{width: 850px;font-size: 15px; color: #000}
+.report-preview{max-width: 950px; padding: 0px 15px; font-size: 15px; color: #000; margin-left: auto; margin-right: auto; margin-top: 20px}
+.report-preview ._RtextP{ text-align: right}
 .report-preview strong{padding-right: 10px; font-weight: 600}
-.report-preview .style-bg{background-color: #f7f7f7; border: solid 3px #fff; padding: 5px}
-.report-preview  ._head03{ margin-bottom: 0}
-.report-preview  .fa{color: #000; font-size: 12px}
+.report-preview .style-bg{background-color: #f7f7f7; border: solid 1px #fff; padding-top: 5px; padding-bottom: 5px}
+.report-preview  ._head03{ margin-bottom: 5px}
+.report-preview .MR-S ._head03{ margin-right:20px}
+.report-preview  .fa{color: #000; font-size: 12px; margin-top: 5px; margin-right: 7px}
 .report-logo{display: block;text-align: center;margin-bottom: 10px}
 .report-logo img{height:75px; width: auto}
 .add-poc{ margin: 0; padding: 4px 12px;font-size: 14px; position: absolute; top: -5px; right: 0}
@@ -2316,8 +2319,8 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 	border: solid 1px #f68606;  padding: 2px 5px; margin-right: 5px; margin-bottom: 4px; display: inline-block
 }
 
-
-
+.container-1250{max-width: 1250px}
+.Dis-h{color: #f68606; font-weight: 400!important}
 
 
 
@@ -2519,6 +2522,12 @@ body.sidebar-toggled footer.sticky-footer {
 .acc-right{ width:50%}
 }
 @media (max-width: 767px) {
+.report-preview ._RtextP {
+    text-align: left;
+}
+.report-preview .MR-S ._head03 {
+    margin-right: 0px
+}
 ._add-padd-btn{padding-top:0px; text-align: right}
 .auth-form .form-group input {
 	max-width: 100%;

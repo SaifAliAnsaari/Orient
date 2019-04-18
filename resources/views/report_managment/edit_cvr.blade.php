@@ -227,7 +227,7 @@
 {{-- Competitin Modal --}}
 <div class="modal fade competition-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content top_border">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Competition <span> Details</span></h5>
@@ -241,29 +241,14 @@
                     <div id="floating-label" class="pl-15 pr-15">
                         <div class="form-wrap p-0">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Competition Name</label>
-                                        <input type="text" id="competition_name" style="font-size: 13px"
+                                        <input type="text" id="competition_name"
                                             class="form-control required_competition" style="font-size:13px">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
 
-                                    <div class="form-s2 pt-19">
-                                        <div>
-                                            <select class="form-control formselect required_competition"
-                                                id="competition_strength" placeholder="Competitor’s Strength">
-                                                <option value="0" disabled selected>Select Strength</option>
-                                                <option value="Competitor’s Strength">Competitor’s Strength</option>
-                                                <option value="Very Good">Very Good</option>
-                                                <option value="Good">Good</option>
-                                                <option value="Poor">Poor</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
 
                             </div>
                         </div>
@@ -685,8 +670,7 @@
                                                                         Competition</option>
                                                                     @if(!empty($competitions))
                                                                     @foreach ($competitions as $comp)
-                                                                    <option name="{{$comp->strength}}"
-                                                                        value="{{$comp->id}}">{{$comp->name}}</option>
+                                                                    <option value="{{$comp->id}}">{{$comp->name}}</option>
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
@@ -698,7 +682,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-8">
 
                                                         <div class="row competition_list_div">
                                                             {{-- <div class="col-md-6">
@@ -725,6 +709,40 @@
                                             </div>
 
                                             <input hidden type="text" value="{{$id}}" id="hidden_cvr_id" />
+
+                                            <div class="col-md-12 PB-10 PT-10">
+													<h3 class="_head03">Competitor’s Strength</h3>
+												</div>
+
+												<div class="col-md-12">
+													<div class="row _checkbox-padd mb-15">
+
+														<div class="col-md-3">
+															<div class="custom-control custom-radio">
+																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-009"
+																	value='Very Good' data-id="Rb-009" style="font-size:13px">
+																<label class="custom-control-label" for="Rb-009">Very Good</label>
+															</div>
+														</div>
+
+														<div class="col-md-3">
+															<div class="custom-control custom-radio">
+																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-010"
+																	value='Good' data-id="Rb-010" style="font-size:13px">
+																<label class="custom-control-label" for="Rb-010">Good</label>
+															</div>
+														</div>
+
+														<div class="col-md-3">
+															<div class="custom-control custom-radio">
+																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-011"
+																	value='Poor' data-id="Rb-011" style="font-size:13px">
+																<label class="custom-control-label" for="Rb-011">Poor</label>
+															</div>
+														</div>
+
+													</div>
+												</div>
 
 
                                             <div class="col-md-12 mt-10">
