@@ -36,7 +36,9 @@
     @include('includes.nav')
     @include('includes.modals')
     <div id="wrapper">
+        @if(Auth::user()->designation == 1 || Auth::user()->designation == 2)
         @include('includes.sidebar-menu')
+        @endif
         
         <div id="content-wrapper">
             @include('includes.alerts')
