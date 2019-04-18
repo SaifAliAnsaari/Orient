@@ -24,7 +24,7 @@
 		<div class="col-lg-4 col-12 mb-30">			    	
 		<div class="card cp_user-l top_border">
  		<div class="body">
- 		<div class="_cut-img mt-30" ><img src="{{ URL::to(Auth::user()->picture) }}" alt=""/>
+ 		<div class="_cut-img mt-30" ><img src="{{ Auth::user()->picture ? URL::to(Auth::user()->picture) : '/images/avatar.svg' }}" alt=""/>
             <div class="nam-title">{{ (Auth::user()->name != null ? Auth::user()->name : "NA") }}</div> 		
             </div>
             
@@ -188,7 +188,7 @@
                             <div class="col-md-6">
                                 <div class="form-wrap up_h">
                                 <div class="upload-pic"></div>
-                                    <input type="file" id="input-file-now" class="dropify" name="employeePicture" data-default-file="{{ URL::to(Auth::user()->picture) }}" />
+                                    <input type="file" id="input-file-now" class="dropify" name="employeePicture" data-default-file="{{ Auth::user()->picture ? URL::to(Auth::user()->picture) : '' }}" />
                                 </div> 
                             </div> 
 

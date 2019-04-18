@@ -246,7 +246,9 @@ class Customer extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         if(DB::table('customers')->where('id', $customerId)->first()){
-            return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+            $pocs = DB::table('poc')->where('company_name', $customerId)->get();
+            $cvrs = DB::table('cvr_core')->where('customer_visited', $customerId)->get();
+            return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'pocs' => $pocs, 'cvrs' => $cvrs]);
         }else{
             return redirect('/');
         }

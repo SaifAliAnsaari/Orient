@@ -52,7 +52,7 @@
 
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ URL::to(Auth::user()->picture) }}" class="user_log" alt="" />
+                <img src="{{ Auth::user()->picture ? URL::to(Auth::user()->picture) : '/images/avatar.svg' }}" class="user_log" alt="" />
                 <span class="uname">{{ Auth::user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">

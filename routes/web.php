@@ -44,6 +44,9 @@ Route::get('/access_rights/{id}', 'AccessRights@access_rights');
 Route::get('/cvr_list', 'ReportManagment@cvr_list');
 Route::get('/cvr_preview/{id}', 'ReportManagment@cvr_preview');
 Route::get('/edit_cvr/{id}', 'ReportManagment@edit_cvr');
+Route::get('/complaints_settings', 'ComplaintsManagment@complaints_settings');
+Route::get('/generate_complaints', 'ComplaintsManagment@generate_complaints');
+Route::get('/complaints_list', 'ComplaintsManagment@complaints_list');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');
@@ -57,6 +60,9 @@ Route::post('/save_pref_against_emp', 'NotificationCenter@save_pref_against_emp'
 Route::post('/read_notif_four', 'NotificationCenter@read_notif_four');
 Route::post('/saveAccessRights', 'AccessRights@saveAccessRights');
 Route::post('/save_cvr_approval', 'ReportManagment@save_cvr_approval');
+Route::post('/save_complain_type', 'ComplaintsManagment@save_complain_type');
+Route::post('/save_complain', 'ComplaintsManagment@save_complain');
+Route::post('/resolve_complain', 'ComplaintsManagment@resolve_complain');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');
@@ -81,6 +87,10 @@ Route::get('/GetCurrentCvr/{id}', 'ReportManagment@GetCurrentCvr');
 Route::get('/get_cust_address', 'ReportManagment@get_cust_address');
 Route::get('/download_pdf/{id}', 'ReportManagment@download_pdf');
 Route::get('/send_mail/{id}', 'ReportManagment@send_mail');
+Route::get('/complains_type_list', 'ComplaintsManagment@complains_type_list');
+Route::get('/get_complain_type_data', 'ComplaintsManagment@get_complain_type_data');
+Route::get('/delete_complain_type', 'ComplaintsManagment@delete_complain_type');
+Route::get('/get_complains_list', 'ComplaintsManagment@get_complains_list');
 
 //Delete
 Route::get('/delete_main_cat/{id}', 'Categories@delete_main_cat');

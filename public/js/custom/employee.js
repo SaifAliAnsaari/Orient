@@ -385,33 +385,26 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#save_changes_userProfile', function(){
-        if($('#current_password').val() == "" || $('#new_password').val() == "" || $('#confirm_password').val() == ""){
-            $('#notifDiv').fadeIn();
-            $('#notifDiv').css('background', 'red');
-            $('#notifDiv').text('Please provide all the required information (*)');
-            setTimeout(() => {
-                $('#notifDiv').fadeOut();
-            }, 3000);
-            return;
-        }
-        if($('#new_password').val() != $('#confirm_password').val()){
-            $('#notifDiv').fadeIn();
-            $('#notifDiv').css('background', 'red');
-            $('#notifDiv').text('New Password and Confirm Password does not match!');
-            setTimeout(() => {
-                $('#notifDiv').fadeOut();
-            }, 3000);
-            return;
-        }
-        if($('#new_password').val().length < 6 || $('#confirm_password').val().length < 6){
-            //debugger;
-            $('#notifDiv').fadeIn();
-            $('#notifDiv').css('background', 'red');
-            $('#notifDiv').text('New Password and Confirm Password should have atleast 6 characters');
-            setTimeout(() => {
-                $('#notifDiv').fadeOut();
-            }, 3000);
-            return;
+        if($('#current_password').val() != "" || $('#new_password').val() != "" || $('#confirm_password').val() != ""){
+            if($('#new_password').val() != $('#confirm_password').val()){
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('New Password and Confirm Password does not match!');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            }
+            if($('#new_password').val().length < 6 || $('#confirm_password').val().length < 6){
+                //debugger;
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('New Password and Confirm Password should have atleast 6 characters');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            }
         }
 
         $(this).text('PROCESSING....');
@@ -438,6 +431,15 @@ $(document).ready(function() {
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'red');
                     $('#notifDiv').text('Unable to update');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "empty"){
+                    $("#save_changes_userProfile").removeAttr('disabled');
+                    $("#save_changes_userProfile").text('Save Changes');
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Please fill all fields.');
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);

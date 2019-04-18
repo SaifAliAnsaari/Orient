@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> --}}
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 
     <title>Orient</title>
 
@@ -17,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/css/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/select2-bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.3">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.1">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
     <link href="/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
@@ -89,13 +90,14 @@
     <script src="/js/master.js?v=1.0" ></script>
     <script src="/js/jquery.form.min.js" ></script>
     <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
     {{-- <script type = "text/javascript" src"https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script> --}}
      <script src="/js/dropzone.js"></script>
     {{--<script src="/js/dropzone-data.js"></script> --}}
     @if($controller == "Customer")
-        <script src="/js/custom/customer.js?v=1.0.1" ></script>
+        <script src="/js/custom/customer.js?v=1.0.2" ></script>
         </script>
     @elseif($controller == "RegisterController")
         <script src="/js/custom/employee.js?v=1.0.1" ></script>
@@ -107,6 +109,8 @@
         <script src="/js/notif/notif_pref.js?v=1.0.1" ></script>
     @elseif($controller == "AccessRights")
         <script src="/js/access_rights/access_rights.js?v=1.0.1" ></script>
+    @elseif($controller == "ComplaintsManagment")
+        <script src="/js/complaints/complaints.js?v=1.0.1" ></script>
     @endif
 
 </body>

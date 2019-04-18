@@ -64,6 +64,26 @@
             </div>
         </li>
     @endif
+    @if(in_array("/complaints_settings", $test_array) || in_array("/generate_complaints", $test_array) || in_array("/complaints_list", $test_array))
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <img src="/images/report.svg" alt="" />
+                <span>Complaints & Suggestions</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navi-l1">
+                @if(in_array("/complaints_settings", $test_array))
+                    <a class="dropdown-item" href="/complaints_settings">Complaints Settings</a>
+                @endif
+                @if(in_array("/generate_complaints", $test_array))
+                    <a class="dropdown-item" href="/generate_complaints">Complaints Generate</a>
+                @endif
+                @if(in_array("/complaints_list", $test_array))
+                    <a class="dropdown-item" href="/complaints_list">Complaints List</a>
+                @endif
+            </div>
+        </li>
+    @endif
     @if(in_array("/main_category", $test_array) || in_array("/sub_category", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
