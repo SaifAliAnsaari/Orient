@@ -167,19 +167,41 @@ class ComplaintsManagment extends ParentController
     }
 
     public function get_complains_list(){
-        echo json_encode(array('info' => DB::table('complains as com')->selectRaw('id, Date(created_at) as date, created_at, resolved, (Select name from users where id = com.created_by) as created_by, (Select complain_head from complain_type where id = com.complain_id) as complain, (Select company_name from customers where id = com.customer_id) as customer, (Select complain_tat from complain_type where id = com.complain_id) as tat, (Select assign_to from complain_type where id = com.complain_id) as assign_to')->get(), 'id' => Auth::user()->id));
+        echo json_encode(array('info' => DB::table('complains as com')->selectRaw('id, Date(created_at) as date, created_at, resolved, (Select name from users where id = com.created_by) as created_by, (Select complain_head from complain_type where id = com.complain_id) as complain, (Select company_name from customers where id = com.customer_id) as customer, (Select complain_tat from complain_type where id = com.complain_id) as tat, (Select assign_to from complain_type where id = com.complain_id) as assign_to')->where('resolved', 0)->get(), 'id' => Auth::user()->id));
     }
 
     public function resolve_complain(Request $request){
         $update = DB::table('complains')->where('id', $request->id)->update([
             'resolved' => 1,
-            'resolved_remarks' => $request->remarks
+            'resolved_remarks' => $request->remarks,
+            'resolve_at' => date('Y-m-d H:i:s'),
+            'resolve_by' => Auth::user()->id
         ]);
         if($update){
             echo json_encode('success');
         }else{
             echo json_encode('failed');
         }
+    }
+
+    public function get_complain_detail(Request $request){
+        echo json_encode(DB::table('complains as com')->selectRaw('remarks, (Select company_name from customers where id = com.customer_id) as cust_name, (Select complain_head from complain_type where id = com.complain_id) as complain')->where('id', $request->id)->first());
+    }
+
+
+
+
+
+
+    public function resolved_complains(){
+        parent::get_notif_data();
+        parent::VerifyRights();
+        if($this->redirectUrl){return redirect($this->redirectUrl);}
+        return view('complaints.resolved_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+    }
+
+    public function get_resolved_complains_list(){
+        echo json_encode(array('info' => DB::table('complains as com')->selectRaw('id, Date(created_at) as date, created_at, resolve_at,resolved, (Select name from users where id = com.resolve_by) as resolved_by, (Select name from users where id = com.created_by) as created_by, (Select complain_head from complain_type where id = com.complain_id) as complain, (Select company_name from customers where id = com.customer_id) as customer, (Select complain_tat from complain_type where id = com.complain_id) as tat, (Select assign_to from complain_type where id = com.complain_id) as assign_to')->where('resolved', 1)->get(), 'id' => Auth::user()->id));
     }
 
 }

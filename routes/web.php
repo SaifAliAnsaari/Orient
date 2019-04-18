@@ -47,6 +47,7 @@ Route::get('/edit_cvr/{id}', 'ReportManagment@edit_cvr');
 Route::get('/complaints_settings', 'ComplaintsManagment@complaints_settings');
 Route::get('/generate_complaints', 'ComplaintsManagment@generate_complaints');
 Route::get('/complaints_list', 'ComplaintsManagment@complaints_list');
+Route::get('/resolved_complains', 'ComplaintsManagment@resolved_complains');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');
@@ -91,6 +92,8 @@ Route::get('/complains_type_list', 'ComplaintsManagment@complains_type_list');
 Route::get('/get_complain_type_data', 'ComplaintsManagment@get_complain_type_data');
 Route::get('/delete_complain_type', 'ComplaintsManagment@delete_complain_type');
 Route::get('/get_complains_list', 'ComplaintsManagment@get_complains_list');
+Route::get('/get_resolved_complains_list', 'ComplaintsManagment@get_resolved_complains_list');
+Route::get('/get_complain_detail', 'ComplaintsManagment@get_complain_detail');
 
 //Delete
 Route::get('/delete_main_cat/{id}', 'Categories@delete_main_cat');

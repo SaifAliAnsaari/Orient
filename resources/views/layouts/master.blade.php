@@ -102,7 +102,7 @@
     @elseif($controller == "RegisterController")
         <script src="/js/custom/employee.js?v=1.0.1" ></script>
    @elseif($controller == "ReportManagment")
-        <script src="/js/reports_managment/reports.js?v=1.0.2" ></script>
+        <script src="/js/reports_managment/reports.js?v=1.0.3" ></script>
     @elseif($controller == "Categories")
         <script src="/js/categories/categories.js?v=1.0.1" ></script>
     @elseif($controller == "NotificationCenter")
@@ -110,7 +110,7 @@
     @elseif($controller == "AccessRights")
         <script src="/js/access_rights/access_rights.js?v=1.0.1" ></script>
     @elseif($controller == "ComplaintsManagment")
-        <script src="/js/complaints/complaints.js?v=1.0.2" ></script>
+        <script src="/js/complaints/complaints.js?v=1.0.4" ></script>
     @endif
 
 </body>

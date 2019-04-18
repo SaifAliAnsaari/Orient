@@ -14,8 +14,7 @@ $(document).ready(function () {
         format: 'yyyy-mm-dd'
     });
 
-    
-
+  
 
     if (action == 'new_cvr') {
         fetchCustomersforCVR('0');
@@ -76,9 +75,6 @@ $(document).ready(function () {
         $('[name="bussinessPH"]').val('');
         $('[name="email"]').val('');
         $('[name="address"]').val('');
-        $('[name="city"]').val('');
-        $('[name="state"]').val('');
-        $('[name="country"]').val('');
         $('[name="web_address"]').val('');
         $('#product-cl-sec').addClass('active');
         $('.overlay').addClass('active');
@@ -175,9 +171,6 @@ $(document).ready(function () {
                     $('[name="bussinessPH"]').val('');
                     $('[name="email"]').val('');
                     $('[name="address"]').val('');
-                    $('[name="city"]').val('');
-                    $('[name="state"]').val('');
-                    $('[name="country"]').val('');
                     $('[name="web_address"]').val('');
                     $('#pl-close').click();
                     // setTimeout(() => {
@@ -573,6 +566,10 @@ $(document).ready(function () {
                 verif.push(true);
             }
         });
+
+        if (jQuery.inArray(false, verif) != -1) {
+            return;
+        }
 
         if ($("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null ) {
             $('#notifDiv').fadeIn();

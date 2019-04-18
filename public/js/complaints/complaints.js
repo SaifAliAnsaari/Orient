@@ -9,6 +9,8 @@ $(document).ready(function () {
         fetchcomplain_types();
     } else if (action == 'complaints_list') {
         fetchcomplain_List()
+    } else if(action == 'resolved_complains'){
+        fetchresolvedcomplains();
     }
 
 
@@ -318,6 +320,33 @@ $(document).ready(function () {
         });
     });
 
+    //Open Modal to view Detail
+    $(document).on('click', '.view_detail_modal', function(){
+        $('#customer_detail_modal').val('');
+        $('#complain_detail_modal').val('');
+        $('#remarks_detail_modal').val('');
+        var id = $(this).attr('id');
+        $.ajax({
+            type: 'GET',
+            url: '/get_complain_detail',
+            data: {
+                _token: '{!! csrf_token() !!}',
+                id: id
+            },
+            success: function (response) {
+                //debugger;
+                $('#modal_loader').hide();
+                var response = JSON.parse(response);
+                //console.log(response);
+                $('#customer_detail_modal').val(response.cust_name);
+                $('#customer_detail_modal').focus();
+                $('#complain_detail_modal').val(response.complain);
+                $('#complain_detail_modal').focus();
+                $('#remarks_detail_modal').val(response.remarks);
+            }
+        });
+    });
+
 });
 
 function fetchcomplain_types() {
@@ -359,7 +388,7 @@ function fetchcomplain_List() {
             var current_date_time = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
             response.info.forEach(element => {
 
-                console.log(JSON.parse(element['assign_to']));
+                //console.log(JSON.parse(element['assign_to']));
                 JSON.parse(element['assign_to']).map(function (idx, ele) {
                     if(idx == response.id){
 
@@ -367,17 +396,41 @@ function fetchcomplain_List() {
                         var valuestop = moment.duration(element['tat']+":00", "HH:mm");
                         var difference = valuestop.subtract(timeSinceComplain);
         
-                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (difference.hours() > 0 ? (difference.minutes() >= 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled') : ( difference.minutes() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled' )) }>Resolve</button> </td></tr>`);
+                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (element['resolved'] == 1 ? 'disabled' : '') }>Resolve</button> <button id="${element['id']}" class="btn btn-default view_detail_modal" data-toggle="modal" data-target=".competition-lg2">View Detail</button></td></tr>`);
                     }
-                    //console.log(idx);
                  });
-                // if(jQuery.inArray(response.id, element['assign_to']) !== -1){
-                //     var timeSinceComplain = find_difference(element['created_at'], current_date_time);
-                //     var valuestop = moment.duration(element['tat']+":00", "HH:mm");
-                //     var difference = valuestop.subtract(timeSinceComplain);
-    
-                //     $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${(difference.minutes() > 0 || difference.hours() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled')}>Resolve</button> </td></tr>`);
-                // }
+               
+                //  $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (difference.hours() > 0 ? (difference.minutes() >= 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled') : ( difference.minutes() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled' )) }>Resolve</button> </td></tr>`);
+                
+            });
+            $('#tblLoader').hide();
+            $('.body').fadeIn();
+            $('#employeesListTable').DataTable();
+        }
+    });
+}
+
+
+function fetchresolvedcomplains() {
+    $.ajax({
+        type: 'GET',
+        url: '/get_resolved_complains_list',
+        success: function (response) {
+            $('.body').empty();
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Date</th><th>Customer</th><th>Complain</th><th>Created By</th><th>TAT</th><th>Resolved Time</th><th>Resolved By</th></tr></thead><tbody></tbody></table>');
+            $('#employeesListTable tbody').empty();
+            var response = JSON.parse(response);
+            var currentdate = new Date();
+            response.info.forEach(element => {
+
+                JSON.parse(element['assign_to']).map(function (idx, ele) {
+                    if(idx == response.id){
+                        var timeSinceComplain = find_difference(element['created_at'], element['resolve_at']);
+                        var current_format = timeSinceComplain.split(':');
+                        var time_format = current_format[0] + " hrs " + current_format[1] + " mins";
+                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${time_format}</td><td>${element['resolved_by']}</td></tr>`);
+                    }
+                 });
                 
             });
             $('#tblLoader').hide();

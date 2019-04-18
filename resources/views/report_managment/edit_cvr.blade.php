@@ -371,7 +371,7 @@
 
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label class="control-label mb-10">Location</label>
+                                                <label class="control-label mb-10">Location*</label>
                                                 <input type="text" id="location" name="location" class="form-control" style="font-size: 13px"
                                                     style="font-size:13px">
                                             </div>
@@ -379,7 +379,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="control-label mb-10">Time Spent</label>
+                                                <label class="control-label mb-10">Time Spent*</label>
                                                 <input type="text" id="time_spent" name="time_spent" style="font-size: 13px"
                                                     class="form-control" style="font-size:13px">
                                             </div>

@@ -79,7 +79,10 @@
                     <a class="dropdown-item" href="/generate_complaints">Complaints Generate</a>
                 @endif
                 @if(in_array("/complaints_list", $test_array))
-                    <a class="dropdown-item" href="/complaints_list">Complaints List</a>
+                    <a class="dropdown-item" href="/complaints_list">New Complains</a>
+                @endif
+                @if(in_array("/resolved_complains", $test_array))
+                    <a class="dropdown-item" href="/resolved_complains">Resolved Complains</a>
                 @endif
             </div>
         </li>

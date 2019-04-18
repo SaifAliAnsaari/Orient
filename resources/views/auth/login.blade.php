@@ -45,7 +45,7 @@
                                             <div class="form-group">
                                                 <div class="clearfix"></div>
                                                 <div class="pass"> <span class="fa fa-unlock"></span>
-                                                    <input id="password" type="password" class="form-group" name="password" placeholder="password" style="font-size: 13px" required>
+                                                    <input id="password" type="password" class="form-group" name="password" placeholder="password" style="font-size: 13px; width:100%" required>
 
                                                     @if ($errors->has('password'))
                                                         <span class="invalid-feedback" role="alert">

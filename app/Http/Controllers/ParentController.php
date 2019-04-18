@@ -24,8 +24,7 @@ class ParentController extends Controller
     public function VerifyRights(){
         $this->getAccRights();
         if(!DB::table('access_rights')->whereRaw('employee_id = '. Auth::user()->id . ' and access = "/'.explode('/', url()->current())[3].'"')->first()){
-            
-            DB::table('access_rights')->whereRaw('employee_id = '. Auth::user()->id . ' and access = "/home"')->first() ? $this->redirectUrl = "/home" : (DB::table('access_rights')->whereRaw('employee_id = '. Auth::user()->id)->first() ? $this->redirectUrl = DB::table('access_rights')->whereRaw('employee_id = '. Auth::user()->id)->first()->access : $this->redirectUrl = "/logout" );
+            DB::table('access_rights')->whereRaw('employee_id = '. Auth::user()->id . ' and access = "/home" and access != "/edit_profile"')->first() ? $this->redirectUrl = "/home" : (DB::table('access_rights')->whereRaw('access != "/edit_profile" and employee_id = '. Auth::user()->id)->first() ? $this->redirectUrl = DB::table('access_rights')->whereRaw('access != "/edit_profile" and employee_id = '. Auth::user()->id)->first()->access : $this->redirectUrl = "/logout" );
         }
     }
 
