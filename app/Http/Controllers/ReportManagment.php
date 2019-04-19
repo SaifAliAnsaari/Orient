@@ -145,7 +145,7 @@ class ReportManagment extends ParentController
                     $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
 
 
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".$cust_name->company_name, "attachment" => URL::to('/').'/'.$file_name]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
             $path = public_path()."/". $file_name;
@@ -337,7 +337,7 @@ class ReportManagment extends ParentController
                 foreach($get_email_addresses as $email){
                     $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
                     //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
-                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".$cust_name->company_name, "attachment" => URL::to('/').'/'.$file_name]));
+                    Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                 }
             }
             $path = public_path()."/". $file_name;
@@ -497,6 +497,19 @@ class ReportManagment extends ParentController
                     'remarks' => $request->remarks,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
+    
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
+
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Approved: CVR for ".$cust_name->company_name]));
+                        
+                    }
+                }
+
+               
             }else{
                 DB::table('cvr_core')->where('id', $request->id)->update(['is_approved' => 2]);
                 DB::table('approval_notif')->insert([
@@ -507,6 +520,18 @@ class ReportManagment extends ParentController
                     'remarks' => $request->remarks,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select      report_created_by from cvr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
+    
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager: <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;
+
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Disapproved: CVR for ".$cust_name->company_name]));
+                        
+                    }
+                }
+               
             }
             
             echo json_encode('success');

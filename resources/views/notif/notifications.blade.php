@@ -30,7 +30,7 @@
                 @endif
                 @if(!empty($all_notif))
                     @foreach($all_notif as $notifications)
-                    <a href="{{ $notifications->cvr_id ? '/cvr_preview'.'/'.$notifications->cvr_id : '/CustomerProfile'.'/'.$notifications->customer_id }}"> <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
+                    <a href="{{ ($notifications->cvr_id ? '/cvr_preview'.'/'.$notifications->cvr_id : ($notifications->customer_id ? '/CustomerProfile'.'/'.$notifications->customer_id : '/complaints_list')) }}"> <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
                            <img src="{{'/images/profile-img--.jpg'}}" class="NU-img float-none mb-0" alt="">
                             <strong class="notifications_list_all" id="{{$notifications->id}}">({{$notifications->customer_nameOrCvr}}) </strong> {{ $notifications->message }}
                            

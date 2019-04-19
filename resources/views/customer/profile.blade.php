@@ -97,6 +97,7 @@
                             <thead>
                                 <tr>
                                     <th>Created At</th>
+                                    <th>Created By</th>
                                     <th>Date of Visit</th>
                                     <th>Time Spent</th>
                                     <th>Purpose</th>
@@ -110,6 +111,7 @@
                                 @foreach ($cvrs as $cvr)
                                 <tr>
                                     <td>{{$cvr->report_created_at}}</td>
+                                    <td>{{$cvr->report_created_by}}</td>
                                     <td>{{$cvr->date_of_visit}}</td>
                                     <td>{{$cvr->time_spent}}</td>
                                     <td>{{$cvr->purpose_of_visit}}</td>

@@ -271,7 +271,51 @@
     </div>
 </div>
 
-<div class=""></div>
+
+{{-- Confirmation Modal --}}
+<div class="modal fade db-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 650px">
+        <div class="modal-content top_border">
+            <div class="modal-header" style="text-align: center; display: block">
+                <h5 class="modal-title" id="exampleModalLongTitle">CVR <span>has been successfully added</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="check_mark">
+                    <div class="sa-icon sa-success animate">
+                        <span class="sa-line sa-tip animateSuccessTip"></span>
+                        <span class="sa-line sa-long animateSuccessLong"></span>
+                        <div class="sa-placeholder"></div>
+                        <div class="sa-fix"></div>
+                    </div>
+                </div>
+
+                <div class="form-wrap p-0">
+                    <h1 class="_head05" align="center"><span>Do you want to add </span> another CVR or Redirect to Home?</h1>
+
+                    <div class="PT-15 PB-10" align="center">
+                        <a href="/"><button type="submit"
+                                class="btn btn-primary font13 m-0 mr-2 mb-2">Rediect To Home</button></a>
+                        <button type="button" class="btn btn-primary font13 m-0 mb-2" data-dismiss="modal">Add Another
+                            CVR</button>
+                        <!--<button type="submit" class="btn btn-cancel m-0 mb-2" data-dismiss="modal" aria-label="Close">No</button> -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="open_confirmation_modal" data-toggle="modal" data-target=".db-confirmation-modal"></div>
 
 
 
@@ -372,7 +416,7 @@
                                         </div>
 
                                         {{-- <a id="open_poc_modal" data-toggle="modal"
-                                                            data-target=".bd-example-modal-lg">Test</a> --}}
+                                                            data-target=".db-confirmation-modal">Test</a> --}}
 
                                         <div class="col-md-12 PT-20">
                                             <h3 class="_head03">POC Name
@@ -669,7 +713,8 @@
                                                                         Competition</option>
                                                                     @if(!empty($competitions))
                                                                     @foreach ($competitions as $comp)
-                                                                    <option value="{{$comp->id}}">{{$comp->name}}</option>
+                                                                    <option value="{{$comp->id}}">{{$comp->name}}
+                                                                    </option>
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
@@ -714,25 +759,32 @@
 
                                                     <div class="col-md-3">
                                                         <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-009"
-                                                                value='Very Good' data-id="Rb-009" style="font-size:13px">
-                                                            <label class="custom-control-label" for="Rb-009">Very Good</label>
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-009"
+                                                                value='Very Good' data-id="Rb-009"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="Rb-009">Very
+                                                                Good</label>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-3">
                                                         <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-010"
-                                                                value='Good' data-id="Rb-010" style="font-size:13px">
-                                                            <label class="custom-control-label" for="Rb-010">Good</label>
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-010" value='Good'
+                                                                data-id="Rb-010" style="font-size:13px">
+                                                            <label class="custom-control-label"
+                                                                for="Rb-010">Good</label>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-3">
                                                         <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-011"
-                                                                value='Poor' data-id="Rb-011" style="font-size:13px">
-                                                            <label class="custom-control-label" for="Rb-011">Poor</label>
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-011" value='Poor'
+                                                                data-id="Rb-011" style="font-size:13px">
+                                                            <label class="custom-control-label"
+                                                                for="Rb-011">Poor</label>
                                                         </div>
                                                     </div>
 

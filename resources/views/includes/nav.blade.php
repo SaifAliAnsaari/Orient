@@ -5,17 +5,19 @@
         <li class="nav-item TM_icon">
             <a class="nav-link" href="#"><img src="/images/q-link-icon.svg" alt="" /></a>
         </li>
-       
 
 
         @csrf
             <li class="nav-item TM_icon dropdown no-arrow"> 
                 <a class="nav-link dropdown-toggle" href="#" id="NotiFications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="badge">
-                    @if($notifications_counts != "" && !empty($approval_notif))
+                    @if(!empty($notifications_counts) && !empty($approval_notif))
                         {{ $notifications_counts->counts + sizeof($approval_notif) }}
                     @endif
                     @if(!empty($approval_notif) && empty($notifications_counts))
                         {{ sizeof($approval_notif) }}
+                    @endif
+                    @if(empty($approval_notif) && !empty($notifications_counts))
+                        {{ $notifications_counts->counts }}
                     @endif
                     
                 </span> <img src="{{ URL::to('/images/bell-icon.svg') }}" alt=""/></a>
@@ -23,7 +25,7 @@
                 <h4 class="notiF-title">Notification </h4>
                     @if(!empty($notif_data))
                         @foreach($notif_data as $notifications)
-                        <a href="{{ $notifications->cvr_id ? '/cvr_preview'.'/'.$notifications->cvr_id : '/CustomerProfile'.'/'.$notifications->customer_id }}"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
+                        <a href="{{ ($notifications->cvr_id ? '/cvr_preview'.'/'.$notifications->cvr_id : ($notifications->customer_id ? '/CustomerProfile'.'/'.$notifications->customer_id : '/complaints_list')) }}"><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{$notifications->message}} </strong><p>
                             <?php 
                                     $datetime1 = new DateTime(date('Y-m-d H:i:s'));//start time
                                     $datetime2 = new DateTime($notifications->created_at);//end time

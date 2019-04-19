@@ -134,7 +134,7 @@ class Customer extends ParentController
                
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $message = 'New Customer "'.$request->compName.'" has been added in Orient.';
+                    $message = 'New Customer <strong>'.$request->compName.'</strong> has been added by: <strong>'.Auth::user()->name.'</strong>.';
                     Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
                 }
             }
@@ -210,7 +210,7 @@ class Customer extends ParentController
             $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
             if(!$get_email_addresses->isEmpty()){
                 foreach($get_email_addresses as $email){
-                    $message = 'Customer "'.$request->compName.'" has been updated in Orient.';
+                    $message = 'Customer <strong>'.$request->compName.'</strong> has been updated by: <strong>'.Auth::user()->name.'</strong>.';
                     Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Updated"]));
                     
                 }
@@ -247,7 +247,7 @@ class Customer extends ParentController
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         if(DB::table('customers')->where('id', $customerId)->first()){
             $pocs = DB::table('poc')->where('company_name', $customerId)->get();
-            $cvrs = DB::table('cvr_core')->where('customer_visited', $customerId)->get();
+            $cvrs = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, date_of_visit, time_spent, purpose_of_visit, opportunity, bussiness_value, (Select name from users where id = cc.report_created_by) as report_created_by')->where('customer_visited', $customerId)->get();
             return view('customer.profile', ['update_customer' => DB::table('customers')->where('id', $customerId)->first(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'pocs' => $pocs, 'cvrs' => $cvrs]);
         }else{
             return redirect('/');

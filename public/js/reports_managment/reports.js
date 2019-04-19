@@ -353,6 +353,7 @@ $(document).ready(function () {
                     $('#address_modal').val('');
                     $('#city_modal').val('');
                     $('#state_modal').val('');
+                    $('.cancel_modal').click();
                 }
             }
         });
@@ -428,6 +429,8 @@ $(document).ready(function () {
                     $('.competition_list_div').append('<div class="alert fade show alert-color _add-secon" role="alert"><strong>Name: &nbsp;</strong>' + element.name + '<button id="' + element.name +'" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 });
             }
+            $('.cancel_competition_modal').click();
+            $('#competition_name').val('');
             //console.log(add_competition_list);
 
         });
@@ -727,6 +730,7 @@ $(document).ready(function () {
                     add_competition_list = [];
                     $('.poc_show_list').empty();
                     $('.competition_list_div').empty();
+                    $('.open_confirmation_modal').click();
                     //$('#comp_dropdwn').val('0').trigger('change');
                 }
             }
@@ -808,6 +812,8 @@ $(document).ready(function () {
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
+                    $('.open_confirmation_modal').click();
+                    //location.replace("/");
                 }
             }
         });

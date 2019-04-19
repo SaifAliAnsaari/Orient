@@ -1,4 +1,4 @@
-<ul class="sidebar navbar-nav toggled">
+<ul class="sidebar navbar-nav toggled" >
     <?php 
     if(!empty($check_rights)){
         $test_array = array();
