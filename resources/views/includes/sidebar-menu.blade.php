@@ -27,6 +27,9 @@
                 @if(in_array("/SCFAR", $test_array))
                     <a class="dropdown-item" href="/SCFAR">Access Rights</a>
                 @endif
+                @if(in_array("/pick_up", $test_array))
+                    <a class="dropdown-item" href="/pick_up">Pick Up & Delivery Location</a>
+                @endif
             </div>
         </li>
     @endif

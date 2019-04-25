@@ -49,6 +49,7 @@ Route::get('/generate_complaints', 'ComplaintsManagment@generate_complaints');
 Route::get('/complaints_list', 'ComplaintsManagment@complaints_list');
 Route::get('/resolved_complains', 'ComplaintsManagment@resolved_complains');
 Route::get('/disapproved_detail/{id}', 'ReportManagment@disapproved_detail');
+Route::get('/pick_up', 'Auth\RegisterController@pick_up');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');
@@ -65,6 +66,8 @@ Route::post('/save_cvr_approval', 'ReportManagment@save_cvr_approval');
 Route::post('/save_complain_type', 'ComplaintsManagment@save_complain_type');
 Route::post('/save_complain', 'ComplaintsManagment@save_complain');
 Route::post('/resolve_complain', 'ComplaintsManagment@resolve_complain');
+Route::post('/PickUp_save', 'Auth\RegisterController@PickUp_save');
+Route::post('/update_pickup', 'Auth\RegisterController@update_pickup');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');
@@ -95,10 +98,13 @@ Route::get('/delete_complain_type', 'ComplaintsManagment@delete_complain_type');
 Route::get('/get_complains_list', 'ComplaintsManagment@get_complains_list');
 Route::get('/get_resolved_complains_list', 'ComplaintsManagment@get_resolved_complains_list');
 Route::get('/get_complain_detail', 'ComplaintsManagment@get_complain_detail');
+Route::get('/GetPickUpList', 'Auth\RegisterController@GetPickUpList');
+Route::get('/pickUp_data/{id}', 'Auth\RegisterController@pickUp_data');
 
 //Delete
 Route::get('/delete_main_cat/{id}', 'Categories@delete_main_cat');
 Route::get('/delete_sub_cat/{id}', 'Categories@delete_sub_cat');
+Route::get('/delete_pickUp', 'Auth\RegisterController@delete_pickUp');
 
 //Deactive or Active Employee
 Route::get('/activate_employee', 'Employee@activate_employee');

@@ -4,8 +4,10 @@ $(document).ready(function() {
     var action = segments[3];
     if (action == 'edit_profile'){
 
-    }else {
-        fetchEmployeesList();
+    }else if(action == 'pick_up'){
+        fetchPickUpLocation();
+    }else{
+        fetchEmployeesList(); 
     }
 
     $('#datepicker').datepicker({
@@ -64,6 +66,37 @@ $(document).ready(function() {
         $('#dropifyImgDiv').append('<input type="file" name="employeePicture" id="employeePicture" />');
         $('#employeePicture').dropify();
     });
+    
+    $(document).on('click', '.openDataSidebarForAddingLocation', function(){
+       // debugger;
+       $('#dataSidebarLoader').hide();
+        if (lastOp == "update") {
+            $('#updatePickUpForm').prop('id', 'savePickUpForm');
+            $('input[name="city_name"]').val("");
+            $('input[name="city_name"]').blur();
+            $('input[name="province"]').val("");
+            $('input[name="province"]').blur();
+            $('input[name="city_short_code"]').val("");
+            $('input[name="city_short_code"]').blur();
+            $('#savePickUpForm').find("select").val("-1").trigger('change')
+            $('#savePickUp').show();
+            $('#PickUp').hide();
+            $('.updatePickUp').hide();
+        }
+        lastOp = 'add';
+        if ($('#saveCompanyForm input[name="_method"]').length) {
+            $('#saveCompanyForm input[name="_method"]').remove();
+        }
+        $('input[id="operation"]').val('add');
+        $('#product-cl-sec').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        $('body').toggleClass('no-scroll');
+    });
+
+
+
 
     $(document).on('click', '.openDataSidebarForUpdateEmployee', function() {
         $('#operation').val('update');
@@ -144,6 +177,72 @@ $(document).ready(function() {
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         $('body').toggleClass('no-scroll');
     });
+
+    $(document).on('click', '.openDataSidebarForUpdatePickUp', function(){
+        var id = $(this).attr('id');
+        $('input[id="operation"]').val('update');
+        lastOp = 'update';
+        $('#dataSidebarLoader').show();
+        $('._cl-bottom').hide();
+        $('.pc-cartlist').hide();
+
+        //Form ki id change kr de hai
+        $('#savePickUpForm').prop('id', 'updatePickUpForm');
+
+        var id = $(this).attr('id');
+        $('input[name="team_updating_id"]').val(id);
+        if (!$('#savePickUpForm input[name="_method"]').length) {
+            $('#savePickUpForm').append('<input name="_method" value="PUT" hidden />');
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '/pickUp_data/' + id,
+            success: function (response) {
+                //console.log(response); return;
+                var response = JSON.parse(response);
+                $('#dataSidebarLoader').hide();
+                $('._cl-bottom').show();
+                $('.pc-cartlist').show();
+                $('#uploadedImg').remove();
+
+                $('input[name="city_name"]').focus();
+                $('input[name="city_name"]').val(response.city_name);
+                $('input[name="city_name"]').blur();
+
+                $('input[name="province"]').focus();
+                $('input[name="province"]').val(response.province);
+                $('input[name="province"]').blur();
+
+                $('input[name="city_short_code"]').focus();
+                $('input[name="city_short_code"]').val(response.city_short);
+                $('input[name="city_short_code"]').blur();
+
+                $('input[name="delivery_id"]').val(response.id);
+
+                var locations = [];
+                jQuery.parseJSON(response.services).forEach(element => {
+                    locations.push(element);
+                });
+                $('#location').val(locations).trigger("change");
+
+                $('#savePickUp').hide();
+                $('.updatePickUp').show();
+                $('.updatePickUp').attr('id', response.id);
+
+            }
+        });
+
+        $('#product-cl-sec').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        $('body').toggleClass('no-scroll');
+    });
+
+
+
+
 
     $(document).on('click', '#saveEmployee', function() {
         var verif = [];
@@ -307,6 +406,108 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', '#savePickUp', function(){
+        var verif = [];
+        $('.required').css('border', '');
+        $('.required').parent().css('border', '');
+
+        $('.required').each(function () {
+            if ($(this).val() == "") {
+                if ($(this).attr('name') == 'location') {
+                    if ($(this).val() == 0 || $(this).val() == null) {
+                        $(this).parent().css("border", "1px solid red");
+                        verif.push(false);
+                        $('#notifDiv').fadeIn();
+                        $('#notifDiv').css('background', 'red');
+                        $('#notifDiv').text('Please provide all the required information (*)');
+                        setTimeout(() => {
+                            $('#notifDiv').fadeOut();
+                        }, 3000);
+                        return;
+                    }
+                } else {
+                    $(this).css("border", "1px solid red");
+                    verif.push(false);
+                    $('#notifDiv').fadeIn();
+                        $('#notifDiv').css('background', 'red');
+                        $('#notifDiv').text('Please provide all the required information (*)');
+                        setTimeout(() => {
+                            $('#notifDiv').fadeOut();
+                        }, 3000);
+                    return;
+                }
+            } else {
+                verif.push(true);
+            }
+        });
+
+        if(verif.includes(false)){
+            return;
+        }
+
+       
+        $('#savePickUp').attr('disabled', 'disabled');
+        $('#cancelPickUp').attr('disabled', 'disabled');
+        $('#savePickUp').text('Processing..');
+
+        $.ajax({
+            type: 'POST',
+            url: '/PickUp_save',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                city_name: $('input[name=city_name]').val(),
+                province: $('input[name=province]').val(),
+                city_short_code: $('input[name=city_short_code]').val(),
+                location: $('#location').val()
+            },
+            success: function (response) {
+                //console.log(response); return;
+                $('#cancelPickUp').removeAttr('disabled');
+                $('#savePickUp').removeAttr('disabled');
+                $('#savePickUp').text('Save');
+                // console.log(response);
+                // return;
+
+                if (JSON.parse(response) == "success") {
+                    //$('input[name="location_service"]').remove();
+                    fetchPickUpLocation();
+                    if ($('#operation').val() !== "update") {
+                        $('input[name="city_name"]').val('');
+                        $('input[name="province"]').val('');
+                        $('input[name="city_short_code"]').val('');
+                        $('select[name="location"]').val('-1').trigger('change');
+                    }
+
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Pick up & Delivery Location have been added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else if(JSON.parse(response) == 'already_exist'){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('City name Already exist');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add Pick up & Delivery Location at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }
+            }
+        });
+       
+    });
+
+
+
+
+
     $(document).on('click', '.activate_btn', function(){
         var id = $(this).attr('id');
         $(this).text('PROCESSING....');
@@ -457,6 +658,141 @@ $(document).ready(function() {
         });
     });
 
+
+
+
+    $(document).on('click', '.deletepickUp', function(){
+        var id = $(this).attr('id');
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $.ajax({
+            type: 'GET',
+            url: '/delete_pickUp',
+            data: {
+                _token: '{!! csrf_token() !!}',
+               id: id
+           },
+            success: function(response) {
+                thisRef.removeAttr('disabled');
+                thisRef.text('Delete');
+                if(JSON.parse(response) == "success"){
+                    fetchPickUpLocation();
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Deleted successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "failed"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to Delete at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }    
+            }
+        });
+    });
+
+    $(document).on('click', '.updatePickUp', function(){
+        var id = $(this).attr('id');
+        var verif = [];
+        $('.required').css('border', '');
+        $('.required').parent().css('border', '');
+
+        $('.required').each(function () {
+            if ($(this).val() == "") {
+                if ($(this).attr('name') == 'location') {
+                    if ($(this).val() == 0 || $(this).val() == null) {
+                        $(this).parent().css("border", "1px solid red");
+                        verif.push(false);
+                        $('#notifDiv').fadeIn();
+                        $('#notifDiv').css('background', 'red');
+                        $('#notifDiv').text('Please provide all the required information (*)');
+                        setTimeout(() => {
+                            $('#notifDiv').fadeOut();
+                        }, 3000);
+                        return;
+                    }
+                } else {
+                    $(this).css("border", "1px solid red");
+                    verif.push(false);
+                    $('#notifDiv').fadeIn();
+                        $('#notifDiv').css('background', 'red');
+                        $('#notifDiv').text('Please provide all the required information (*)');
+                        setTimeout(() => {
+                            $('#notifDiv').fadeOut();
+                        }, 3000);
+                    return;
+                }
+            } else {
+                verif.push(true);
+            }
+        });
+
+        if(verif.includes(false)){
+            return;
+        }
+        $('.updatePickUp').attr('disabled', 'disabled');
+        $('#cancelPickUp').attr('disabled', 'disabled');
+        $('.updatePickUp').text('Processing..');
+
+        $.ajax({
+            type: 'POST',
+            url: '/update_pickup',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                id: id,
+                city_name: $('input[name=city_name]').val(),
+                province: $('input[name=province]').val(),
+                city_short_code: $('input[name=city_short_code]').val(),
+                location: $('#location').val()
+            },
+            success: function (response) {
+                //console.log(response); return;
+                $('#cancelPickUp').removeAttr('disabled');
+                $('.updatePickUp').removeAttr('disabled');
+                $('.updatePickUp').text('Update');
+                // console.log(response);
+                // return;
+
+                if (JSON.parse(response) == "success") {
+                    //$('input[name="location_service"]').remove();
+                    fetchPickUpLocation();
+                    if ($('#operation').val() !== "update") {
+                        $('input[name="city_name"]').val('');
+                        $('input[name="province"]').val('');
+                        $('input[name="city_short_code"]').val('');
+                        $('select[name="location"]').val('-1').trigger('change');
+                    }
+
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Pick up & Delivery Location have been added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else if(JSON.parse(response) == 'already_exist'){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('City name Already exist');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add Pick up & Delivery Location at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }
+            }
+        });
+    });
+
 });
 
 function fetchEmployeesList() {
@@ -474,6 +810,26 @@ function fetchEmployeesList() {
             $('#tblLoader').hide();
             $('.body').fadeIn();
             $('#employeesListTable').DataTable();
+        }
+    });
+}
+
+function fetchPickUpLocation(){
+    $.ajax({
+        type: 'GET',
+        url: '/GetPickUpList',
+        success: function (response) {
+            //console.log(response);
+            $('.body').empty();
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="clientsListTable" style="width:100%;"><thead><tr><th>ID</th><th>City Name</th><th>Province</th><th>City Short</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('#clientsListTable tbody').empty();
+            var response = JSON.parse(response);
+            response.forEach(element => {
+                $('#clientsListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['city_name'] + '</td><td>' + element['province'] + '</td><td>' + element['city_short'] + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdatePickUp">Edit</button><button type="button" id="' + element['id'] + '" class="btn btn-default red-bg deletepickUp" title="Delete">Delete</button></form></td></tr>');
+            });
+            $('#tblLoader').hide();
+            $('.body').fadeIn();
+            $('#clientsListTable').DataTable();
         }
     });
 }
