@@ -167,7 +167,7 @@ class RegisterController extends ParentController
                 'city_name' => $request->city_name,
                 'province' => $request->province,
                 'city_short' => $request->city_short_code,
-                'services' => json_encode($request->location),
+                //'services' => json_encode($request->location),
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->id
                 ]);
@@ -220,7 +220,7 @@ class RegisterController extends ParentController
                 'city_name' => $request->city_name,
                 'province' => $request->province,
                 'city_short' => $request->city_short_code,
-                'services' => json_encode($request->location),
+                //'services' => json_encode($request->location),
                 'updated_by' => Auth::user()->id,
                 'updated_at' => date('Y-m-d H:i:s')
                 ]);

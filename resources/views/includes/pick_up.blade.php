@@ -4,7 +4,7 @@
 @section('data-sidebar')
 <div id="product-cl-sec">
     <a href="#" id="pl-close" class="close-btn-pl"></a>
-    <div class="pro-header-text">New <span>Pick up & Delivery Location</span></div>
+    <div class="pro-header-text">New <span>City</span></div>
     <div style="min-height: 400px" id="dataSidebarLoader" style="display: none">
         <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">
     </div>
@@ -22,7 +22,7 @@
                                 <div class="col-12">
                                     <div id="floating-label" class="card p-20 top_border mb-3">
                                         <input hidden type="text" name="delivery_id" value = "">
-                                        <h2 class="_head03 PT-10">Add <span> Pick up & Delivery Location</span></h2>
+                                        <h2 class="_head03 PT-10">Add <span> City</span></h2>
                                         <div class="form-wrap p-0">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -58,7 +58,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-s2">
                                                         <label class="PT-10 font12">Location Service*</label>
@@ -71,7 +71,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -94,11 +94,11 @@
 @section('content')
 <div class="row mt-2 mb-3">
     <div class="col-lg-6 col-md-6 col-sm-6">
-        <h2 class="_head01">Pick up & Delivery Location</h2>
+        <h2 class="_head01">Cities</h2>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <ol class="breadcrumb">
-            <li><a href="#"><span>Pick up & Delivery Location</span></a></li>
+            <li><a href="#"><span>Cities</span></a></li>
             <li><span>Active</span></li>
         </ol>
     </div>
@@ -107,8 +107,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <a class="btn add_button openDataSidebarForAddingLocation"><i class="fa fa-plus"></i> Add Pick up & Delivery Location</a>
-                <h2>Pick up & Delivery Location List</h2>
+                <a class="btn add_button openDataSidebarForAddingLocation"><i class="fa fa-plus"></i> Add City</a>
+                <h2>Cities List</h2>
             </div>
             <div style="min-height: 400px" id="tblLoader">
                 <img src="/images/loader.gif" width="30px" height="auto" style="position: absolute; left: 50%; top: 45%;">

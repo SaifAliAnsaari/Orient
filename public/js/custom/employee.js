@@ -78,7 +78,7 @@ $(document).ready(function() {
             $('input[name="province"]').blur();
             $('input[name="city_short_code"]').val("");
             $('input[name="city_short_code"]').blur();
-            $('#savePickUpForm').find("select").val("-1").trigger('change')
+            //$('#savePickUpForm').find("select").val("-1").trigger('change')
             $('#savePickUp').show();
             $('#PickUp').hide();
             $('.updatePickUp').hide();
@@ -220,11 +220,11 @@ $(document).ready(function() {
 
                 $('input[name="delivery_id"]').val(response.id);
 
-                var locations = [];
-                jQuery.parseJSON(response.services).forEach(element => {
-                    locations.push(element);
-                });
-                $('#location').val(locations).trigger("change");
+                // var locations = [];
+                // jQuery.parseJSON(response.services).forEach(element => {
+                //     locations.push(element);
+                // });
+                // $('#location').val(locations).trigger("change");
 
                 $('#savePickUp').hide();
                 $('.updatePickUp').show();
@@ -457,8 +457,8 @@ $(document).ready(function() {
                 _token: $('input[name="_token"]').val(),
                 city_name: $('input[name=city_name]').val(),
                 province: $('input[name=province]').val(),
-                city_short_code: $('input[name=city_short_code]').val(),
-                location: $('#location').val()
+                city_short_code: $('input[name=city_short_code]').val()
+                //location: $('#location').val()
             },
             success: function (response) {
                 //console.log(response); return;
@@ -475,7 +475,7 @@ $(document).ready(function() {
                         $('input[name="city_name"]').val('');
                         $('input[name="province"]').val('');
                         $('input[name="city_short_code"]').val('');
-                        $('select[name="location"]').val('-1').trigger('change');
+                        //$('select[name="location"]').val('-1').trigger('change');
                     }
 
                     $('#notifDiv').fadeIn();
@@ -747,8 +747,8 @@ $(document).ready(function() {
                 id: id,
                 city_name: $('input[name=city_name]').val(),
                 province: $('input[name=province]').val(),
-                city_short_code: $('input[name=city_short_code]').val(),
-                location: $('#location').val()
+                city_short_code: $('input[name=city_short_code]').val()
+                //location: $('#location').val()
             },
             success: function (response) {
                 //console.log(response); return;
