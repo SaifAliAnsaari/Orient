@@ -33,7 +33,7 @@ class Employee extends ParentController
             $employee->email = $request->email;
             $employee->cnic = $request->cnic;
             $employee->city = $request->city;
-            $employee->state = $request->state;
+            $employee->state = $request->province;
             $employee->company = $request->company;
             $employee->address = $request->address;
             $employee->username = $request->username;

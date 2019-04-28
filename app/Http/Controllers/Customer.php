@@ -32,8 +32,36 @@ class Customer extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $parent_comp = DB::table('customers')->get();
-        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        $data = DB::table('pick_up_delivery')->get();
+
+        $provinces = [];
+        $counter = 0;
+        array_map(function($item) use($data, &$provinces, &$counter, &$cities){
+            $provinces[$counter]['province'] = $item['province'];
+            $provinces[$counter]['id'] = $item['id'];
+            $counter ++;
+        }, json_decode($data, true));
+        
+        $filtered_privinces = $this->unique_multidim_array($provinces, "province");
+
+        // echo '<pre>'; print_r($cities); die;
+        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data]);
      }
+
+     function unique_multidim_array($array, $key) { 
+        $temp_array = array(); 
+        $i = 0; 
+        $key_array = array(); 
+        
+        foreach($array as $val) { 
+            if (!in_array($val[$key], $key_array)) { 
+                $key_array[$i] = $val[$key]; 
+                $temp_array[$i] = $val; 
+            } 
+            $i++; 
+        } 
+        return $temp_array; 
+    } 
 
     //Ajax Call from list-customers.js
     public function CustomersList(Request $request){
@@ -81,11 +109,7 @@ class Customer extends ParentController
      */
     public function create()
     {
-        // parent::get_notif_data();
-        // parent::VerifyRights();
-        // if($this->redirectUrl){return redirect($this->redirectUrl);}
-        // $parent_comp = DB::table('customers')->get();
-        // return view('customer.create', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp]);
+       
     }
 
     /**
@@ -107,7 +131,7 @@ class Customer extends ParentController
         //$customer->email = $request->email;
         $customer->address = $request->address;
         $customer->city = $request->city;
-        $customer->state = $request->state;
+        $customer->state = $request->province;
         $customer->country = $request->country;
         $customer->webpage = $request->web_address;
         $customer->remarks = $request->description;
@@ -186,7 +210,7 @@ class Customer extends ParentController
         //$customer->email = $request->email;
         $customer->address = $request->address;
         $customer->city = $request->city;
-        $customer->state = $request->state;
+        $customer->state = $request->province;
         $customer->country = $request->country;
         $customer->webpage = $request->web_address;
         $customer->remarks = $request->description;

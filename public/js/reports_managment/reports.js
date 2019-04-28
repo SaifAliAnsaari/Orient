@@ -897,6 +897,21 @@ $(document).ready(function () {
         location.href = '/cvr_list';
     });
 
+
+
+
+
+    $(document).on('change', '#select_city', function(){
+        var id = $('#select_city option:selected').attr('name');
+        var cities_array = JSON.parse($('#full_cities_array').val());
+        cities_array.map(function(x) {
+            if(x.province == id){
+               $('#select_province').val(x.province).trigger('change');
+            }
+        }).indexOf(id);
+        
+    });
+
 });
 
 function fetchCustomersforCVR(cust_id) {

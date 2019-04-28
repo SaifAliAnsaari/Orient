@@ -49,18 +49,32 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" style="font-size: 13px" class="form-control required" placeholder="">
+                                                
+                                                <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
+                                                        <div>
+                                                            <input hidden type="text" value="{{$data}}" id="full_cities_array"/>
+                                                            <select class="form-control formselect" id="select_city" name="city" placeholder="Select City">
+                                                                <option value="0" selected disabled>Select City</option>
+                                                                @if(!empty($data))
+                                                                    @foreach ($data as $city)
+                                                                        <option name="{{$city->province}}" value="{{$city->id}}">{{$city->city_name}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label mb-10">Province</label>
-                                                        <input type="text" name="state" style="font-size: 13px" class="form-control" placeholder="">
+                                                    <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
+                                                        <div>
+                                                            <select class="form-control formselect" id="select_province" name="province" placeholder="Select Province">
+                                                                <option value="0" selected disabled>Select Province</option>
+                                                                @if(!empty($provinces))
+                                                                    @foreach ($provinces as $province)
+                                                                        <option value="{{$province['province']}}">{{$province['province']}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 {{-- <div class="col-md-6">

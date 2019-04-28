@@ -28,11 +28,22 @@ class ReportManagment extends ParentController
     public function new_cvr(){
         parent::get_notif_data();
         parent::VerifyRights();
-
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
         $competitions = DB::table('cvr_competition')->get();
-        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'competitions' => $competitions, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+        $data = DB::table('pick_up_delivery')->get();
+
+        $provinces = [];
+        $counter = 0;
+        array_map(function($item) use($data, &$provinces, &$counter, &$cities){
+            $provinces[$counter]['province'] = $item['province'];
+            $provinces[$counter]['id'] = $item['id'];
+            $counter ++;
+        }, json_decode($data, true));
+        
+        $filtered_privinces = $this->unique_multidim_array($provinces, "province");
+
+        return view('report_managment.new_cvr', ['categories' => DB::table('sub_categories')->get(), 'notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'cust' => $customers, 'competitions' => $competitions, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data]);
     }
 
     //Get Customers AND POC List
@@ -556,5 +567,25 @@ class ReportManagment extends ParentController
             return redirect('/');
         }
     }
+
+
+
+
+
+
+    function unique_multidim_array($array, $key) { 
+        $temp_array = array(); 
+        $i = 0; 
+        $key_array = array(); 
+        
+        foreach($array as $val) { 
+            if (!in_array($val[$key], $key_array)) { 
+                $key_array[$i] = $val[$key]; 
+                $temp_array[$i] = $val; 
+            } 
+            $i++; 
+        } 
+        return $temp_array; 
+    } 
 
 }

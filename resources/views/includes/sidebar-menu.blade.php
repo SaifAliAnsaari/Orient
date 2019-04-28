@@ -27,8 +27,8 @@
                 @if(in_array("/SCFAR", $test_array))
                     <a class="dropdown-item" href="/SCFAR">Access Rights</a>
                 @endif
-                @if(in_array("/pick_up", $test_array))
-                    <a class="dropdown-item" href="/pick_up">Pick Up & Delivery Location</a>
+                @if(in_array("/cities", $test_array))
+                    <a class="dropdown-item" href="/cities">Cities</a>
                 @endif
             </div>
         </li>
@@ -72,7 +72,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/images/comment.svg" alt="" />
-                <span>Complaints & Suggestions</span>
+                <span>Customer Complaints</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
                 @if(in_array("/complaints_settings", $test_array))
@@ -82,10 +82,10 @@
                     <a class="dropdown-item" href="/generate_complaints">Complaints Generate</a>
                 @endif
                 @if(in_array("/complaints_list", $test_array))
-                    <a class="dropdown-item" href="/complaints_list">New Complains</a>
+                    <a class="dropdown-item" href="/complaints_list">New Complaint</a>
                 @endif
                 @if(in_array("/resolved_complains", $test_array))
-                    <a class="dropdown-item" href="/resolved_complains">Resolved Complains</a>
+                    <a class="dropdown-item" href="/resolved_complains">Resolved Complaints</a>
                 @endif
             </div>
         </li>

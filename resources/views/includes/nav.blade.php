@@ -2,9 +2,15 @@
     <a class="hamburger" href="#" id="sidebarToggle"><i class="fas fa-bars"></i></a>
     <a class="_logo" href="/"><img src="/images/orichem.jpeg" alt="" /></a>
     <ul class="navbar-nav ml-auto top_nav">
-        <li class="nav-item TM_icon">
-            <a class="nav-link" href="#"><img src="/images/q-link-icon.svg" alt="" /></a>
-        </li>
+            <li class="nav-item TM_icon dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="Qlinks" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ URL::to('/images/q-link-icon.svg') }}" alt=""/></a>
+                    <div class="dropdown-menu dropdown-menu-right Qlinks" aria-labelledby="Qlinks">
+                    <h4 class="notiF-title">Quick Actions</h4>
+                    <a href="/new_cvr"><img src="{{ URL::to('/images/graph.svg') }}" alt=""> Add New CVR</a>
+                    <a href="/Customer_list"><img src="{{ URL::to('/images/add-report.svg') }}" alt=""> Add Customer</a>
+                    <a href="/register"><img src="{{ URL::to('/images/employee-list.svg') }}" alt=""> Add Employee</a>
+                    </div>
+                </li>
 
 
         @csrf

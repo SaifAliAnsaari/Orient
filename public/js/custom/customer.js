@@ -128,14 +128,6 @@ $(document).ready(function() {
                 $('input[name="address"]').val(response.info.address);
                 $('input[name="address"]').blur();
 
-                $('input[name="city"]').focus();
-                $('input[name="city"]').val(response.info.city);
-                $('input[name="city"]').blur();
-
-                $('input[name="state"]').focus();
-                $('input[name="state"]').val(response.info.state);
-                $('input[name="state"]').blur();
-
                 $('input[name="email"]').focus();
                 $('input[name="email"]').val(response.info.email);
                 $('input[name="email"]').blur();
@@ -150,6 +142,8 @@ $(document).ready(function() {
 
                 $('select[name="parent_company"]').val((response.info.parent_company ? response.info.parent_company : '0')).trigger('change')
                 $('select[name="industry"]').val(response.info.industry).trigger('change');
+                $('select[name="city"]').val(response.info.city).trigger('change');
+                $('select[name="province"]').val(response.info.state).trigger('change');
 
                 $('textarea[name="description"]').val(response.info.remarks);
 
@@ -317,6 +311,8 @@ $(document).ready(function() {
                         $("input[name='compName']").val('');
                         $("select[name='parent_company']").val('0').trigger('change');
                         $("select[name='industry']").val('0').trigger('change');
+                        $("select[name='city']").val('0').trigger('change');
+                        $("select[name='province']").val('0').trigger('change');
                         $("input[name='poc']").val('');
                         $("input[name='jobTitle']").val('');
                         $("input[name='bussinessPH']").val('');
@@ -792,6 +788,20 @@ $(document).ready(function() {
          }
        
      });
+
+
+
+
+    $(document).on('change', '#select_city', function(){
+        var id = $('#select_city option:selected').attr('name');
+        var cities_array = JSON.parse($('#full_cities_array').val());
+        cities_array.map(function(x) {
+            if(x.province == id){
+               $('#select_province').val(x.province).trigger('change');
+            }
+        }).indexOf(id);
+        
+    });
     
 });
 
@@ -825,7 +835,7 @@ function fetchCompaniesList() {
             _token: '{!! csrf_token() !!}'
         },
         success: function(response) {
-           console.log(response);
+           //console.log(response);
             $('.body').empty();
             $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>Address</th><th>City</th><th>Country</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();

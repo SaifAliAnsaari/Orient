@@ -137,14 +137,6 @@ $(document).ready(function() {
                 $('input[name="cnic"]').val(response.employee.cnic);
                 $('input[name="cnic"]').blur();
 
-                $('input[name="city"]').focus();
-                $('input[name="city"]').val(response.employee.city);
-                $('input[name="city"]').blur();
-
-                $('input[name="state"]').focus();
-                $('input[name="state"]').val(response.employee.state);
-                $('input[name="state"]').blur();
-
                 $('input[name="address"]').focus();
                 $('input[name="address"]').val(response.employee.address);
                 $('input[name="address"]').blur();
@@ -160,6 +152,8 @@ $(document).ready(function() {
                 $('input[name="salary"]').blur();
 
                 $('select[name="company"]').val(response.employee.company).trigger('change');
+                $('select[name="city"]').val(response.employee.city).trigger('change');
+                $('select[name="province"]').val(response.employee.state).trigger('change');
                 $('select[name="designation"]').val(response.employee.designation).trigger('change');
                 $('select[name="reporting"]').val(response.employee.reporting_to).trigger('change');
                 $('select[name="department"]').val(response.employee.department_id).trigger('change');
@@ -324,12 +318,26 @@ $(document).ready(function() {
                     $('#cancelEmployee').removeAttr('disabled');
                     $('#saveEmployee').text('Save');
                     if ($('#operation').val() !== "update") {
-                        $('#saveEmployeeForm').find("input[type=text], textarea").val("");
-                        $('#saveEmployeeForm').find("input[type=number], textarea").val("");
-                        $('#saveEmployeeForm').find("input[type=email], textarea").val("");
-                        $('#saveEmployeeForm').find("select").val("0").trigger('change');
+                        // $('#saveEmployeeForm').find("input[type=text], textarea").val("");
+                        // $('#saveEmployeeForm').find("input[type=number], textarea").val("");
+                        // $('#saveEmployeeForm').find("input[type=email], textarea").val("");
+                        // $('#saveEmployeeForm').find("select").val("0").trigger('change');
                         $('.dropify-clear').click();
-                        //$('select[name="country"]').val(1).trigger('change');
+                        $('input[name="name"]').val("");
+                        $('input[name="phone"]').val("");
+                        $('input[name="email"]').val("");
+                        $('input[name="cnic"]').val("");
+                        $('input[name="address"]').val("");
+                        $('input[name="username"]').val("");
+                        $('input[name="password"]').val("");
+                        $('input[name="hiring"]').val("");
+                        $('input[name="salary"]').val("");
+                        $('select[name="city"]').val('0').trigger('change');
+                        $('select[name="province"]').val('0').trigger('change');
+                        $('select[name="designation"]').val('0').trigger('change');
+                        $('select[name="reporting"]').val('0').trigger('change');
+                        $('select[name="department"]').val('0').trigger('change');
+                        $('select[name="company"]').val('0').trigger('change');
                     }
                     $('#pl-close').click();
                     $('#notifDiv').fadeIn();
@@ -791,6 +799,20 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+
+
+
+    $(document).on('change', '#select_city', function(){
+        var id = $('#select_city option:selected').attr('name');
+        var cities_array = JSON.parse($('#full_cities_array').val());
+        cities_array.map(function(x) {
+            if(x.province == id){
+               $('#select_province').val(x.province).trigger('change');
+            }
+        }).indexOf(id);
+        
     });
 
 });
