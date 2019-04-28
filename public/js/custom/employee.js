@@ -593,6 +593,7 @@ $(document).ready(function() {
         });
     });
 
+    //Change Password User Profile
     $(document).on('click', '#save_changes_userProfile', function(){
         if($('#current_password').val() != "" || $('#new_password').val() != "" || $('#confirm_password').val() != ""){
             if($('#new_password').val() != $('#confirm_password').val()){
@@ -658,6 +659,49 @@ $(document).ready(function() {
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'red');
                     $('#notifDiv').text('Password does not match.');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }
+            }
+        });
+    });
+
+    //Save Picture User Profile
+    $(document).on('click', '#save_pic_user_profile', function(){
+        $(this).text('PROCESSING....');
+        $(this).attr("disabled", "disabled");
+        $('#saveEditProfilePictureForm').ajaxSubmit({
+            type: "POST",
+            url: "/update_user_profile_pic",
+            data: $('#saveEditProfilePictureForm').serialize(),
+            cache: false,
+            success: function(response) {
+                if(JSON.parse(response) == "success"){
+                    $("#save_pic_user_profile").removeAttr('disabled');
+                    $("#save_pic_user_profile").text('Save');
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Updated successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                    location.reload();
+                }else if(JSON.parse(response) == "failed"){
+                    $("#save_pic_user_profile").removeAttr('disabled');
+                    $("#save_pic_user_profile").text('Save');
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to update');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "empty"){
+                    $("#save_pic_user_profile").removeAttr('disabled');
+                    $("#save_pic_user_profile").text('Save');
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Please select picture to upload.');
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);

@@ -101,17 +101,17 @@ class Employee extends ParentController
             if (Hash::check($request->current_password, $hashedPassword)) {
                 $employee->password = bcrypt($request->confirm_password);
     
-                if($request->hasFile('employeePicture')){
-                    $completeFileName = $request->file('employeePicture')->getClientOriginalName();
-                    $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
-                    $extension = $request->file('employeePicture')->getClientOriginalExtension();
-                    $empPicture = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
-                    $path = $request->file('employeePicture')->storeAs('public/employees', $empPicture);
-                    if(Storage::exists('public/employees/'.str_replace('./storage/employees/', '', $employee->picture))){
-                        Storage::delete('public/employees/'.str_replace('./storage/employees/', '', $employee->picture));
-                    }
-                    $employee->picture = './storage/employees/'.$empPicture;
-                }
+                // if($request->hasFile('employeePicture')){
+                //     $completeFileName = $request->file('employeePicture')->getClientOriginalName();
+                //     $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+                //     $extension = $request->file('employeePicture')->getClientOriginalExtension();
+                //     $empPicture = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
+                //     $path = $request->file('employeePicture')->storeAs('public/employees', $empPicture);
+                //     if(Storage::exists('public/employees/'.str_replace('./storage/employees/', '', $employee->picture))){
+                //         Storage::delete('public/employees/'.str_replace('./storage/employees/', '', $employee->picture));
+                //     }
+                //     $employee->picture = './storage/employees/'.$empPicture;
+                // }
     
                 if($employee->save()){
                     echo json_encode("success");
@@ -124,8 +124,33 @@ class Employee extends ParentController
                 echo json_encode('not_match');
                 die;
             }
-        }else if($request->hasFile('employeePicture')){
-            $test = $employee->picture;
+        }
+        // else if($request->hasFile('employeePicture')){
+        //     $test = $employee->picture;
+        //     $completeFileName = $request->file('employeePicture')->getClientOriginalName();
+        //     $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+        //     $extension = $request->file('employeePicture')->getClientOriginalExtension();
+        //     $empPicture = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
+        //     $path = $request->file('employeePicture')->storeAs('public/employees', $empPicture);
+        //     if(Storage::exists('public/employees/'.str_replace('./storage/employees/', '', $employee->picture))){
+        //         Storage::delete('public/employees/'.str_replace('./storage/employees/', '', $employee->picture));
+        //     }
+        //     $employee->picture = './storage/employees/'.$empPicture;
+        //     $employee->save();
+        //     echo json_encode("success");
+        //     die;
+        // }
+        else {
+            echo json_encode("empty"); 
+            die;
+        }
+
+        
+    }
+
+    public function update_user_profile_pic(Request $request){
+        $employee = User::find($request->user_id);
+        if($request->hasFile('employeePicture')){
             $completeFileName = $request->file('employeePicture')->getClientOriginalName();
             $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
             $extension = $request->file('employeePicture')->getClientOriginalExtension();
@@ -135,15 +160,14 @@ class Employee extends ParentController
                 Storage::delete('public/employees/'.str_replace('./storage/employees/', '', $employee->picture));
             }
             $employee->picture = './storage/employees/'.$empPicture;
-            $employee->save();
-            echo json_encode("success");
-            die;
-        }else {
-            echo json_encode("empty"); 
-            die;
+            if($employee->save()){
+                echo json_encode("success");
+            }else{
+                echo json_encode("failed");
+            }
+        }else{
+            echo json_encode('empty');
         }
-
-        
     }
 
 }

@@ -103,7 +103,7 @@
     <script src="/js/custom/customer.js?v=1.0.3"></script>
     </script>
     @elseif($controller == "RegisterController")
-    <script src="/js/custom/employee.js?v=1.0.4"></script>
+    <script src="/js/custom/employee.js?v=1.0.5"></script>
     @elseif($controller == "ReportManagment")
     <script src="/js/reports_managment/reports.js?v=1.0.6"></script>
     @elseif($controller == "Categories")

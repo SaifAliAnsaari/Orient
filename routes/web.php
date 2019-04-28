@@ -71,6 +71,7 @@ Route::post('/update_pickup', 'Auth\RegisterController@update_pickup');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');
+Route::post('/update_user_profile_pic', 'Employee@update_user_profile_pic');
 Route::post('/update_poc_fromPOCDetailPage', 'Customer@update_poc_fromPOCDetailPage');
 Route::post('/update_main_cat/{id}', 'Categories@update_main_cat');
 Route::post('/update_sub_cat/{id}', 'Categories@update_sub_cat');
