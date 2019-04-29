@@ -4,7 +4,7 @@ $(document).ready(function() {
     var action = segments[3];
     if (action == 'edit_profile'){
 
-    }else if(action == 'pick_up'){
+    }else if(action == 'cities'){
         fetchPickUpLocation();
     }else{
         fetchEmployeesList(); 
