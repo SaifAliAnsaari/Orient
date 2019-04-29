@@ -6,9 +6,9 @@
                     <a class="nav-link dropdown-toggle" href="#" id="Qlinks" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ URL::to('/images/q-link-icon.svg') }}" alt=""/></a>
                     <div class="dropdown-menu dropdown-menu-right Qlinks" aria-labelledby="Qlinks">
                     <h4 class="notiF-title">Quick Actions</h4>
-                    <a href="/new_cvr"><img src="{{ URL::to('/images/graph.svg') }}" alt=""> Add New CVR</a>
-                    <a href="/Customer_list"><img src="{{ URL::to('/images/add-report.svg') }}" alt=""> Add Customer</a>
-                    <a href="/register"><img src="{{ URL::to('/images/employee-list.svg') }}" alt=""> Add Employee</a>
+                    <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New CVR</a>
+                    <a href="/Customer_list"><img src="{{ URL::to('/images/customer-list.svg') }}" alt=""> Add Customer</a>
+                    <a href="/register"><img src="{{ URL::to('/images/add-emp.svg') }}" alt=""> Add Employee</a>
                     </div>
                 </li>
 

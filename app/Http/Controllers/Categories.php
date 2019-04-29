@@ -72,6 +72,8 @@ class Categories extends ParentController
 
 
 
+
+     
      public function sub_category(){
         parent::get_notif_data();
         parent::VerifyRights();
