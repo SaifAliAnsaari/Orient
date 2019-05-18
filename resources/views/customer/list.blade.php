@@ -2,6 +2,51 @@
 
 @section('data-sidebar')
 
+{{-- Modal --}}
+<div class="modal fade competition-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content top_border">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Parent Company <span> Details</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-wrap p-0">
+
+                    <div id="floating-label" class="pl-15 pr-15">
+                        <div class="form-wrap p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Company Name</label>
+                                        <input type="text" id="company_name"
+                                            class="form-control required_company" style="font-size:13px">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer  border-0">
+                        <button type="submit" class="btn btn-cancel cancel_company_modal" data-dismiss="modal"
+                            aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-primary add_company_modal">Add</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     
 <div id="product-cl-sec">
     <a href="" id="pl-close" class="close-btn-pl close_customer_form"></a>
@@ -32,16 +77,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12">
-                                                    <div>
-                                                        <select class="form-control formselect" name="parent_company" placeholder="Select Customer Type">
-                                                            <option value="0" selected disabled>Select Parent Company</option>
-                                                            @if(!empty($parent_comp))
-                                                                @foreach ($parent_comp as $comp)
-                                                                    <option value="{{$comp->id}}">{{$comp->company_name}}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
+                                                    <div class="ADD_Select">
+                                                        <div class="form-s2 selpluse">
+                                                            <div>
+                                                                <select class="form-control formselect" id="parent_company" name="parent_company" placeholder="Select Customer Type">
+                                                                    <option value="0" selected disabled>Select Parent Company</option>
+                                                                   
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <a href="#" class="btn plus_button po-ab"
+                                                            data-toggle="modal" data-target=".competition-lg"><i
+                                                                class="fa fa-plus"></i></a>
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="form-s2 col-md-12 pt-10">
                                                     <div>

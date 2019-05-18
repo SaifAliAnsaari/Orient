@@ -2,6 +2,7 @@ var add_poc_list = [];
 var add_competition_list = [];
 var purpose_array = [];
 var products_array = [];
+var company_id = 0;
 $(document).ready(function () {
     var segments = location.href.split('/');
     var action = segments[3];
@@ -11,21 +12,37 @@ $(document).ready(function () {
     // var products_array = [];
 
     $('#datepicker').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        autoclose: true
     });
 
   
 
     if (action == 'new_cvr') {
         fetchCustomersforCVR('0');
+        fetchParentCompanies(company_id);
     }else if(action == 'cvr_list'){
         var type = "1";
         $('.select_cvr_type').val('1').trigger('change');
         fetchCvrList(type);
     }else if(action == 'edit_cvr'){
         fetchCustomersforCVR('0');
+        fetchParentCompanies(company_id);
         setTimeout(() => {
             fetchCurrentCvrData();
+        }, 500); 
+    }else if(action == 'new_svr'){
+        fetchCustomersforCVR('0');
+        fetchParentCompanies(company_id);
+    }else if(action == 'svr_list'){
+        var type = "1";
+        $('.select_svr_type').val('1').trigger('change');
+        fetchSvrList(type);
+    }else if(action == 'edit_svr'){
+        fetchCustomersforCVR('0');
+        fetchParentCompanies(company_id);
+        setTimeout(() => {
+            fetchCurrentSvrData();
         }, 500); 
     }
 
@@ -33,7 +50,7 @@ $(document).ready(function () {
     //Customer Selected
     $(document).on('change', '#cvr_customers_list', function(){
         id = $(this).val();
-        $('location').val('');
+        $('#location').val('');
         $('.cvr_poc_list').find('option').remove();
         $('.cvr_poc_list').append('<option selected disabled value="0">Processing...</option>');
 
@@ -529,7 +546,7 @@ $(document).ready(function () {
             url: '/fpdf',
             data: data,
             success: function(response){
-                console.log(response);
+                //console.log(response);
             }
         });
     });
@@ -659,8 +676,6 @@ $(document).ready(function () {
             return;
         }
 
-
-
         $('.save_cvr').text('Processing...');
         $('.save_cvr').attr('disabled', 'disabled');
         $('.cancel_cvr').attr('disabled', 'disabled');
@@ -745,8 +760,6 @@ $(document).ready(function () {
 
 
 
-
-
     //Update CVR
     $(document).on('click', '.update_cvr', function(){
         if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='Opportunity']:checked").val() == "" || $("input[name='Opportunity']:checked").val() == "undefined" || $("input[name='Opportunity']:checked").val() == null || $("input[name='AnnualBusiness']:checked").val() == "" || $("input[name='AnnualBusiness']:checked").val() == "undefined" || $("input[name='AnnualBusiness']:checked").val() == null || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || $("input[name='competitions_strength']:checked").val() == "" || $("input[name='competitions_strength']:checked").val() == "undefined" || $("input[name='competitions_strength']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
@@ -822,20 +835,17 @@ $(document).ready(function () {
     });
 
 
-
-
-
     //Save Approval
     $(document).on('click', '.save_approval', function(){
-        if($('textarea[name=remarks]').val() == ''){
-            $('#notifDiv').fadeIn();
-            $('#notifDiv').css('background', 'red');
-            $('#notifDiv').text('Please Enter Remarks!');
-            setTimeout(() => {
-                $('#notifDiv').fadeOut();
-            }, 3000);
-            return;
-        }
+        // if($('textarea[name=remarks]').val() == ''){
+        //     $('#notifDiv').fadeIn();
+        //     $('#notifDiv').css('background', 'red');
+        //     $('#notifDiv').text('Please Enter Remarks!');
+        //     setTimeout(() => {
+        //         $('#notifDiv').fadeOut();
+        //     }, 3000);
+        //     return;
+        // }
 
         var approval = $("input[name='approval_radio']:checked").val();
         var id = $(this).attr('id');
@@ -880,9 +890,7 @@ $(document).ready(function () {
     });
 
 
-
-
-    //Select CVR Type
+    //Select CVR Type Filter
     $(document).on('change', '.select_cvr_type', function(){
         $('.body').empty();
         $('#tblLoader').show();
@@ -890,15 +898,10 @@ $(document).ready(function () {
     });
 
 
-
-
     //Cancel buttons
     $(document).on('click', '.cancel_cvr', function(){
         location.href = '/cvr_list';
     });
-
-
-
 
 
     $(document).on('change', '#select_city', function(){
@@ -911,6 +914,356 @@ $(document).ready(function () {
         }).indexOf(id);
         
     });
+
+    //Add Parent Company
+    $(document).on('click', '.add_company_modal', function(){
+        var verif = [];
+        $('.required_company').each(function () {
+            if ($(this).val() == "") {
+                $(this).css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else {
+                verif.push(true);
+            }
+            
+        });
+        if (jQuery.inArray(false, verif) != -1) {
+            return;
+        }
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $('.cancel_company_modal').attr('disabled', 'disabled');
+        $.ajax({
+            type: 'GET',
+            url: '/save_parent_company',
+            data: {
+                _token: '{!! csrf_token() !!}',
+               name: $('#company_name').val()
+            },
+            success: function(response) {
+                thisRef.removeAttr('disabled');
+                $('.cancel_company_modal').removeAttr('disabled');
+                thisRef.text('Save');
+                if(JSON.parse(response) == "already_exist"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Parent Company already exist');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "failed"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to add parent company');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else{
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                    $('#company_name').val('');
+                    fetchParentCompanies(JSON.parse(response));
+                    $('.cancel_company_modal').click();
+                }   
+            }
+        });
+
+    });
+
+
+
+
+
+
+    //SVR
+    //Save SVR
+    $(document).on('click', '.save_svr', function () {
+
+        var verif = [];
+        $('.required_core').each(function () {
+            if ($(this).val() == "") {
+                $(this).css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else if ($(this).val() == 0 || $(this).val() == null) {
+                $(this).parent().css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else {
+                verif.push(true);
+            }
+        });
+
+        if (jQuery.inArray(false, verif) != -1) {
+            return;
+        }
+
+        if($("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Relationship');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if($("input[name='competitions_strength']:checked").val() == "" || $("input[name='competitions_strength']:checked").val() == "undefined" || $("input[name='competitions_strength']:checked").val() == null){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Select Competitor Strength');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+
+        if(purpose_array.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Purpose of Visit');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(products_array.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Prooducts');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(add_poc_list.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Add POC');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        if(add_competition_list.length == 0){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Define Competition');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        $('.save_svr').text('Processing...');
+        $('.save_svr').attr('disabled', 'disabled');
+        $('.cancel_svr').attr('disabled', 'disabled');
+
+        $.ajax({
+            type: 'POST',
+            url: '/save_svr',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                poc_list: add_poc_list,
+                competition_list: add_competition_list,
+                purpose: purpose_array + "",
+                products: products_array,
+                date: $('#datepicker').val(),
+                customer_id: $('#cvr_customers_list').val(),
+                location: $('#location').val(),
+                time_spent: $('#time_spent').val(),
+                relationship: $("input[name='relationship']:checked").val() + "",
+                competitions_strength: $("input[name='competitions_strength']:checked").val() + "",
+                description: $('#des_svr').val()
+            },
+            success: function (response) {
+                console.log(response);
+                $('.save_svr').removeAttr('disabled');
+                $('.cancel_svr').removeAttr('disabled');
+                $('.save_svr').text('Submit');
+
+                if (JSON.parse(response) == "failed") {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add SVR at the moment.');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+
+                } else if (JSON.parse(response) == "success") {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', '#0038ba');
+                    $('#notifDiv').text('SVR has been added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                    $('#cvr_customers_list').val('0').trigger('change');
+                    $('#location').val('');
+                    $('#time_spent').val('');
+                    $("textarea[name='des_cvr']").val('');
+                    $('.cvr_poc_list').find('option').remove();
+                    $('.purpose_checkboxes').prop('checked', false);
+                    $('.checkboxes_products').prop('checked', false);
+                    $("input[name='competitions_strength']").prop('checked', false);
+                    $("input[name='relationship']").prop('checked', false);
+                    purpose_array = [];
+                    products_array = [];
+                    add_poc_list = [];
+                    add_competition_list = [];
+                    $('.poc_show_list').empty();
+                    $('.competition_list_div').empty();
+                    $('.open_confirmation_modal').click();
+                    $('#des_svr').val('');
+                }
+            }
+        });
+
+    });
+
+     //Select SVR Type Filter
+    $(document).on('change', '.select_svr_type', function(){
+        $('.body').empty();
+        $('#tblLoader').show();
+        fetchSvrList($('.select_svr_type').val());
+    });
+
+    //Update SVR
+    $(document).on('click', '.update_svr', function(){
+        if ($('#datepicker').val() == "" || $('#cvr_customers_list').val() == '0' || $('#cvr_customers_list').val() == null || $('#location').val() == "" || $('#time_spent').val() == "" || $("input[name='relationship']:checked").val() == "" || $("input[name='relationship']:checked").val() == "undefined" || $("input[name='relationship']:checked").val() == null || $("input[name='competitions_strength']:checked").val() == "" || $("input[name='competitions_strength']:checked").val() == "undefined" || $("input[name='competitions_strength']:checked").val() == null || purpose_array.length == 0 || products_array.length == 0 || add_poc_list.length == 0 || add_competition_list.length == 0) {
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Something Missing');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
+
+        $('.update_svr').text('Processing...');
+        $('.update_svr').attr('disabled', 'disabled');
+        $('.cancel_svr').attr('disabled', 'disabled');
+        //$('.preview_cvr').attr('disabled', 'disabled');
+
+        $.ajax({
+            type: 'POST',
+            url: '/update_svr',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                svr_id: $('#hidden_svr_id').val(),
+                poc_list: add_poc_list,
+                competition_list: add_competition_list,
+                purpose: purpose_array + "",
+                products: products_array,
+                date: $('#datepicker').val(),
+                customer_id: $('#cvr_customers_list').val(),
+                location: $('#location').val(),
+                time_spent: $('#time_spent').val(),
+                relationship: $("input[name='relationship']:checked").val() + "",
+                competitions_strength: $("input[name='competitions_strength']:checked").val() + "",
+                description: $('#des_svr').val()
+            },
+            success: function (response) {
+                $('.update_svr').removeAttr('disabled');
+                $('.cancel_svr').removeAttr('disabled');
+               // $('.preview_cvr').removeAttr('disabled');
+                $('.update_svr').text('Submit');
+
+                if (JSON.parse(response) == "failed") {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add SVR at the moment.');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+
+                } else if (JSON.parse(response) == "success") {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', '#0038ba');
+                    $('#notifDiv').text('SVR has been added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                    $('.open_confirmation_modal').click();
+                    //location.replace("/");
+                }
+            }
+        });
+    });
+
+    //Save SVR Approval
+    $(document).on('click', '.save_svr_approval', function(){
+
+        var approval = $("input[name='approval_radio']:checked").val();
+        var id = $(this).attr('id');
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $('.cancel_svr_modal').attr('disabled', 'disabled');
+
+        $.ajax({
+            type: 'POST',
+            url: '/save_svr_approval',
+            data: {
+                _token: $('input[name="_token"]').val(),
+                id: id,
+                approval: approval,
+                remarks: $('textarea[name=remarks]').val()
+            },
+            success: function (response) {
+                var response = JSON.parse(response);
+                thisRef.text('Save');
+                thisRef.removeAttr('disabled');
+                $('.cancel_svr_modal').removeAttr('disabled');
+                if (response == 'failed') {
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add Approval at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else {
+                    window.location.replace("/svr_list");
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Added Successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                   
+                }
+            }
+        });
+    });
+
+    
 
 });
 
@@ -961,7 +1314,7 @@ function fetchCvrList(type){
             type: type
         },
         success: function(response) {
-            //console.log(response); return;
+            //console.log(response);
             $('.body').empty();
             $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Sales Engineer</th><th>Customer</th><th>Date Of Report</th><th>Date Of Visit</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
@@ -969,6 +1322,31 @@ function fetchCvrList(type){
             response.info.forEach(element => {
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
                 $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default">View Detail</button></a>' : "")) +'<a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+            });
+            $('#tblLoader').hide();
+            $('.body').fadeIn();
+            $('#companiesListTable').DataTable();
+        }
+    });
+}
+
+function fetchSvrList(type){
+    $.ajax({
+        type: 'GET',
+        url: '/GetSVRList',
+        data: {
+            _token: '{!! csrf_token() !!}',
+            type: type
+        },
+        success: function(response) {
+           // console.log(response); 
+            $('.body').empty();
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Sales Engineer</th><th>Customer</th><th>Date Of Report</th><th>Date Of Visit</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('#companiesListTable tbody').empty();
+            var response = JSON.parse(response);
+            response.info.forEach(element => {
+                // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_svr_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default">View Detail</button></a>' : "")) +'<a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
@@ -1068,6 +1446,118 @@ function fetchCurrentCvrData(){
            
         }
     }); 
+}
+
+function fetchCurrentSvrData(){
+    var segments = location.href.split('/');
+    
+    $.ajax({
+        type: 'GET',
+        url: '/GetCurrentSvr/'+segments[4],
+        data: {
+            _token: '{!! csrf_token() !!}'
+        },
+        success: function(response) {
+           //console.log(response);
+            var response = JSON.parse(response);
+            $('#curr_date').text(response.core.report_created_at);
+            $('#user_name').text(response.core.created_by);
+            //$('#datepicker').val(response.core.date_of_visit);
+            $('#datepicker').datepicker("setDate", new Date(response.core.date_of_visit));
+            $('#cvr_customers_list').val(response.core.customer_visited).trigger('change');
+            $('#location').val(response.core.location);
+            $('#time_spent').val(response.core.time_spent);
+            $('.relationship').filter(function(){
+                return this.value === response.core.relationship ;
+            }).prop('checked', true);
+            
+            $('#des_svr').text(response.core.description);
+            if (response.core.purpose_of_visit.indexOf(',') > -1){
+                var array = response.core.purpose_of_visit.split(",");
+                $.each(array,function(i){
+                    $('.purpose_checkboxes').filter(function(){
+                        if(this.value === array[i]){
+                            purpose_array.push(array[i]);
+                        }
+                        return this.value === array[i];
+                    }).prop('checked', true);
+                    });
+            }else{
+                $('.purpose_checkboxes').filter(function(){
+                    if(this.value === response.core.purpose_of_visit){
+                        purpose_array.push(response.core.purpose_of_visit);
+                    }
+                    return this.value === response.core.purpose_of_visit;
+                }).prop('checked', true);
+            }
+
+            setTimeout(() => {
+                $('#location').focus(); 
+                $('#time_spent').focus();
+            }, 500);
+            
+            $.each(response.products,function(i){
+                $('.checkboxes_products').filter(function(){
+                    if(this.value === response.products[i].category_id + ""){
+                        products_array.push(response.products[i].category_id + "");
+                    }
+                    return this.value === response.products[i].category_id + "";
+                }).prop('checked', true);
+            });
+            
+            $('.poc_show_list').empty();
+            $.each(response.poc,function(i){
+                $('.poc_show_list').append('<div class="alert fade show alert-color _add-secon" role="alert">'+ response.poc[i].poc_name +'<button type="button" name="' + response.poc[i].poc_id + '" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                add_poc_list.push({
+                    "poc_id": response.poc[i].poc_id,
+                    "poc_name": response.poc[i].poc_name
+                });
+            });
+
+            $('.competition_list_div').empty();
+            var competitor_strength = '';
+            $.each(response.competitions,function(i){
+                competitor_strength = response.competitions[i].strength;
+                $('.competition_list_div').append('<div class="alert fade show alert-color _add-secon" role="alert"><strong>Name: &nbsp;</strong>' + response.competitions[i].name + '<button id="' + response.competitions[i].name + '-' + response.competitions[i].strength + '" type="button" class="close delete_one_competitor" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                add_competition_list.push({
+                    //"strength": response.competitions[i].strength,
+                    "name": response.competitions[i].name
+                });
+            });
+            $('input[name="competitions_strength"]').filter(function(){
+                return this.value === competitor_strength;
+            }).prop('checked', true);
+
+            // console.log(purpose_array);
+            // console.log(products_array);
+           
+        }
+    }); 
+}
+
+function fetchParentCompanies(company_id){
+    $('#parent_company').find('option').remove();
+    $('#parent_company').append('<option selected disabled value="0">Processing...</option>');
+
+    $.ajax({
+        type: 'GET',
+        url: '/GetCompaniesForCustomers',
+        data: {
+            _token: '{!! csrf_token() !!}'
+        },
+        success: function (response) {
+            var response = JSON.parse(response);
+            $('#parent_company').find('option').remove();
+            $('#parent_company').append('<option selected disabled value="0">Select Parent Company</option>');
+            response.forEach(element => {
+                $('#parent_company').append('<option value="' + element.id + '" '+ (element.id == company_id ? "selected" : '') +'>' + element.name + '</option>');
+            });
+            
+            setTimeout(() => {
+                $('#parent_company').val(company_id+"").trigger('change');
+            }, 500);
+        }
+    });
 }
 
 function validateEmail(email) {

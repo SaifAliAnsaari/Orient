@@ -128,6 +128,7 @@ $(document).ready(function () {
                      }, 3000);
                      $('#route_name').val("");
                      $('#show_up_name').val("");
+                     window.location  = '/SCFAR';
                 } else{
                     $('.save_rights').removeAttr('disabled');
                     $('.save_rights').text('Save');

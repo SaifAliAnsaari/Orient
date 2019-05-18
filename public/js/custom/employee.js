@@ -6,12 +6,15 @@ $(document).ready(function() {
 
     }else if(action == 'cities'){
         fetchPickUpLocation();
+    }else if(action == 'designations'){
+        fetchDesignations();
     }else{
         fetchEmployeesList(); 
     }
 
     $('#datepicker').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        autoclose: true
     });
 
     
@@ -47,13 +50,18 @@ $(document).ready(function() {
 
             $('input[name="hiring"]').val("");
 
-            $('input[name="salary"]').val("");
-            $('input[name="salary"]').blur();
+            // $('input[name="salary"]').val("");
+            // $('input[name="salary"]').blur();
 
            // $('select[name="country"]').val(1).trigger('change');
             $('select[name="designation"]').val(0).trigger('change');
             $('select[name="reporting"]').val(0).trigger('change');
             $('select[name="department"]').val(0).trigger('change');
+            $('select[name="division"]').val(0).trigger('change');
+            $('select[name="select_sales_emp"]').val(0).trigger("change");
+            $('select[name="select_service_emp"]').val(0).trigger("change");
+            $('select[name="select_complaints_emp"]').val(0).trigger("change");
+            $('select[name="select_customers_emp"]').val(0).trigger("change");
         }
         lastOp = 'add';
         $('#operation').val('add');
@@ -95,6 +103,21 @@ $(document).ready(function() {
         $('body').toggleClass('no-scroll');
     });
 
+    $(document).on('click', '.openDataSidebarForAddingDesignation', function() {
+        //$('#dataSidebarLoader').hide();
+        if (lastOp == "update") {
+            $('input[name="designation_name"]').val("");
+            $('input[name="designation_name"]').blur();
+        }
+        lastOp = 'add';
+        $('#operation').val('add');
+        $('#product-cl-sec').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        $('body').toggleClass('no-scroll');
+    });
+
 
 
 
@@ -108,13 +131,18 @@ $(document).ready(function() {
         $('#dropifyImgDiv').empty();
         $('#dropifyImgDiv').append('<input type="file" name="employeePicture" id="employeePicture" />');
 
+        $('select[name="select_sales_emp"]').val(0).trigger("change");
+        $('select[name="select_service_emp"]').val(0).trigger("change");
+        $('select[name="select_complaints_emp"]').val(0).trigger("change");
+        $('select[name="select_customers_emp"]').val(0).trigger("change");
+
         var id = $(this).attr('id');
         $('input[name="employee_updating_id"]').val(id)
         $.ajax({
             type: 'GET',
             url: '/Employee/' + id,
             success: function(response) {
-                //console.log(response);
+                console.log(response);
                 var response = JSON.parse(response);
                 $('#dataSidebarLoader').hide();
                 $('._cl-bottom').show();
@@ -145,11 +173,12 @@ $(document).ready(function() {
                 $('input[name="username"]').val(response.employee.username);
                 $('input[name="username"]').blur();
 
-                $('input[name="hiring"]').val(response.employee.hiring);
+                //$('input[name="hiring"]').val(response.employee.hiring);
+                $('input[name="hiring"]').datepicker("setDate", new Date(response.employee.hiring));
 
-                $('input[name="salary"]').focus();
-                $('input[name="salary"]').val(response.employee.salary);
-                $('input[name="salary"]').blur();
+                // $('input[name="salary"]').focus();
+                // $('input[name="salary"]').val(response.employee.salary);
+                // $('input[name="salary"]').blur();
 
                 $('select[name="company"]').val(response.employee.company).trigger('change');
                 $('select[name="city"]').val(response.employee.city).trigger('change');
@@ -157,6 +186,32 @@ $(document).ready(function() {
                 $('select[name="designation"]').val(response.employee.designation).trigger('change');
                 $('select[name="reporting"]').val(response.employee.reporting_to).trigger('change');
                 $('select[name="department"]').val(response.employee.department_id).trigger('change');
+                $('select[name="division"]').val(response.employee.division).trigger('change');
+
+                var cvrs = [];
+                JSON.parse("[" + response.notif.cvr + "]").forEach(element => {
+                    cvrs.push(element);
+                });
+
+                var svrs = [];
+                JSON.parse("[" + response.notif.svr + "]").forEach(element => {
+                    svrs.push(element);
+                });
+
+                var complaints = [];
+                JSON.parse("[" + response.notif.complaint + "]").forEach(element => {
+                    complaints.push(element);
+                });
+
+                var customers = [];
+                JSON.parse("[" + response.notif.customer + "]").forEach(element => {
+                    customers.push(element);
+                });
+
+                $('select[name="select_sales_emp"]').val(cvrs).trigger("change");
+                $('select[name="select_service_emp"]').val(svrs).trigger("change");
+                $('select[name="select_complaints_emp"]').val(complaints).trigger("change");
+                $('select[name="select_customers_emp"]').val(customers).trigger("change");
 
                 var imgUrl = response.base_url + response.employee.picture;
                 $("#employeePicture").attr("data-height", '100px');
@@ -234,6 +289,38 @@ $(document).ready(function() {
         $('body').toggleClass('no-scroll');
     });
 
+    $(document).on('click', '.openDataSidebarForUpdateDesignation', function(){
+        $('#operation').val('update');
+        lastOp = 'update';
+        $('#dataSidebarLoader').show();
+        $('._cl-bottom').hide();
+        $('.pc-cartlist').hide();
+
+        var id = $(this).attr('id');
+        $('input[name="designation_update_id"]').val(id)
+        $.ajax({
+            type: 'GET',
+            url: '/get_designation/' + id,
+            success: function(response) {
+                console.log(response);
+                var response = JSON.parse(response);
+                $('#dataSidebarLoader').hide();
+                $('._cl-bottom').show();
+                $('.pc-cartlist').show();
+
+                $('input[name="designation_name"]').focus();
+                $('input[name="designation_name"]').val(response.name);
+                $('input[name="designation_name"]').blur();
+            }
+        });
+
+        $('#product-cl-sec').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        $('body').toggleClass('no-scroll');
+    });
+
 
 
 
@@ -295,7 +382,11 @@ $(document).ready(function() {
                 return;
             }
         }
-        
+
+        $('input[name="hidden_cvr_emp"]').val($('select[name="select_sales_emp"]').val());
+        $('input[name="hidden_svr_emp"]').val($('select[name="select_service_emp"]').val());
+        $('input[name="hidden_complaint_emp"]').val($('select[name="select_complaints_emp"]').val());
+        $('input[name="hidden_customers_emp"]').val($('select[name="select_customers_emp"]').val());
 
         $('#saveEmployee').attr('disabled', 'disabled');
         $('#cancelEmployee').attr('disabled', 'disabled');
@@ -312,41 +403,8 @@ $(document).ready(function() {
             data: $('#saveEmployeeForm').serialize(),
             cache: false,
             success: function(response) {
-                if (JSON.parse(response) == "success") {
-                    fetchEmployeesList();
-                    $('#saveEmployee').removeAttr('disabled');
-                    $('#cancelEmployee').removeAttr('disabled');
-                    $('#saveEmployee').text('Save');
-                    if ($('#operation').val() !== "update") {
-                        // $('#saveEmployeeForm').find("input[type=text], textarea").val("");
-                        // $('#saveEmployeeForm').find("input[type=number], textarea").val("");
-                        // $('#saveEmployeeForm').find("input[type=email], textarea").val("");
-                        // $('#saveEmployeeForm').find("select").val("0").trigger('change');
-                        $('.dropify-clear').click();
-                        $('input[name="name"]').val("");
-                        $('input[name="phone"]').val("");
-                        $('input[name="email"]').val("");
-                        $('input[name="cnic"]').val("");
-                        $('input[name="address"]').val("");
-                        $('input[name="username"]').val("");
-                        $('input[name="password"]').val("");
-                        $('input[name="hiring"]').val("");
-                        $('input[name="salary"]').val("");
-                        $('select[name="city"]').val('0').trigger('change');
-                        $('select[name="province"]').val('0').trigger('change');
-                        $('select[name="designation"]').val('0').trigger('change');
-                        $('select[name="reporting"]').val('0').trigger('change');
-                        $('select[name="department"]').val('0').trigger('change');
-                        $('select[name="company"]').val('0').trigger('change');
-                    }
-                    $('#pl-close').click();
-                    $('#notifDiv').fadeIn();
-                    $('#notifDiv').css('background', 'green');
-                    $('#notifDiv').text('Employee have been added successfully');
-                    setTimeout(() => {
-                        $('#notifDiv').fadeOut();
-                    }, 3000);
-                } else if(JSON.parse(response) == "email_exist") {
+                //console.log(response);
+                if(JSON.parse(response) == "email_exist") {
                     $('#saveEmployee').removeAttr('disabled');
                     $('#cancelEmployee').removeAttr('disabled');
                     $('#saveEmployee').text('Save');
@@ -389,6 +447,39 @@ $(document).ready(function() {
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'red');
                     $('#notifDiv').text('Username already exist....');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else{
+                    fetchEmployeesList();
+                    $('#saveEmployee').removeAttr('disabled');
+                    $('#cancelEmployee').removeAttr('disabled');
+                    $('#saveEmployee').text('Save');
+                    if ($('#operation').val() !== "update") {
+                        $('.dropify-clear').click();
+                        $('input[name="name"]').val("");
+                        $('input[name="phone"]').val("");
+                        $('input[name="email"]').val("");
+                        $('input[name="cnic"]').val("");
+                        $('input[name="address"]').val("");
+                        $('input[name="username"]').val("");
+                        $('input[name="password"]').val("");
+                        $('input[name="hiring"]').val("");
+                        //$('input[name="salary"]').val("");
+                        $('select[name="city"]').val('0').trigger('change');
+                        $('select[name="province"]').val('0').trigger('change');
+                        $('select[name="designation"]').val('0').trigger('change');
+                        $('select[name="reporting"]').val('0').trigger('change');
+                        $('select[name="department"]').val('0').trigger('change');
+                        $('select[name="company"]').val('0').trigger('change');
+                        $('select[name="division"]').val('0').trigger('change');
+                        $('.open_confirmation_modal').click();
+                        $('.access_right_link').attr('href', '/access_rights/'+JSON.parse(response));
+                    }
+                    $('#pl-close').click();
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Employee have been added successfully');
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
@@ -510,6 +601,99 @@ $(document).ready(function() {
             }
         });
        
+    });
+
+    $(document).on('click', '#saveDesignation', function(){
+        var verif = [];
+        $('.required').css('border', '');
+        $('.required').parent().css('border', '');
+
+        $('.required').each(function () {
+            if ($(this).val() == "") {
+                $(this).css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else {
+                verif.push(true);
+            }
+        });
+
+        if(verif.includes(false)){
+            return;
+        }
+
+        $('#saveDesignation').attr('disabled', 'disabled');
+        $('#cancelDesignation').attr('disabled', 'disabled');
+        $('#saveDesignation').text('Processing..');
+        var ajaxUrl = "/save_designation";
+
+        if ($('#operation').val() !== "add") {
+            ajaxUrl = "/UpdateDesignation/" + $('input[name="designation_update_id"]').val();
+        }
+
+        $('#saveDesignationForm').ajaxSubmit({
+            type: "POST",
+            url: ajaxUrl,
+            data: $('#saveDesignationForm').serialize(),
+            cache: false,
+            success: function(response) {
+                //console.log(response);
+                $('#saveDesignation').removeAttr('disabled');
+                $('#cancelDesignation').removeAttr('disabled');
+                $('#saveDesignation').text('Save');
+                if(JSON.parse(response) == "failed"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Failed to add Designation at the moment......');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "already exist"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Designation already exist....');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else{
+                    fetchDesignations();
+                    if ($('#operation').val() !== "update") {
+                        $('input[name="designation_name"]').val("");
+                        $('#pl-close').click();
+                    }
+                    
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Designation have been added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }
+            },
+            error: function(err) {
+                $('#saveDesignation').removeAttr('disabled');
+                $('#cancelDesignation').removeAttr('disabled');
+                $('#saveDesignation').text('Save');
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Failed to add Designation at the moment');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                if (err.status == 422) {
+                    $.each(err.responseJSON.errors, function(i, error) {
+                        var el = $(document).find('[name="' + i + '"]');
+                        el.after($('<small style="color: red; position: absolute; width:100%; text-align: right; margin-left: -30px">' + error[0] + '</small>'));
+                    });
+                }
+            }
+        });
     });
 
 
@@ -713,6 +897,7 @@ $(document).ready(function() {
 
 
 
+    //Delete
     $(document).on('click', '.deletepickUp', function(){
         var id = $(this).attr('id');
         var thisRef = $(this);
@@ -747,6 +932,43 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(document).on('click', '.delete_designation', function(){
+        var id = $(this).attr('id');
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $.ajax({
+            type: 'GET',
+            url: '/delete_designation',
+            data: {
+                _token: '{!! csrf_token() !!}',
+               id: id
+           },
+            success: function(response) {
+                thisRef.removeAttr('disabled');
+                thisRef.text('Delete');
+                if(JSON.parse(response) == "success"){
+                    fetchDesignations();
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Deleted successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "failed"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to Delete at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }    
+            }
+        });
+    });
+
+
 
     $(document).on('click', '.updatePickUp', function(){
         var id = $(this).attr('id');
@@ -896,6 +1118,25 @@ function fetchPickUpLocation(){
             $('#tblLoader').hide();
             $('.body').fadeIn();
             $('#clientsListTable').DataTable();
+        }
+    });
+}
+
+function fetchDesignations(){
+    $.ajax({
+        type: 'GET',
+        url: '/DesignationsList',
+        success: function(response) {
+            $('.body').empty();
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="DesignationsListTable" style="width:100%"><thead><tr><th>ID</th><th>Designation Name</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('#DesignationsListTable tbody').empty();
+            var response = JSON.parse(response);
+            response.forEach(element => {
+                $('#DesignationsListTable tbody').append(`<tr><td>${element['id']}</td><td>${element['name']}</td><td><button id="${element['id']}" class="btn btn-default btn-line openDataSidebarForUpdateDesignation">Edit</button><button id="${element['id']}" class="btn btn-default red-bg delete_designation" title="Delete">Delete</button></td></tr>`);
+            });
+            $('#tblLoader').hide();
+            $('.body').fadeIn();
+            $('#DesignationsListTable').DataTable();
         }
     });
 }

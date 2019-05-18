@@ -30,6 +30,9 @@
                 @if(in_array("/cities", $test_array))
                     <a class="dropdown-item" href="/cities">Cities</a>
                 @endif
+                @if(in_array("/designations", $test_array))
+                    <a class="dropdown-item" href="/designations">Designations</a>
+                @endif
             </div>
         </li>
     @endif
@@ -55,7 +58,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/images/report.svg" alt="" />
-                <span>Report Management</span>
+                <span>Sales Report</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
                 @if(in_array("/new_cvr", $test_array))
@@ -67,6 +70,23 @@
             </div>
         </li>
     @endif
+    @if(in_array("/new_svr", $test_array) || in_array("/svr_list", $test_array))
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <img src="/images/report.svg" alt="" />
+            <span>Service Report</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navi-l1">
+            @if(in_array("/new_svr", $test_array))
+                <a class="dropdown-item" href="/new_svr">Add New SVR</a>
+            @endif
+            @if(in_array("/svr_list", $test_array))
+                <a class="dropdown-item" href="/svr_list">SVR List</a>
+            @endif
+        </div>
+    </li>
+@endif
     @if(in_array("/complaints_settings", $test_array) || in_array("/generate_complaints", $test_array) || in_array("/complaints_list", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -107,7 +127,7 @@
             </div>
         </li>
     @endif
-    @if(in_array("/notification_prefrences", $test_array))
+    {{-- @if(in_array("/notification_prefrences", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -120,7 +140,7 @@
                 @endif
             </div>
         </li>
-    @endif
+    @endif --}}
     <?php }
     ?>
 </ul>

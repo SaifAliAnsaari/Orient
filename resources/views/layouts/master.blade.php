@@ -100,18 +100,18 @@
     <script src="/js/dropzone.js"></script>
     {{--<script src="/js/dropzone-data.js"></script> --}}
     @if($controller == "Customer")
-    <script src="/js/custom/customer.js?v=1.0.3"></script>
+    <script src="/js/custom/customer.js?v=1.0.4"></script>
     </script>
     @elseif($controller == "RegisterController")
-    <script src="/js/custom/employee.js?v=1.0.5"></script>
+    <script src="/js/custom/employee.js?v=1.0.6"></script>
     @elseif($controller == "ReportManagment")
-    <script src="/js/reports_managment/reports.js?v=1.0.6"></script>
+    <script src="/js/reports_managment/reports.js?v=1.0.7"></script>
     @elseif($controller == "Categories")
-    <script src="/js/categories/categories.js?v=1.0.2"></script>
+    <script src="/js/categories/categories.js?v=1.0.3"></script>
     @elseif($controller == "NotificationCenter")
     <script src="/js/notif/notif_pref.js?v=1.0.1"></script>
     @elseif($controller == "AccessRights")
-    <script src="/js/access_rights/access_rights.js?v=1.0.1"></script>
+    <script src="/js/access_rights/access_rights.js?v=1.0.2"></script>
     @elseif($controller == "ComplaintsManagment")
     <script src="/js/complaints/complaints.js?v=1.0.4"></script>
     @endif

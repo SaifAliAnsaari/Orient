@@ -50,6 +50,12 @@ Route::get('/complaints_list', 'ComplaintsManagment@complaints_list');
 Route::get('/resolved_complains', 'ComplaintsManagment@resolved_complains');
 Route::get('/disapproved_detail/{id}', 'ReportManagment@disapproved_detail');
 Route::get('/cities', 'Auth\RegisterController@pick_up');
+Route::get('/designations', 'Auth\RegisterController@designations');
+Route::get('/new_svr', 'ReportManagment@new_svr');
+Route::get('/svr_list', 'ReportManagment@svr_list');
+Route::get('/edit_svr/{id}', 'ReportManagment@edit_svr');
+Route::get('/svr_preview/{id}', 'ReportManagment@svr_preview');
+Route::get('/disapproved_svr_detail/{id}', 'ReportManagment@disapproved_svr_detail');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');
@@ -68,6 +74,11 @@ Route::post('/save_complain', 'ComplaintsManagment@save_complain');
 Route::post('/resolve_complain', 'ComplaintsManagment@resolve_complain');
 Route::post('/PickUp_save', 'Auth\RegisterController@PickUp_save');
 Route::post('/update_pickup', 'Auth\RegisterController@update_pickup');
+Route::post('/save_designation', 'Auth\RegisterController@save_designation');
+Route::get('/save_parent_company', 'Customer@save_parent_company');
+Route::post('/save_svr', 'ReportManagment@save_svr');
+Route::post('/update_svr', 'ReportManagment@update_svr');
+Route::post('/save_svr_approval', 'ReportManagment@save_svr_approval');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');
@@ -76,6 +87,8 @@ Route::post('/update_poc_fromPOCDetailPage', 'Customer@update_poc_fromPOCDetailP
 Route::post('/update_main_cat/{id}', 'Categories@update_main_cat');
 Route::post('/update_sub_cat/{id}', 'Categories@update_sub_cat');
 Route::get('/updateClientFromProfile', 'Customer@updateClientFromProfile');
+Route::post('/UpdateDesignation/{id}', 'Auth\RegisterController@UpdateDesignation');
+
 
 //Get Data
 Route::get('/GetPOCList', 'Customer@GetPOCList');
@@ -101,11 +114,19 @@ Route::get('/get_resolved_complains_list', 'ComplaintsManagment@get_resolved_com
 Route::get('/get_complain_detail', 'ComplaintsManagment@get_complain_detail');
 Route::get('/GetPickUpList', 'Auth\RegisterController@GetPickUpList');
 Route::get('/pickUp_data/{id}', 'Auth\RegisterController@pickUp_data');
+Route::get('/DesignationsList', 'Auth\RegisterController@DesignationsList');
+Route::get('/get_designation/{id}', 'Auth\RegisterController@get_designation');
+Route::get('/GetCompaniesForCustomers', 'Customer@GetCompaniesForCustomers');
+Route::get('/GetSVRList', 'ReportManagment@GetSVRList');
+Route::get('/GetCurrentSvr/{id}', 'ReportManagment@GetCurrentSvr');
+Route::get('/download_svr_pdf/{id}', 'ReportManagment@download_svr_pdf');
+Route::get('/send_svr_mail/{id}', 'ReportManagment@send_svr_mail');
 
 //Delete
 Route::get('/delete_main_cat/{id}', 'Categories@delete_main_cat');
 Route::get('/delete_sub_cat/{id}', 'Categories@delete_sub_cat');
 Route::get('/delete_pickUp', 'Auth\RegisterController@delete_pickUp');
+Route::get('/delete_designation', 'Auth\RegisterController@delete_designation');
 
 //Deactive or Active Employee
 Route::get('/activate_employee', 'Employee@activate_employee');

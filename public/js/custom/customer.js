@@ -1,3 +1,4 @@
+var company_id = 0;
 $(document).ready(function() {
 
     var segments = location.href.split('/');
@@ -11,6 +12,7 @@ $(document).ready(function() {
     // }
     if(action == 'Customer_list'){
         fetchCompaniesList();
+        fetchParentCompanies(company_id);
     }else if(action == 'CustomerProfile'){
         fetchCompanyInfoForUpdate($('#companyIdForUpdate').val());
     }else if(action == 'poc_list'){
@@ -802,6 +804,74 @@ $(document).ready(function() {
         }).indexOf(id);
         
     });
+
+
+
+
+    $(document).on('click', '.add_company_modal', function(){
+        var verif = [];
+        $('.required_company').each(function () {
+            if ($(this).val() == "") {
+                $(this).css("border", "1px solid red");
+                verif.push(false);
+                $('#notifDiv').fadeIn();
+                $('#notifDiv').css('background', 'red');
+                $('#notifDiv').text('Please provide all the required information (*)');
+                setTimeout(() => {
+                    $('#notifDiv').fadeOut();
+                }, 3000);
+                return;
+            } else {
+                verif.push(true);
+            }
+        });
+        if (jQuery.inArray(false, verif) != -1) {
+            return;
+        }
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $('.cancel_company_modal').attr('disabled', 'disabled');
+        $.ajax({
+            type: 'GET',
+            url: '/save_parent_company',
+            data: {
+                _token: '{!! csrf_token() !!}',
+               name: $('#company_name').val()
+            },
+            success: function(response) {
+                thisRef.removeAttr('disabled');
+                $('.cancel_company_modal').removeAttr('disabled');
+                thisRef.text('Save');
+                if(JSON.parse(response) == "already_exist"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Parent Company already exist');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "failed"){
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to add parent company');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                } else{
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Added successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                    $('#company_name').val('');
+                    fetchParentCompanies(JSON.parse(response));
+                    $('.cancel_company_modal').click();
+                }   
+            }
+        });
+
+    });
     
 });
 
@@ -871,6 +941,31 @@ function fetchPOCList(){
             $('#tblLoader').hide();
             $('.body').fadeIn();
             $('#companiesListTable').DataTable();
+        }
+    });
+}
+
+function fetchParentCompanies(company_id){
+    $('#parent_company').find('option').remove();
+    $('#parent_company').append('<option selected disabled value="0">Processing...</option>');
+
+    $.ajax({
+        type: 'GET',
+        url: '/GetCompaniesForCustomers',
+        data: {
+            _token: '{!! csrf_token() !!}'
+        },
+        success: function (response) {
+            var response = JSON.parse(response);
+            $('#parent_company').find('option').remove();
+            $('#parent_company').append('<option selected disabled value="0">Select Parent Company</option>');
+            response.forEach(element => {
+                $('#parent_company').append('<option value="' + element.id + '" '+ (element.id == company_id ? "selected" : '') +'>' + element.name + '</option>');
+            });
+            
+            setTimeout(() => {
+                $('#parent_company').val(company_id+"").trigger('change');
+            }, 500);
         }
     });
 }

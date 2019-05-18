@@ -211,6 +211,7 @@ $(document).ready(function() {
 
                     if($('#operation').val() == 'add'){
                        $('[name="main_cat_name"]').val('');
+                       $('#pl-close').click();
                     }
                     
                 }else if(JSON.parse(response) == "already_exist"){
@@ -313,10 +314,12 @@ $(document).ready(function() {
                     }, 3000);
 
                     if($('#operation').val() == 'add'){
-                       $('[name="main_cat_name"]').val('');
+                        $('#pl-close').click();
+                        $('[name="main_cat_name"]').val('');
+                        $("input[name='sub_cat_name']").val('');
+                        $("select[name='select_main_cat']").val('0').trigger('change');
                     }
-                    $("input[name='sub_cat_name']").val('');
-                    $("select[name='select_main_cat']").val('0').trigger('change');
+                    
                     
                 }else if(JSON.parse(response) == "already_exist"){
                     $('#saveSubCat').removeAttr('disabled');

@@ -95,8 +95,9 @@ class RegisterController extends ParentController
         }, json_decode($data, true));
         
         $filtered_privinces = $this->unique_multidim_array($provinces, "province");
+        $designations = DB::table('designations')->get();
 
-        return view('auth.register', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'emp' => $employees, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data]);
+        return view('auth.register', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'emp' => $employees, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data, 'designations' => $designations]);
     }
 
     /**
@@ -107,8 +108,6 @@ class RegisterController extends ParentController
      */
     protected function create(array $data)
     {
-        // echo json_encode($data['company']);
-        // die;
         $userPicture = '';
         if(isset($_FILES["employeePicture"])){
             $userPicture = './storage/employees/' . time().'-'.str_replace(' ', '_', basename($_FILES["employeePicture"]["name"]));
@@ -129,12 +128,20 @@ class RegisterController extends ParentController
                 'hiring' => $data['hiring'],
                 'designation' => $data['designation'],
                 'department_id' => $data['department'],
-                'salary' => $data['salary'],
+                //'salary' => $data['salary'],
+                'division' => $data['division'],
                 'picture' => $userPicture,
                 'password' => Hash::make($data['password']),
             ]);
             if($status){
-                echo json_encode('success');
+                DB::table('subecribed_notif_new')->insert([
+                    'cvr' => $data['hidden_cvr_emp'],
+                    'svr' => $data['hidden_svr_emp'],
+                    'complaint' => $data['hidden_complaint_emp'],
+                    'customer' => $data['hidden_customers_emp'],
+                    'emp_id' => $status->id
+                ]);
+                echo json_encode($status->id);
                 die;
             }else{
                 echo json_encode("failed");
@@ -239,6 +246,63 @@ class RegisterController extends ParentController
             echo json_encode('success');
         }catch(\Illuminate\Database\QueryException $ex){ 
             echo json_encode('failed'); 
+        }
+    }
+
+
+
+
+    public function designations(){
+        parent::VerifyRights();
+        if($this->redirectUrl){return redirect($this->redirectUrl);}
+        parent::get_notif_data();
+        return view('includes.designations', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+    }
+
+    public function save_designation(Request $request){
+        if(DB::table('designations')->where('name', $request->designation_name)->first()){
+            echo json_encode('already exist');
+        }else{
+            $insert = DB::table('designations')->insert([
+                'name' => $request->designation_name
+            ]);
+            if($insert){
+                echo json_encode('success');
+            }else{
+                echo json_encode('failed');
+            }
+        }
+    }
+
+    public function DesignationsList(){
+        echo json_encode(DB::table('designations')->get());
+    }
+
+    public function get_designation($id){
+        echo json_encode(DB::table('designations')->where('id', $id)->first());
+    }
+
+    public function UpdateDesignation(Request $request, $id){
+        if(DB::table('designations')->whereRaw('name = "'.$request->designation_name.'" and id != '.$id)->first()){
+            echo json_encode('already exist');
+        }else{
+            try{
+                DB::table('designations')->where('id', $id)->update([
+                    'name' => $request->designation_name
+                    ]);
+                echo json_encode('success');
+            }catch(\Illuminate\Database\QueryException $ex){ 
+                echo json_encode('failed'); 
+            }
+        }
+    }
+
+    public function delete_designation(Request $request){
+        $delete = DB::table('designations')->where('id', $request->id)->delete();
+        if($delete){
+            echo json_encode('success');
+        }else{
+            echo json_encode('failed');
         }
     }
 

@@ -18,7 +18,7 @@ class Employee extends ParentController
      */
     public function GetEmployeeInfo($id)
     {
-        echo json_encode(array('employee' => User::find($id), 'base_url' => URL::to('/').'/'));
+        echo json_encode(array('employee' => User::find($id), 'base_url' => URL::to('/').'/', 'notif' => DB::table('subecribed_notif_new')->where('emp_id', $id)->first()));
     }
 
     public function UpdateEmployee(Request $request, $id)
@@ -42,7 +42,8 @@ class Employee extends ParentController
                 $employee->password = $password;
             }
             $employee->hiring = $request->hiring;
-            $employee->salary = $request->salary;
+            //$employee->salary = $request->salary;
+            $employee->division = $request->division;
             $employee->designation = $request->designation;
             $employee->reporting_to = $request->reporting;
             $employee->department_id = $request->department;
@@ -59,7 +60,24 @@ class Employee extends ParentController
                 $employee->picture = './storage/employees/'.$empPicture;
             }
 
+            $test = $request->hidden_customers_emp;
             if($employee->save()){
+                if(DB::table('subecribed_notif_new')->where('emp_id', $id)->first()){
+                    DB::table('subecribed_notif_new')->where('emp_id', $id)->update([
+                        'cvr' => $request->hidden_cvr_emp,
+                        'svr' => $request->hidden_svr_emp,
+                        'customer' => $request->hidden_customers_emp,
+                        'complaint' => $request->hidden_complaint_emp
+                    ]);
+                }else{
+                    DB::table('subecribed_notif_new')->insert([
+                        'cvr' => $request->hidden_cvr_emp,
+                        'svr' => $request->hidden_svr_emp,
+                        'complaint' => $request->hidden_complaint_emp,
+                        'customer' => $request->hidden_customers_emp,
+                        'emp_id' => $id
+                    ]);
+                }
                 echo json_encode("success");
             }else{
                 echo json_encode("failed");

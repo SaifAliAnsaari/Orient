@@ -7,7 +7,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content top_border">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Approve <span> CVR</span></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Approve <span> SVR</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -39,8 +39,8 @@
             </div>
 
             <div class="modal-footer border-0">
-                <button type="submit" class="btn btn-cancel cancel_modal" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary save_approval" id="{{$id}}">Save</button>
+                <button type="submit" class="btn btn-cancel cancel_svr_modal" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button type="button" class="btn btn-primary save_svr_approval" id="{{$id}}">Save</button>
             </div>
 
 
@@ -51,12 +51,12 @@
 
 <div class="row mt-2 mb-3">
         <div class="col-lg-6 col-md-6 col-sm-6">
-            <h2 class="_head01">CUSTOMER <span>VISIT REPORT</span></h2>
+            <h2 class="_head01">SERVICE <span>VISIT REPORT</span></h2>
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <ol class="breadcrumb">
-                <li><a href="#"><span>Customer Visit Report</span></a></li>
+                <li><a href="#"><span>Service Visit Report</span></a></li>
                 <li><span>Add Report</span></li>
             </ol>
         </div>
@@ -133,25 +133,7 @@
 
                         <div class="row MR-S">
 
-                            <div class="col-md-4 PT-30">
-                                <div class="row">
-                                    <div class="col-12 p-0">
-                                        <h3 class="_head03">Opportunity</h3>
-                                        <i class="fa fa-check"></i> {{ $core->opportunity }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 PT-30">
-                                <div class="row">
-                                    <div class="col-12 p-0">
-                                        <h3 class="_head03">Annual Business Value</h3>
-                                        <i class="fa fa-check"></i> {{ ($core->bussiness_value == '2500K+' ? '> 2500K' : $core->bussiness_value) }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 PT-30">
+                            <div class="col-md-12 PT-30">
                                 <div class="row">
                                     <div class="col-12 p-0">
                                         <h3 class="_head03 mr-0">Relationship With Customer</h3>
@@ -195,23 +177,20 @@
 
                         <div class="row">
                             <div class="col-md-6 p-0 PT-20 order-2 order-md-1">
-                                {{-- @if($core->is_approved != 1)
+                                @if($core->is_approved != 1)
                                     @if(Auth::user()->designation == '1' || Auth::user()->designation == '2')
                                         <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
-                                            data-target=".competition-lg">Approve CVR</button>
+                                            data-target=".competition-lg">Approve SVR</button>
                                     @endif
-                                @endif --}}
-                                @if($approval_able == 1)
-                                <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
-                                data-target=".competition-lg">Approve CVR</button>
                                 @endif
                                 
                                 <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button></div>
 
-                                <a href="/download_pdf/{{$id}}"><div class="col-md-6 p-0 _RtextP PT-20 order-1 order-md-2"><button type="button"
+                                <a href="/download_svr_pdf/{{$id}}"><div class="col-md-6 p-0 _RtextP PT-20 order-1 order-md-2"><button type="button"
                                     class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button></a>
-                                <a href="/send_mail/{{$id}}"><button type="button" class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a>
-                                <button type="button" class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button></div>
+                                <a href="/send_svr_mail/{{$id}}"><button type="button" class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a>
+                                <button type="button" class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button>
+                            </div>
                         </div>
 
 

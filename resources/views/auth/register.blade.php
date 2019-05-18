@@ -1,5 +1,9 @@
 @extends('layouts.master')
 @section('data-sidebar')
+
+
+
+
 <div id="product-cl-sec">
     <a href="#" id="pl-close" class="close-btn-pl"></a>
     <div class="pro-header-text">New <span>Employee</span></div>
@@ -53,14 +57,16 @@
                                                 <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
                                                         <div>
                                                             <input hidden type="text" value="{{$data}}" id="full_cities_array"/>
-                                                            <select class="form-control formselect" id="select_city" name="city" placeholder="Select City">
-                                                                <option value="0" selected disabled>Select City</option>
-                                                                @if(!empty($data))
-                                                                    @foreach ($data as $city)
-                                                                        <option name="{{$city->province}}" value="{{$city->id}}">{{$city->city_name}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
+                                                            <div>
+                                                                <select class="form-control formselect required" id="select_city" name="city" placeholder="Select City">
+                                                                    <option value="0" selected disabled>Select City*</option>
+                                                                    @if(!empty($data))
+                                                                        @foreach ($data as $city)
+                                                                            <option name="{{$city->province}}" value="{{$city->id}}">{{$city->city_name}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
@@ -123,9 +129,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
+                                                        {{-- <div class="form-group">
                                                             <label class="control-label mb-10">Salary</label>
                                                             <input type="number" name="salary" style="font-size: 13px" class="form-control" placeholder="">
+                                                        </div> --}}
+                                                        <div class="form-s2 pt-10">
+                                                            <div>
+                                                                <select name="division" class="form-control formselect required" placeholder="Select Division">
+                                                                    <option value="0" disabled selected>Select Division*</option>
+                                                                    <option value="1">Chemical </option>
+                                                                    <option value="2">Equipment</option> 
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -133,11 +148,16 @@
                                                             <div>
                                                                 <select name="designation" class="form-control formselect required" placeholder="select Designation">
                                                                     <option value="0" disabled selected>Select Designation*</option>
-                                                                    <option value="1">Admin</option>
+                                                                    @if(!empty($designations))
+                                                                        @foreach ($designations as $designation)
+                                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                    {{-- <option value="1">Admin</option>
                                                                     <option value="2">Manager</option>
                                                                     <option value="3">Salesman</option>
                                                                     <option value="4">Rider</option>
-                                                                    <option value="5">Cashier</option> 
+                                                                    <option value="5">Cashier</option>  --}}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -178,6 +198,63 @@
                                                     </div>
                                             </div>
                                         </div>
+                                        <h2 class="_head03 PT-20">Notification<span> Management</span></h2>
+
+                                    <div class="form-wrap p-0">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-s2">
+                                                    <label class="PT-10 font12">Sales Report</label>
+                                                    <select class="form-control sd-type" name="select_sales_emp" multiple="multiple">
+                                                        @if(!empty($emp))
+                                                            @foreach ($emp as $employee)
+                                                                <option value='{{$employee->id}}'>{{$employee->name}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <input hidden name="hidden_cvr_emp" value="" type="text"/>
+
+                                                <div class="form-s2">
+                                                    <label class="PT-10 font12">Services Report</label>
+                                                    <select class="form-control sd-type"name="select_service_emp"  multiple="multiple">
+                                                        @if(!empty($emp))
+                                                            @foreach ($emp as $employee)
+                                                                <option value='{{$employee->id}}'>{{$employee->name}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <input hidden name="hidden_svr_emp" value="" type="text"/>
+
+                                                <div class="form-s2">
+                                                    <label class="PT-10 font12">Complaint Report</label>
+                                                    <select class="form-control sd-type" name="select_complaints_emp" multiple="multiple">
+                                                        @if(!empty($emp))
+                                                            @foreach ($emp as $employee)
+                                                                <option value='{{$employee->id}}'>{{$employee->name}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <input hidden name="hidden_complaint_emp" value="" type="text"/>
+
+                                                <div class="form-s2">
+                                                    <label class="PT-10 font12">Customers Report</label>
+                                                    <select class="form-control sd-type" name="select_customers_emp" multiple="multiple">
+                                                        @if(!empty($emp))
+                                                            @foreach ($emp as $employee)
+                                                                <option value='{{$employee->id}}'>{{$employee->name}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                <input hidden name="hidden_customers_emp" value="" type="text"/>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -192,8 +269,57 @@
         <button id="pl-close" type="button" class="btn btn-cancel mr-2" id="cancelEmployee">Cancel</button>
     </div>
 </div>
+
+
+
 @endsection
+
 @section('content')
+
+{{-- Modal --}}
+<div class="modal fade db-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 650px">
+        <div class="modal-content top_border">
+            <div class="modal-header" style="text-align: center; display: block">
+                <h5 class="modal-title" id="exampleModalLongTitle">Employee <span>has been successfully added</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="check_mark">
+                    <div class="sa-icon sa-success animate">
+                        <span class="sa-line sa-tip animateSuccessTip"></span>
+                        <span class="sa-line sa-long animateSuccessLong"></span>
+                        <div class="sa-placeholder"></div>
+                        <div class="sa-fix"></div>
+                    </div>
+                </div>
+
+                <div class="form-wrap p-0">
+                    <h1 class="_head05" align="center"><span>Do you want to add </span> Access Rights or Add Another Employee?</h1>
+
+                    <div class="PT-15 PB-10" align="center">
+                        <button type="button" data-dismiss="modal"
+                                class="btn btn-primary font13 m-0 mr-2 mb-2">Add Another Employee</button>
+                        <a href="/" class="access_right_link"><button type="button" class="btn btn-primary font13 m-0 mb-2">Add Access Rights
+                            </button></a>
+                        <!--<button type="submit" class="btn btn-cancel m-0 mb-2" data-dismiss="modal" aria-label="Close">No</button> -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="open_confirmation_modal" data-toggle="modal" data-target=".db-confirmation-modal"></div>
+
+
 <div class="row mt-2 mb-3">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <h2 class="_head01">Employee <span>Management</span></h2>
@@ -209,7 +335,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <a id="productlist01" href="#" class="btn add_button openDataSidebarForAddingEmployee"><i class="fa fa-plus"></i> <span> New Employee</span></a>
+                <a id="productlist01"  class="btn add_button openDataSidebarForAddingEmployee"><i class="fa fa-plus"></i> <span> New Employee</span></a>
                 <h2>Employee <span> List</span></h2>
             </div>
             <div style="min-height: 400px" id="tblLoader">

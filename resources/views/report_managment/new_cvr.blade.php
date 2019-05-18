@@ -26,18 +26,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12">
-                                                    <div>
-                                                        <select class="form-control formselect" name="parent_company"
-                                                            placeholder="Select Customer Type">
-                                                            <option value="0" selected disabled>Select Parent Company
-                                                            </option>
-                                                            @if(!empty($cust))
-                                                            @foreach ($cust as $customers)
-                                                            <option value="{{$customers->id}}">
-                                                                {{$customers->company_name}}</option>
-                                                            @endforeach
-                                                            @endif
-                                                        </select>
+                                                    <div class="ADD_Select">
+                                                        <div class="form-s2 selpluse">
+                                                            <div>
+                                                                <select class="form-control formselect"
+                                                                    id="parent_company" name="parent_company"
+                                                                    placeholder="Select Customer Type">
+                                                                    <option value="0" selected disabled>Select Parent
+                                                                        Company</option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <a href="#" class="btn plus_button po-ab" data-toggle="modal"
+                                                            data-target=".competition-lg-company"><i
+                                                                class="fa fa-plus"></i></a>
                                                     </div>
                                                 </div>
                                                 <div class="form-s2 col-md-12 pt-10">
@@ -105,27 +108,34 @@
                                                             class="form-control required" placeholder="">
                                                     </div>
                                                 </div>
-                                                <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="form-s2 col-md-6"
+                                                    style="margin-top:10px; margin-bottom:10px;">
                                                     <div>
-                                                        <input hidden type="text" value="{{$data}}" id="full_cities_array"/>
-                                                        <select class="form-control formselect" id="select_city" name="city" placeholder="Select City">
+                                                        <input hidden type="text" value="{{$data}}"
+                                                            id="full_cities_array" />
+                                                        <select class="form-control formselect" id="select_city"
+                                                            name="city" placeholder="Select City">
                                                             <option value="0" selected disabled>Select City</option>
                                                             @if(!empty($data))
-                                                                @foreach ($data as $city)
-                                                                    <option name="{{$city->province}}" value="{{$city->id}}">{{$city->city_name}}</option>
-                                                                @endforeach
+                                                            @foreach ($data as $city)
+                                                            <option name="{{$city->province}}" value="{{$city->id}}">
+                                                                {{$city->city_name}}</option>
+                                                            @endforeach
                                                             @endif
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="form-s2 col-md-6"
+                                                    style="margin-top:10px; margin-bottom:10px;">
                                                     <div>
-                                                        <select class="form-control formselect" id="select_province" name="province" placeholder="Select Province">
+                                                        <select class="form-control formselect" id="select_province"
+                                                            name="province" placeholder="Select Province">
                                                             <option value="0" selected disabled>Select Province</option>
                                                             @if(!empty($provinces))
-                                                                @foreach ($provinces as $province)
-                                                                    <option value="{{$province['province']}}">{{$province['province']}}</option>
-                                                                @endforeach
+                                                            @foreach ($provinces as $province)
+                                                            <option value="{{$province['province']}}">
+                                                                {{$province['province']}}</option>
+                                                            @endforeach
                                                             @endif
                                                         </select>
                                                     </div>
@@ -282,6 +292,51 @@
 </div>
 
 
+{{-- Parent Company Modal --}}
+<div class="modal fade competition-lg-company" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content top_border">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Parent Company <span> Details</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-wrap p-0">
+
+                    <div id="floating-label" class="pl-15 pr-15">
+                        <div class="form-wrap p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Company Name</label>
+                                        <input type="text" id="company_name" class="form-control required_company"
+                                            style="font-size:13px">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer  border-0">
+                        <button type="submit" class="btn btn-cancel cancel_company_modal" data-dismiss="modal"
+                            aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-primary add_company_modal">Add</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {{-- Confirmation Modal --}}
 <div class="modal fade db-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
@@ -306,11 +361,12 @@
                 </div>
 
                 <div class="form-wrap p-0">
-                    <h1 class="_head05" align="center"><span>Do you want to add </span> another CVR or Redirect to Home?</h1>
+                    <h1 class="_head05" align="center"><span>Do you want to add </span> another CVR or Redirect to Home?
+                    </h1>
 
                     <div class="PT-15 PB-10" align="center">
-                        <a href="/"><button type="submit"
-                                class="btn btn-primary font13 m-0 mr-2 mb-2">Rediect To Home</button></a>
+                        <a href="/"><button type="submit" class="btn btn-primary font13 m-0 mr-2 mb-2">Rediect To
+                                Home</button></a>
                         <button type="button" class="btn btn-primary font13 m-0 mb-2" data-dismiss="modal">Add Another
                             CVR</button>
                         <!--<button type="submit" class="btn btn-cancel m-0 mb-2" data-dismiss="modal" aria-label="Close">No</button> -->

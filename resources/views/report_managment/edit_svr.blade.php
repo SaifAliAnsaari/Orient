@@ -28,14 +28,17 @@
                                                     <div class="ADD_Select">
                                                         <div class="form-s2 selpluse">
                                                             <div>
-                                                                <select class="form-control formselect" id="parent_company" name="parent_company" placeholder="Select Customer Type">
-                                                                    <option value="0" selected disabled>Select Parent Company</option>
-                                                                    
+                                                                <select class="form-control formselect"
+                                                                    id="parent_company" name="parent_company"
+                                                                    placeholder="Select Customer Type">
+                                                                    <option value="0" selected disabled>Select Parent
+                                                                        Company</option>
+
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <a href="#" class="btn plus_button po-ab"
-                                                            data-toggle="modal" data-target=".competition-lg-company"><i
+                                                        <a href="#" class="btn plus_button po-ab" data-toggle="modal"
+                                                            data-target=".competition-lg-company"><i
                                                                 class="fa fa-plus"></i></a>
                                                     </div>
                                                 </div>
@@ -71,15 +74,15 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">POC*</label>
-                                                        <input type="text" name="poc" class="form-control required" style="font-size: 13px"
-                                                            placeholder="">
+                                                        <input type="text" name="poc" class="form-control required"
+                                                            style="font-size: 13px" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Job Title*</label>
-                                                        <input type="text" name="jobTitle" class="form-control required" style="font-size: 13px"
-                                                            placeholder="">
+                                                        <input type="text" name="jobTitle" class="form-control required"
+                                                            style="font-size: 13px" placeholder="">
                                                     </div>
                                                 </div>
 
@@ -93,36 +96,38 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Email Address*</label>
-                                                        <input type="email" name="email" class="form-control required" style="font-size: 13px"
-                                                            placeholder="">
+                                                        <input type="email" name="email" class="form-control required"
+                                                            style="font-size: 13px" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Address*</label>
-                                                        <input type="text" name="address" class="form-control required" style="font-size: 13px"
-                                                            placeholder="">
+                                                        <input type="text" name="address" class="form-control required"
+                                                            style="font-size: 13px" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">City*</label>
-                                                        <input type="text" name="city" maxlength="13" value="Karachi" style="font-size: 13px"
-                                                            class="form-control required" placeholder="">
+                                                        <input type="text" name="city" maxlength="13" value="Karachi"
+                                                            style="font-size: 13px" class="form-control required"
+                                                            placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">State*</label>
-                                                        <input type="text" name="state" class="form-control required" style="font-size: 13px"
-                                                            value="Sindh" placeholder="">
+                                                        <input type="text" name="state" class="form-control required"
+                                                            style="font-size: 13px" value="Sindh" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label mb-10">Country*</label>
-                                                        <input type="text" name="country" value="Pakistan" style="font-size: 13px"
-                                                            class="form-control required" placeholder="">
+                                                        <input type="text" name="country" value="Pakistan"
+                                                            style="font-size: 13px" class="form-control required"
+                                                            placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -135,8 +140,9 @@
                                                 <div class="col-md-12">
                                                     <label class="PT-10 font12">Remarks</label>
                                                     <div class="form-group mb-0">
-                                                        <textarea name="description" class="" rows="8" style="font-size: 13px"
-                                                            id="description" style="font-size:13px"></textarea>
+                                                        <textarea name="description" class="" rows="8"
+                                                            style="font-size: 13px" id="description"
+                                                            style="font-size:13px"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,30 +184,30 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">POC Name*</label>
-                                        <input type="text" id="poc_name_modal" class="form-control required_modal" style="font-size: 13px"
-                                            placeholder="">
+                                        <input type="text" id="poc_name_modal" class="form-control required_modal"
+                                            style="font-size: 13px" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Job Title*</label>
-                                        <input type="text" id="jobTitle_modal" class="form-control required_modal" style="font-size: 13px"
-                                            placeholder="">
+                                        <input type="text" id="jobTitle_modal" class="form-control required_modal"
+                                            style="font-size: 13px" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Business Phone*</label>
-                                        <input type="number" id="businessPH_modal" class="form-control required_modal" style="font-size: 13px"
-                                            placeholder="">
+                                        <input type="number" id="businessPH_modal" class="form-control required_modal"
+                                            style="font-size: 13px" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Email ID*</label>
-                                        <input type="email" id="email_modal" class="form-control required_modal" style="font-size: 13px"
-                                            placeholder="">
+                                        <input type="email" id="email_modal" class="form-control required_modal"
+                                            style="font-size: 13px" placeholder="">
                                     </div>
                                 </div>
 
@@ -289,8 +295,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label mb-10">Company Name</label>
-                                        <input type="text" id="company_name"
-                                            class="form-control required_company" style="font-size:13px">
+                                        <input type="text" id="company_name" class="form-control required_company"
+                                            style="font-size:13px">
                                     </div>
                                 </div>
 
@@ -320,7 +326,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 650px">
         <div class="modal-content top_border">
             <div class="modal-header" style="text-align: center; display: block">
-                <h5 class="modal-title" id="exampleModalLongTitle">CVR <span>has been successfully updated</span>
+                <h5 class="modal-title" id="exampleModalLongTitle">SVR <span>has been successfully updated</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -341,9 +347,9 @@
                     <h1 class="_head05" align="center"><span>Do you want to </span> Redirect To Home?</h1>
 
                     <div class="PT-15 PB-10" align="center">
-                        <a href="/"><button type="submit"
-                                class="btn btn-primary font13 m-0 mr-2 mb-2">Redirect To Home</button></a>
-                        
+                        <a href="/"><button type="submit" class="btn btn-primary font13 m-0 mr-2 mb-2">Redirect To
+                                Home</button></a>
+
                         <!--<button type="submit" class="btn btn-cancel m-0 mb-2" data-dismiss="modal" aria-label="Close">No</button> -->
                     </div>
 
@@ -359,7 +365,7 @@
 
 <div id="wrapper">
 
-    <form id="update_cvr">
+    <form id="update_svr">
         {!! Form::hidden('tokenForAjaxReq', csrf_token()) !!}
         @csrf
         <input hidden type="text" name="hidden_poc_list" value="0" id="hidden_poc_list" />
@@ -403,9 +409,9 @@
                                         <div class="col-md-4">
                                             <label class="font12">Date of Visit</label>
                                             <div class="position-relative">
-                                                <input type="text" name="datepicker" id="datepicker" style="font-size: 13px"
-                                                    class="form-control" placeholder="" value="Select Date"
-                                                    style="font-size:13px">
+                                                <input type="text" name="datepicker" id="datepicker"
+                                                    style="font-size: 13px" class="form-control" placeholder=""
+                                                    value="Select Date" style="font-size:13px">
                                             </div>
                                         </div>
 
@@ -423,18 +429,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-md-4">
-                                            <label class="font12">POC List</label>
-                                            <div class=" position-relative">
-                                                <div class="form-s2 selpluse">
-                                                    <select class="form-control formselect cvr_poc_list" placeholder="Select">
-
-                                                    </select>
-                                                </div>
-                                                <a class="btn plus_button po-ab productlist01 add_old_poc"><i class="fa fa-plus"></i></a>
-                                            </div>
-                                        </div> --}}
-
                                     </div>
 
                                     <div class="row xsm-p-10">
@@ -442,16 +436,16 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Location*</label>
-                                                <input type="text" id="location" name="location" class="form-control" style="font-size: 13px"
-                                                    style="font-size:13px">
+                                                <input type="text" id="location" name="location" class="form-control"
+                                                    style="font-size: 13px" style="font-size:13px">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Time Spent*</label>
-                                                <input type="text" id="time_spent" name="time_spent" style="font-size: 13px"
-                                                    class="form-control" style="font-size:13px">
+                                                <input type="text" id="time_spent" name="time_spent"
+                                                    style="font-size: 13px" class="form-control" style="font-size:13px">
                                             </div>
                                         </div>
 
@@ -501,84 +495,51 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <input type="text" name="purpose_hidden_array" id="purpose_hidden_array"
-                                                hidden />
-
-                                            <div class="row _checkbox-padd mb-15">
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Sales"
-                                                            class="custom-control-input purpose_checkboxes" id="id001"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id001">Sales</label>
+                                                <input type="text" name="purpose_hidden_array" id="purpose_hidden_array"
+                                                    hidden />
+    
+                                                <div class="row _checkbox-padd mb-15">
+    
+                                                    <div class="col-md-3 col-xs-3">
+                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                            <input type="checkbox" value="Service"
+                                                                class="custom-control-input purpose_checkboxes" id="id001"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="id001">Service</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Survey"
-                                                            class="custom-control-input purpose_checkboxes" id="id002"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id002">Survey</label>
+    
+                                                    <div class="col-md-3 col-xs-3">
+                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                            <input type="checkbox" value="Inspection"
+                                                                class="custom-control-input purpose_checkboxes" id="id002"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="id002">Inspection</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Proposal"
-                                                            class="custom-control-input purpose_checkboxes" id="id003"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id003">Proposal
-                                                            Submission</label>
+    
+                                                    <div class="col-md-3 col-xs-3">
+                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                            <input type="checkbox" value="Customer Call "
+                                                                class="custom-control-input purpose_checkboxes" id="id003"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="id003">Customer Call </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Courtesy Call"
-                                                            class="custom-control-input purpose_checkboxes" id="id005"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id005">Courtesy
-                                                            Call</label>
+    
+    
+                                                    <div class="col-md-3 col-xs-3">
+                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                            <input type="checkbox" value="Others"
+                                                                class="custom-control-input purpose_checkboxes" id="id005"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="id005">Others</label>
+                                                        </div>
                                                     </div>
+    
                                                 </div>
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Follow Up"
-                                                            class="custom-control-input purpose_checkboxes" id="id006"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id006">Follow
-                                                            Up</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Technical Discussion"
-                                                            class="custom-control-input purpose_checkboxes" id="id007"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="id007">Technical
-                                                            Discussion</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3 col-xs-3">
-                                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Inspection"
-                                                            class="custom-control-input purpose_checkboxes" id="id008"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label"
-                                                            for="id008">Inspection</label>
-                                                    </div>
-                                                </div>
-
-
+    
                                             </div>
-
-                                        </div>
 
                                         <div class="col-md-12  PT-10 PB-10">
                                             <h3 class="_head03">Products</h3>
@@ -609,88 +570,6 @@
                                         </div>
 
 
-                                        <div class="col-md-12  PT-10 PB-10">
-                                            <h3 class="_head03">Opportunity</h3>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="row radio_topPD mb-15">
-                                                <div class="col-md-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input opportunity" type="radio"
-                                                            name="Opportunity" id="vg-0" value='Very Good'
-                                                            data-id="vg-0" style="font-size:13px">
-                                                        <label class="custom-control-label" for="vg-0">Very Good</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input opportunity" type="radio"
-                                                            name="Opportunity" id="good02" value='Good' data-id="good02"
-                                                            style="font-size:13px">
-                                                        <label class="custom-control-label" for="good02">Good</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input opportunity" type="radio"
-                                                            name="Opportunity" id="poor-02" value='Poor'
-                                                            data-id="poor-02" style="font-size:13px">
-                                                        <label class="custom-control-label" for="poor-02">Poor</label>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12  PT-10 PB-10">
-                                            <h3 class="_head03">Annual Business Value</h3>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="row radio_topPD  mb-15">
-                                                <div class="col-md-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input class="custom-control-input bussiness_annual"
-                                                            type="radio" name="AnnualBusiness" id="Rb-001"
-                                                            value='< 500K' data-id="Rb-001" style="font-size:13px">
-                                                        <label class="custom-control-label" for="Rb-001">
-                                                            < 500K</label> </div> </div> <div class="col-md-3">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input class="custom-control-input bussiness_annual"
-                                                                        type="radio" name="AnnualBusiness" id="Rb-002"
-                                                                        value='500K-1000K' data-id="Rb-002"
-                                                                        style="font-size:13px">
-                                                                    <label class="custom-control-label"
-                                                                        for="Rb-002">500K-1000K</label>
-                                                                </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input bussiness_annual"
-                                                                type="radio" name="AnnualBusiness" id="Rb-003"
-                                                                value='1000K-2500K' data-id="Rb-003"
-                                                                style="font-size:13px">
-                                                            <label class="custom-control-label"
-                                                                for="Rb-003">1000K-2500K</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input bussiness_annual"
-                                                                type="radio" name="AnnualBusiness" id="Rb-004"
-                                                                value='2500K+' data-id="Rb-004" style="font-size:13px">
-                                                            <label class="custom-control-label" for="Rb-004">>
-                                                                2500K</label>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
 
                                             <div class="col-md-12 PB-10">
                                                 <h3 class="_head03">Relationship With Customer</h3>
@@ -755,7 +634,8 @@
                                                                         Competition</option>
                                                                     @if(!empty($competitions))
                                                                     @foreach ($competitions as $comp)
-                                                                    <option value="{{$comp->id}}">{{$comp->name}}</option>
+                                                                    <option value="{{$comp->id}}">{{$comp->name}}
+                                                                    </option>
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
@@ -793,58 +673,65 @@
 
                                             </div>
 
-                                            <input hidden type="text" value="{{$id}}" id="hidden_cvr_id" />
+                                            <input hidden type="text" value="{{$id}}" id="hidden_svr_id" />
 
                                             <div class="col-md-12 PB-10 PT-10">
-													<h3 class="_head03">Competitor’s Strength</h3>
-												</div>
+                                                <h3 class="_head03">Competitor’s Strength</h3>
+                                            </div>
 
-												<div class="col-md-12">
-													<div class="row _checkbox-padd mb-15">
+                                            <div class="col-md-12">
+                                                <div class="row _checkbox-padd mb-15">
 
-														<div class="col-md-3">
-															<div class="custom-control custom-radio">
-																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-009"
-																	value='Very Good' data-id="Rb-009" style="font-size:13px">
-																<label class="custom-control-label" for="Rb-009">Very Good</label>
-															</div>
-														</div>
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-009"
+                                                                value='Very Good' data-id="Rb-009"
+                                                                style="font-size:13px">
+                                                            <label class="custom-control-label" for="Rb-009">Very
+                                                                Good</label>
+                                                        </div>
+                                                    </div>
 
-														<div class="col-md-3">
-															<div class="custom-control custom-radio">
-																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-010"
-																	value='Good' data-id="Rb-010" style="font-size:13px">
-																<label class="custom-control-label" for="Rb-010">Good</label>
-															</div>
-														</div>
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-010" value='Good'
+                                                                data-id="Rb-010" style="font-size:13px">
+                                                            <label class="custom-control-label"
+                                                                for="Rb-010">Good</label>
+                                                        </div>
+                                                    </div>
 
-														<div class="col-md-3">
-															<div class="custom-control custom-radio">
-																<input class="custom-control-input" type="radio" name="competitions_strength" id="Rb-011"
-																	value='Poor' data-id="Rb-011" style="font-size:13px">
-																<label class="custom-control-label" for="Rb-011">Poor</label>
-															</div>
-														</div>
+                                                    <div class="col-md-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                name="competitions_strength" id="Rb-011" value='Poor'
+                                                                data-id="Rb-011" style="font-size:13px">
+                                                            <label class="custom-control-label"
+                                                                for="Rb-011">Poor</label>
+                                                        </div>
+                                                    </div>
 
-													</div>
-												</div>
+                                                </div>
+                                            </div>
 
 
                                             <div class="col-md-12 mt-10">
-                                                <h3 class="_head03">Visit Summary</h3>
+                                                <h3 class="_head03">Comments</h3>
                                             </div>
 
                                             <div class="col-md-12 mb-15">
-                                                <textarea id="des_cvr" name="des_cvr" rows="6"
+                                                <textarea id="des_svr" name="des_svr" rows="6"
                                                     style="font-size:13px"></textarea>
                                             </div>
 
                                             <div class="col-12">
                                                 <button type="button"
-                                                    class="btn btn-primary mr-2 mb-10 update_cvr">Submit</button>
+                                                    class="btn btn-primary mr-2 mb-10 update_svr">Submit</button>
                                                 {{-- <button type="button" class="btn btn-primary mr-2 mb-10 preview_cvr">Preview</button> --}}
                                                 <button type="button"
-                                                    class="btn btn-cancel mb-10 cancel_cvr">Cancel</button>
+                                                    class="btn btn-cancel mb-10 cancel_svr">Cancel</button>
                                             </div>
 
                                         </div>
