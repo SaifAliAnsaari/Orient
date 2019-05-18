@@ -16,7 +16,16 @@ if(!empty($check_rights)){
     <div class="col-md-4">
         <a href="/new_cvr" class="box-sec">
             <span class="img-svg"><img src="/images/add-report-icon.svg" alt=""></span>
-            <strong>Add</strong> CVR
+            <strong>Add</strong> Sales Report
+        </a>
+    </div>
+    @endif
+
+    @if(in_array("/new_svr", $test_array))
+    <div class="col-md-4">
+        <a href="/new_svr" class="box-sec">
+            <span class="img-svg"><img src="/images/add-report-icon.svg" alt=""></span>
+            <strong>Add</strong> Service Report
         </a>
     </div>
     @endif
@@ -43,7 +52,7 @@ if(!empty($check_rights)){
     <div class="col-md-4">
         <a href="/generate_complaints" class="box-sec">
             <span class="img-svg"><img src="/images/complain-icon.svg" alt=""></span>
-            <strong>Complaints</strong>
+            <strong>Add</strong> Complaint
         </a>
     </div>
     @endif
@@ -52,7 +61,7 @@ if(!empty($check_rights)){
     <div class="col-md-4">
         <a href="/edit_profile/{{Auth::user()->id}}" class="box-sec">
             <span class="img-svg"><img src="/images/cont-setting.svg" alt=""></span>
-            <strong>Setting</strong>
+            <strong>Settings</strong>
         </a>
     </div>
     @endif

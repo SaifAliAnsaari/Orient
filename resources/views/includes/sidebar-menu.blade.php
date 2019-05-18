@@ -18,7 +18,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/images/icon-organization.svg" alt="" />
-                <span>Employee Management</span>
+                <span>Employees</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
                 @if(in_array("/register", $test_array))
@@ -41,7 +41,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/images/icon-customer-management.svg" alt="" />
-                <span>Customer Management</span>
+                <span>Customers</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
                 @if(in_array("/Customer_list", $test_array))
@@ -49,6 +49,23 @@
                 @endif
                 @if(in_array("/poc_list", $test_array))
                     <a class="dropdown-item" href="/poc_list">POC List</a>
+                @endif
+            </div>
+        </li>
+    @endif
+    @if(in_array("/main_category", $test_array) || in_array("/sub_category", $test_array))
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <img src="/images/categ-icon.svg" alt="" />
+                <span>Categories</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navi-l1">
+                @if(in_array("/main_category", $test_array))
+                    <a class="dropdown-item" href="/main_category">Main Category</a>
+                @endif
+                @if(in_array("/sub_category", $test_array))
+                    <a class="dropdown-item" href="/sub_category">Sub Category</a>
                 @endif
             </div>
         </li>
@@ -79,10 +96,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navi-l1">
             @if(in_array("/new_svr", $test_array))
-                <a class="dropdown-item" href="/new_svr">Add New SVR</a>
+                <a class="dropdown-item" href="/new_svr">Add New Sales Visit Report</a>
             @endif
             @if(in_array("/svr_list", $test_array))
-                <a class="dropdown-item" href="/svr_list">SVR List</a>
+                <a class="dropdown-item" href="/svr_list">Sales Visit Reports List</a>
             @endif
         </div>
     </li>
@@ -92,37 +109,20 @@
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="/images/comment.svg" alt="" />
-                <span>Customer Complaints</span>
+                <span>Complaints</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navi-l1">
-                @if(in_array("/complaints_settings", $test_array))
-                    <a class="dropdown-item" href="/complaints_settings">Complaints Settings</a>
-                @endif
                 @if(in_array("/generate_complaints", $test_array))
-                    <a class="dropdown-item" href="/generate_complaints">Complaints Generate</a>
+                    <a class="dropdown-item" href="/generate_complaints">Generate Complaint</a>
                 @endif
                 @if(in_array("/complaints_list", $test_array))
-                    <a class="dropdown-item" href="/complaints_list">New Complaint</a>
+                    <a class="dropdown-item" href="/complaints_list">Pending Complaints</a>
                 @endif
                 @if(in_array("/resolved_complains", $test_array))
                     <a class="dropdown-item" href="/resolved_complains">Resolved Complaints</a>
                 @endif
-            </div>
-        </li>
-    @endif
-    @if(in_array("/main_category", $test_array) || in_array("/sub_category", $test_array))
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <img src="/images/categ-icon.svg" alt="" />
-                <span>Categories</span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navi-l1">
-                @if(in_array("/main_category", $test_array))
-                    <a class="dropdown-item" href="/main_category">Main Category</a>
-                @endif
-                @if(in_array("/sub_category", $test_array))
-                    <a class="dropdown-item" href="/sub_category">Sub Category</a>
+                @if(in_array("/complaints_settings", $test_array))
+                    <a class="dropdown-item" href="/complaints_settings">Settings</a>
                 @endif
             </div>
         </li>

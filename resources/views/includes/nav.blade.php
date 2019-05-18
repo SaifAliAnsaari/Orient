@@ -66,7 +66,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <span class="dropdown-item usernamelab">{{ Auth::user()->name }}</span>
                 <a class="dropdown-item" href="/edit_profile/{{ Auth::user()->id }}"><i class="fa fa-user"> </i> Profile</a>
-                <a class="dropdown-item" href="#"><i class="fa fa-cogs"> </i> Settings</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-cogs"> </i> Setting</a>
                 <a class="dropdown-item" href="/logout"><i class="fa fa-power-off"> </i> Logout</a>
             </div>
         </li>
