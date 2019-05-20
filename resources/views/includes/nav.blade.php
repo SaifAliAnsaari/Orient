@@ -6,9 +6,24 @@
                     <a class="nav-link dropdown-toggle" href="#" id="Qlinks" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ URL::to('/images/q-link-icon.svg') }}" alt=""/></a>
                     <div class="dropdown-menu dropdown-menu-right Qlinks" aria-labelledby="Qlinks">
                     <h4 class="notiF-title">Quick Actions</h4>
-                    <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New CVR</a>
-                    <a href="/Customer_list"><img src="{{ URL::to('/images/customer-list.svg') }}" alt=""> Add Customer</a>
-                    <a href="/register"><img src="{{ URL::to('/images/add-emp.svg') }}" alt=""> Add Employee</a>
+                    <?php 
+                    if(!empty($check_rights)){
+                        $test_array = array();
+                        $counter = 0;
+                        foreach($check_rights as $rights){
+                            $test_array[$counter] = $rights->access;
+                            $counter++;
+                        } ?>
+                        @if(in_array("/new_cvr", $test_array))
+                        <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New CVR</a>
+                        @endif
+                        @if(in_array("/Customer_list", $test_array))
+                        <a href="/Customer_list"><img src="{{ URL::to('/images/customer-list.svg') }}" alt=""> Add Customer</a>
+                        @endif
+                        @if(in_array("/register", $test_array))
+                        <a href="/register"><img src="{{ URL::to('/images/add-emp.svg') }}" alt=""> Add Employee</a>
+                        @endif
+                    <?php } ?>
                     </div>
                 </li>
 

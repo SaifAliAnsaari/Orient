@@ -1458,7 +1458,7 @@ function fetchCurrentSvrData(){
             _token: '{!! csrf_token() !!}'
         },
         success: function(response) {
-           //console.log(response);
+           console.log(response);
             var response = JSON.parse(response);
             $('#curr_date').text(response.core.report_created_at);
             $('#user_name').text(response.core.created_by);
@@ -1472,6 +1472,7 @@ function fetchCurrentSvrData(){
             }).prop('checked', true);
             
             $('#des_svr').text(response.core.description);
+            debugger;
             if (response.core.purpose_of_visit.indexOf(',') > -1){
                 var array = response.core.purpose_of_visit.split(",");
                 $.each(array,function(i){
@@ -1484,10 +1485,11 @@ function fetchCurrentSvrData(){
                     });
             }else{
                 $('.purpose_checkboxes').filter(function(){
-                    if(this.value === response.core.purpose_of_visit){
+                    var test =  this.value;
+                    if(this.value == response.core.purpose_of_visit){
                         purpose_array.push(response.core.purpose_of_visit);
                     }
-                    return this.value === response.core.purpose_of_visit;
+                    return this.value == response.core.purpose_of_visit;
                 }).prop('checked', true);
             }
 

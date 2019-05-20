@@ -162,6 +162,10 @@ class ComplaintsManagment extends ParentController
             if($check_sub_emp){
                 if($check_sub_emp->complaint){
                     $complaints = explode(",", $check_sub_emp->complaint);
+                    
+                    //For Email
+                    $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 104)')->get();
+                     $cust_name = DB::table('customers')->where('id', $request->customers)->first();
                     foreach($complaints as $complaint){
                         DB::table('notifications_list')->insert([
                             'code' => 104,
@@ -169,18 +173,25 @@ class ComplaintsManagment extends ParentController
                             'complain_id' => $insert,
                             'notif_to' => $complaint
                         ]);
+                        foreach($get_email_addresses as $email){
+                            if($email->id == $complaint){
+                                $message = 'A New Complain has been added by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong>.';
+                                Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "A New Complain Added"]));
+                            }
+                        }
                     }
+                    // $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 104) AND id IN ("'.$complaints.'")')->get();
+                    // $cust_name = DB::table('customers')->where('id', $request->customers)->first();
+                    // if(!empty($get_email_addresses)){
+                    //     foreach($get_email_addresses as $email){
+                    //         $message = 'A New Complain has been added by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong>.';
+                    //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "A New Complain Added"]));
+                            
+                    //     }
+                    // }
                 }
             }
-            // $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 104)')->get();
-            // $cust_name = DB::table('customers')->where('id', $request->customers)->first();
-            // if(!empty($get_email_addresses)){
-            //     foreach($get_email_addresses as $email){
-            //         $message = 'A New Complain has been added by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong>.';
-            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "A New Complain Added"]));
-                    
-            //     }
-            // }
+            
             echo json_encode('success');
         }else{
             echo json_encode('failed');
@@ -224,15 +235,16 @@ class ComplaintsManagment extends ParentController
             //     'message' => 'Complain Rsolved',
             //     'complain_id' => $request->id
             // ]);
-            // $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 105)')->get();
-            // $cust_name = DB::table('customers')->whereRaw('id = (Select customer_id from complains where id = "'.$request->id.'")')->first();
-            // if(!empty($get_email_addresses)){
-            //     foreach($get_email_addresses as $email){
-            //         $message = 'Complain has been Resolved by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong> with the following remarks: <br> <br> '.$request->remarks ;
-            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Complain Resolved"]));
+            if(DB::table('subscribed_notifications')->where('notification_code_id = 105 AND email = 1 AND emp_id = (Select created_by from complains where id = "'.$request->id.'")')){
+
+                $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select created_by from complains where id = "'.$request->id.'")')->first();
+                $cust_name = DB::table('customers')->whereRaw('id = (Select customer_id from complains where id = "'.$request->id.'")')->first();
+                if($get_email_addresses){
+                    $message = 'Complain has been Resolved by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong> with the following remarks: <br> <br> '.$request->remarks ;
+                    Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "Complain Resolved"]));
                     
-            //     }
-            // }
+                }
+            }
             echo json_encode('success');
         }else{
             echo json_encode('failed');

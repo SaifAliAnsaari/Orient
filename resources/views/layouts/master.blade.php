@@ -105,7 +105,7 @@
     @elseif($controller == "RegisterController")
     <script src="/js/custom/employee.js?v=1.0.6"></script>
     @elseif($controller == "ReportManagment")
-    <script src="/js/reports_managment/reports.js?v=1.0.7"></script>
+    <script src="/js/reports_managment/reports.js?v=1.0.8"></script>
     @elseif($controller == "Categories")
     <script src="/js/categories/categories.js?v=1.0.3"></script>
     @elseif($controller == "NotificationCenter")

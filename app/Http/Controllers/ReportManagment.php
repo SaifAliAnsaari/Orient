@@ -135,20 +135,7 @@ class ReportManagment extends ParentController
             ]);
         }
 
-        $check_sub_emp = DB::table('subecribed_notif_new')->whereRaw('emp_id = '.Auth::user()->id.' And cvr IS NOT NULL')->first();
-        if($check_sub_emp){
-            if($check_sub_emp->cvr){
-                $cvrs = explode(",", $check_sub_emp->cvr);
-                foreach($cvrs as $cvr){
-                    DB::table('notifications_list')->insert([
-                        'code' => 102,
-                        'message' =>'New CVR added',
-                        'cvr_id' => $insert_core,
-                        'notif_to' => $cvr
-                    ]);
-                }
-            }
-        }
+        
         // $insert_notification = DB::table('notifications_list')->insert([
         //     'code' => 102,
         //     'message' => 'New CVR added',
@@ -156,14 +143,46 @@ class ReportManagment extends ParentController
         // ]);
 
         if($insert_core){
-            // $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
-            // $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
+
+
+            $check_sub_emp = DB::table('subecribed_notif_new')->whereRaw('emp_id = '.Auth::user()->id.' And cvr IS NOT NULL')->first();
+            if($check_sub_emp){
+                if($check_sub_emp->cvr){
+                    $cvrs = explode(",", $check_sub_emp->cvr);
+
+                    //For Email
+                    $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+                    $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
+                    $cvr_id = array('id' => $insert_core);
+                    $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+                    $final_url = URL::to('/').$url;
+                    $file_name = "cvr".time().".pdf";
+                    file_put_contents($file_name, fopen($final_url, 'r'));
+                    foreach($cvrs as $cvr){
+                        DB::table('notifications_list')->insert([
+                            'code' => 102,
+                            'message' =>'New CVR added',
+                            'cvr_id' => $insert_core,
+                            'notif_to' => $cvr
+                        ]);
+                    }
+
+                    foreach($get_email_addresses as $email){
+                        if($email->id == $cvr){
+                            $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
+
+                            Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                        }
+                    }
+                    $path = public_path()."/". $file_name;
+                    if(file_exists($path)) {
+                        unlink($path);
+                    }
+                }
+            }
+
+
             
-            // $cvr_id = array('id' => $insert_core);
-            // $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
-            // $final_url = URL::to('/').$url;
-            // $file_name = "cvr".time().".pdf";
-            // file_put_contents($file_name, fopen($final_url, 'r'));
             // if(!$get_email_addresses->isEmpty()){
             //     foreach($get_email_addresses as $email){
 
@@ -172,10 +191,7 @@ class ReportManagment extends ParentController
             //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
             //     }
             // }
-            // $path = public_path()."/". $file_name;
-            // if(file_exists($path)) {
-            //     unlink($path);
-            // }
+            
            
 
             echo json_encode('success');
@@ -403,6 +419,15 @@ class ReportManagment extends ParentController
             if($check_sub_emp){
                 if($check_sub_emp->cvr){
                     $cvrs = explode(",", $check_sub_emp->cvr);
+
+                    //For Email
+                    $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
+                    $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
+                    $cvr_id = array('id' => $request->cvr_id);
+                    $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
+                    $final_url = URL::to('/').$url;
+                    $file_name = "cvr".time().".pdf";
+                    file_put_contents($file_name, fopen($final_url, 'r'));
                     foreach($cvrs as $cvr){
                         DB::table('notifications_list')->insert([
                             'code' => 102,
@@ -410,6 +435,17 @@ class ReportManagment extends ParentController
                             'cvr_id' => $request->cvr_id,
                             'notif_to' => $cvr
                         ]);
+                    }
+                    foreach($get_email_addresses as $email){
+                        if($email->id == $cvr){
+                            $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
+                            //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
+                            Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                        }
+                    }
+                    $path = public_path()."/". $file_name;
+                    if(file_exists($path)) {
+                        unlink($path);
                     }
                 }
             }
@@ -419,15 +455,7 @@ class ReportManagment extends ParentController
             //     'cvr_id' => $request->cvr_id
             // ]);
     
-            // $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 102)')->get();
-            // $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
-
-
-            // $cvr_id = array('id' => $request->cvr_id);
-            // $url = '/fpdf?'.http_build_query(json_decode(json_encode($cvr_id), true));
-            // $final_url = URL::to('/').$url;
-            // $file_name = "cvr".time().".pdf";
-            // file_put_contents($file_name, fopen($final_url, 'r'));
+            
             // if(!$get_email_addresses->isEmpty()){
             //     foreach($get_email_addresses as $email){
             //         $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
@@ -435,12 +463,7 @@ class ReportManagment extends ParentController
             //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
             //     }
             // }
-            // $path = public_path()."/". $file_name;
-            // if(file_exists($path)) {
-            //     unlink($path);
-            // }
-
-
+           
            
             echo json_encode('success');
             
@@ -586,17 +609,17 @@ class ReportManagment extends ParentController
                 //     'remarks' => $request->remarks,
                 //     'created_at' => date('Y-m-d H:i:s')
                 // ]);
-                // if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')){
-                //     $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
-                //     $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
-                //     if($get_email_addresses){
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
     
-                //         $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
 
-                //         Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Approved: CVR for ".$cust_name->company_name]));
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Approved: CVR for ".$cust_name->company_name]));
                         
-                //     }
-                // }
+                    }
+                }
 
                
             }else{
@@ -615,17 +638,17 @@ class ReportManagment extends ParentController
                 //     'remarks' => $request->remarks,
                 //     'created_at' => date('Y-m-d H:i:s')
                 // ]);
-                // if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select      report_created_by from cvr_core where id = "'.$request->id.'")')){
-                //     $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
-                //     $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
-                //     if($get_email_addresses){
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 103 AND email = 1 AND emp_id = (Select      report_created_by from cvr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from cvr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from cvr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
     
-                //         $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager: <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your CVR against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager: <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;
 
-                //         Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Disapproved: CVR for ".$cust_name->company_name]));
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Disapproved: CVR for ".$cust_name->company_name]));
                         
-                //     }
-                // }
+                    }
+                }
                
             }
             
@@ -737,6 +760,16 @@ class ReportManagment extends ParentController
         if($check_sub_emp){
             if($check_sub_emp->svr){
                 $svrs = explode(",", $check_sub_emp->svr);
+
+                //For Email
+                $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 106)')->get();
+                $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
+                
+                $svr_id = array('id' => $insert_core);
+                $url = '/fpdf/svr.php?'.http_build_query(json_decode(json_encode($svr_id), true));
+                $final_url = URL::to('/').$url;
+                $file_name = "svr".time().".pdf";
+                file_put_contents($file_name, fopen($final_url, 'r'));
                 foreach($svrs as $svr){
                     DB::table('notifications_list')->insert([
                         'code' => 106,
@@ -745,18 +778,23 @@ class ReportManagment extends ParentController
                         'notif_to' => $svr
                     ]);
                 }
+                foreach($get_email_addresses as $email){
+                    if($email->id == $svr){
+                        $message = 'Dear <strong> '.$email->name. '</strong>, <br> <br> A new SVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
+
+
+                        Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                    }
+                }
+                $path = public_path()."/". $file_name;
+                if(file_exists($path)) {
+                    unlink($path);
+                }
             }
         }
 
         if($insert_core){
-            // $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 106)')->get();
-            // $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
-            
-            // $svr_id = array('id' => $insert_core);
-            // $url = '/fpdf/svr.php?'.http_build_query(json_decode(json_encode($svr_id), true));
-            // $final_url = URL::to('/').$url;
-            // $file_name = "svr".time().".pdf";
-            // file_put_contents($file_name, fopen($final_url, 'r'));
+           
             // if(!$get_email_addresses->isEmpty()){
             //     foreach($get_email_addresses as $email){
 
@@ -766,10 +804,7 @@ class ReportManagment extends ParentController
             //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
             //     }
             // }
-            // $path = public_path()."/". $file_name;
-            // if(file_exists($path)) {
-            //     unlink($path);
-            // }
+           
 
             echo json_encode('success');
         }else{
@@ -968,6 +1003,15 @@ class ReportManagment extends ParentController
                 if($check_sub_emp){
                     if($check_sub_emp->svr){
                         $svrs = explode(",", $check_sub_emp->svr);
+
+                        //For Email
+                        $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 106)')->get();
+                        $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
+                        $svr_id = array('id' => $request->svr_id);
+                        $url = '/fpdf/svr.php?'.http_build_query(json_decode(json_encode($svr_id), true));
+                        $final_url = URL::to('/').$url;
+                        $file_name = "cvr".time().".pdf";
+                        file_put_contents($file_name, fopen($final_url, 'r'));
                         foreach($svrs as $svr){
                             DB::table('notifications_list')->insert([
                                 'code' => 106,
@@ -976,18 +1020,22 @@ class ReportManagment extends ParentController
                                 'notif_to' => $svr
                             ]);
                         }
+
+                        foreach($get_email_addresses as $email){
+                            if($email->id == $svr){
+                                $message = 'Dear <strong>'.$email->name. '</strong>, <br> <br> A SVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
+                                //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
+                                Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                            }
+                        }
+                        $path = public_path()."/". $file_name;
+                        if(file_exists($path)) {
+                            unlink($path);
+                        }
                     }
                 }
         
-                // $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 106)')->get();
-                // $cust_name = DB::table('customers')->select('company_name')->where('id', $request->customer_id)->first();
-    
-    
-                // $svr_id = array('id' => $request->svr_id);
-                // $url = '/fpdf/svr.php?'.http_build_query(json_decode(json_encode($svr_id), true));
-                // $final_url = URL::to('/').$url;
-                // $file_name = "cvr".time().".pdf";
-                // file_put_contents($file_name, fopen($final_url, 'r'));
+                
                 // if(!$get_email_addresses->isEmpty()){
                 //     foreach($get_email_addresses as $email){
                 //         $message = 'Dear <strong>'.$email->name. '</strong>, <br> <br> A SVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
@@ -995,10 +1043,7 @@ class ReportManagment extends ParentController
                 //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                 //     }
                 // }
-                // $path = public_path()."/". $file_name;
-                // if(file_exists($path)) {
-                //     unlink($path);
-                // }
+               
     
                 echo json_encode('success');
                 
@@ -1045,6 +1090,17 @@ class ReportManagment extends ParentController
                     'svr_id' => $request->id,
                     'notif_to' => $data->report_created_by
                 ]);
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 107 AND email = 1 AND emp_id = (Select report_created_by from svr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from svr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from svr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
+    
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your SVR against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
+
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Approved: SVR for ".$cust_name->company_name]));
+                        
+                    }
+                }
             }else{
                 DB::table('svr_core')->where('id', $request->id)->update(['is_approved' => 2]);
                 DB::table('notifications_list')->insert([
@@ -1053,6 +1109,17 @@ class ReportManagment extends ParentController
                     'svr_id' => $request->id,
                     'notif_to' => $data->report_created_by
                 ]);
+                if(DB::table('subscribed_notifications')->where('notification_code_id = 107 AND email = 1 AND emp_id = (Select report_created_by from svr_core where id = "'.$request->id.'")')){
+                    $get_email_addresses = DB::table('users')->select('email', 'name')->whereRaw('id = (Select report_created_by from svr_core where id = "'.$request->id.'")')->first();
+                    $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from svr_core where id = "'.$request->id.'")')->first();
+                    if($get_email_addresses){
+    
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your SVR against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager : <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;;
+
+                        Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Approved: SVR for ".$cust_name->company_name]));
+                        
+                    }
+                }
             }
             echo json_encode('success');
         }else{

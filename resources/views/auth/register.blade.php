@@ -58,6 +58,7 @@
                                                         <div>
                                                             <input hidden type="text" value="{{$data}}" id="full_cities_array"/>
                                                             <div>
+                                                                <label class=" font12">City*</label>
                                                                 <select class="form-control formselect required" id="select_city" name="city" placeholder="Select City">
                                                                     <option value="0" selected disabled>Select City*</option>
                                                                     @if(!empty($data))
@@ -71,6 +72,7 @@
                                                     </div>
                                                     <div class="form-s2 col-md-6" style="margin-top:10px; margin-bottom:10px;">
                                                         <div>
+                                                            <label class=" font12">Province*</label>
                                                             <select class="form-control formselect" id="select_province" name="province" placeholder="Select Province">
                                                                 <option value="0" selected disabled>Select Province</option>
                                                                 @if(!empty($provinces))
@@ -133,8 +135,9 @@
                                                             <label class="control-label mb-10">Salary</label>
                                                             <input type="number" name="salary" style="font-size: 13px" class="form-control" placeholder="">
                                                         </div> --}}
-                                                        <div class="form-s2 pt-10">
+                                                        <div class="form-s2">
                                                             <div>
+                                                                 <label class="font12">Division</label>
                                                                 <select name="division" class="form-control formselect required" placeholder="Select Division">
                                                                     <option value="0" disabled selected>Select Division*</option>
                                                                     <option value="1">Chemical </option>
@@ -146,6 +149,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-s2 pt-10">
                                                             <div>
+                                                                    <label class=" font12">Designation*</label>
                                                                 <select name="designation" class="form-control formselect required" placeholder="select Designation">
                                                                     <option value="0" disabled selected>Select Designation*</option>
                                                                     @if(!empty($designations))
@@ -163,8 +167,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-s2 pt-19">
+                                                        <div class="form-s2 pt-10">
                                                             <div>
+                                                                 <label class=" font12">Reporting To*</label>
                                                                 <select name="reporting" class="form-control formselect required" placeholder="Reporting To">
                                                                     <option value="0" disabled selected>Reporting To*</option>
                                                                     @if(!empty($emp))
@@ -178,6 +183,7 @@
                                                     </div>
                                                     <div class="form-s2 pt-19 col-md-6">
                                                         <div>
+                                                            <label class=" font12">Department*</label>
                                                             <select name="department" class="form-control formselect required" placeholder="Select Department">
                                                                 <option value="0" disabled selected>Select Department*</option>
                                                                 <option value="1">Sales</option>
@@ -188,6 +194,7 @@
                                                     </div>
                                                     <div class="form-s2 pt-19 col-md-6">
                                                         <div>
+                                                                <label class=" font12">Company*</label>
                                                             <select name="company" class="form-control formselect required" placeholder="Select Department">
                                                                 <option value="0" disabled selected>Select Company*</option>
                                                                 <option value="Orient Engineering Services">Orient Engineering Services</option>

@@ -543,7 +543,7 @@
 
                                                 <div class="col-md-3 col-xs-3">
                                                     <div class="custom-control custom-checkbox mr-sm-2">
-                                                        <input type="checkbox" value="Customer Call "
+                                                        <input type="checkbox" value="Customer Call"
                                                             class="custom-control-input purpose_checkboxes" id="id003"
                                                             style="font-size:13px">
                                                         <label class="custom-control-label" for="id003">Customer Call </label>

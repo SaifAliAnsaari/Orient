@@ -171,6 +171,9 @@ class Customer extends ParentController
             if($check_sub_emp){
                 if($check_sub_emp->customer){
                     $customers = explode(",", $check_sub_emp->customer);
+
+                    //For Email
+                    $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
                     foreach($customers as $customer){
                         DB::table('notifications_list')->insert([
                             'code' => 101,
@@ -178,6 +181,12 @@ class Customer extends ParentController
                             'customer_id' => $_customer_id,
                             'notif_to' => $customer
                         ]);
+                    }
+                    foreach($get_email_addresses as $email){
+                        if($email->id == $customer){
+                            $message = 'New Customer <strong>'.$request->compName.'</strong> has been added by: <strong>'.Auth::user()->name.'</strong>.';
+                            Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
+                        }
                     }
                 }
             }
@@ -188,14 +197,14 @@ class Customer extends ParentController
         //         'customer_id' => $customer->id
         //     ]);
 
-        //    $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+          
                
-        //     if(!$get_email_addresses->isEmpty()){
-        //         foreach($get_email_addresses as $email){
-        //             $message = 'New Customer <strong>'.$request->compName.'</strong> has been added by: <strong>'.Auth::user()->name.'</strong>.';
-        //             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
-        //         }
-        //     }
+            // if(!$get_email_addresses->isEmpty()){
+            //     foreach($get_email_addresses as $email){
+            //         $message = 'New Customer <strong>'.$request->compName.'</strong> has been added by: <strong>'.Auth::user()->name.'</strong>.';
+            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
+            //     }
+            // }
             echo json_encode($_customer_id);
         }else{
             echo json_encode("failed");
@@ -264,6 +273,9 @@ class Customer extends ParentController
             if($check_sub_emp){
                 if($check_sub_emp->customer){
                     $customers = explode(",", $check_sub_emp->customer);
+
+                    //For Email
+                    $get_email_addresses = DB::table('users')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
                     foreach($customers as $customer){
                         DB::table('notifications_list')->insert([
                             'code' => 101,
@@ -271,6 +283,13 @@ class Customer extends ParentController
                             'customer_id' => $id,
                             'notif_to' => $customer
                         ]);
+                    }
+
+                    foreach($get_email_addresses as $email){
+                        if($email->id == $customer){
+                            $message = 'Customer <strong>'.$request->compName.'</strong> has been updated by: <strong>'.Auth::user()->name.'</strong>.';
+                            Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Updated"]));
+                        }
                     }
                 }
             }
@@ -280,7 +299,7 @@ class Customer extends ParentController
             //     'message' => 'Customer updated',
             //     'customer_id' => $id
             // ]);
-            // $get_email_addresses = DB::table('users')->select('email')->whereRaw('id IN (Select emp_id from subscribed_notifications WHERE email = 1 AND notification_code_id = 101)')->get();
+            
             // if(!$get_email_addresses->isEmpty()){
             //     foreach($get_email_addresses as $email){
             //         $message = 'Customer <strong>'.$request->compName.'</strong> has been updated by: <strong>'.Auth::user()->name.'</strong>.';

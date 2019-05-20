@@ -24,6 +24,7 @@ class HomeController extends ParentController
      */
     public function index()
     {
+        
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         parent::get_notif_data();

@@ -96,10 +96,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navi-l1">
             @if(in_array("/new_svr", $test_array))
-                <a class="dropdown-item" href="/new_svr">Add New Sales Visit Report</a>
+                <a class="dropdown-item" href="/new_svr">New Service Report</a>
             @endif
             @if(in_array("/svr_list", $test_array))
-                <a class="dropdown-item" href="/svr_list">Sales Visit Reports List</a>
+                <a class="dropdown-item" href="/svr_list">Service Reports List</a>
             @endif
         </div>
     </li>
@@ -127,7 +127,7 @@
             </div>
         </li>
     @endif
-    {{-- @if(in_array("/notification_prefrences", $test_array))
+    @if(in_array("/notification_prefrences", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -140,7 +140,7 @@
                 @endif
             </div>
         </li>
-    @endif --}}
+    @endif
     <?php }
     ?>
 </ul>
