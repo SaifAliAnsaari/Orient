@@ -38,7 +38,7 @@
                     <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
                         <img src="{{'/images/profile-img--.jpg'}}" class="NU-img float-none mb-0" alt="">
                         <strong class="notifications_list_all"
-                            id="{{$notifications->id}}"> </strong><strong>{{$notifications->customer_nameOrCvr}}</strong> 
+                            id="{{$notifications->id}}"> </strong><strong>{{($notifications->customer_nameOrCvr ? $notifications->customer_nameOrCvr : '--')}}</strong> 
                             <?php 
                             if($notifications->message == "New Customer Added"){
                                 echo " Created a ";
@@ -47,7 +47,7 @@
                             }else if($notifications->message == "New SVR added"){
                                 echo " Created a ";
                             }else{
-                                echo " Update a ";
+                                echo " Updated a ";
                             }
                             ?>
                              {{ ($notifications->cvr_id ? "Customer Visit Report" : ($notifications->svr_id ? "Service Visit Report" : "Customer")) }} {{ ($notifications->notif_for ? " For ".$notifications->notif_for : "") }}  
