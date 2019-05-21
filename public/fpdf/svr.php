@@ -68,7 +68,7 @@ $stmt->close();
 
 
 
-$sql = "SELECT `name`, `strength` from svr_competition where svr_id = ".$_GET['id'];
+$sql = "SELECT `name`, `strength` from cvr_competition where svr_id = ".$_GET['id'];
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $stmt->bind_result($com_name, $com_strength);

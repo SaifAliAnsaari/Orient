@@ -30,7 +30,7 @@ class ReportManagment extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
-        $competitions = DB::table('cvr_competition')->get();
+        $competitions = DB::table('cvr_competition')->groupBy('name')->get();
         $data = DB::table('pick_up_delivery')->get();
 
         $provinces = [];
@@ -685,7 +685,7 @@ class ReportManagment extends ParentController
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $customers = DB::table('customers')->get();
-        $competitions = DB::table('svr_competition')->get();
+        $competitions = DB::table('cvr_competition')->groupBy('name')->get();
         $data = DB::table('pick_up_delivery')->get();
 
         $provinces = [];
@@ -738,7 +738,7 @@ class ReportManagment extends ParentController
             ]);
         }
         foreach($request->competition_list as $comp){
-            $insert_comp = DB::table('svr_competition')->insert([
+            $insert_comp = DB::table('cvr_competition')->insert([
                 'svr_id' => $insert_core,
                 'name' => $comp["name"],
                 'strength' => $request->competitions_strength
@@ -918,7 +918,7 @@ class ReportManagment extends ParentController
         if($this->redirectUrl){return redirect($this->redirectUrl);}
         $core = DB::table('svr_core as cc')->where('id', $id)->first();
         $customers = DB::table('customers')->get();
-        $competitions = DB::table('svr_competition')->get();
+        $competitions = DB::table('cvr_competition')->get();
         if($core){
             if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
                 if($core){
@@ -948,7 +948,7 @@ class ReportManagment extends ParentController
         $core = DB::table('svr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
         $products = DB::table('svr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('svr_id', $id)->get();
         $pocs = DB::table('svr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('svr_id', $id)->get();
-        $competitions = DB::table('svr_competition')->where('svr_id', $id)->get();
+        $competitions = DB::table('cvr_competition')->where('svr_id', $id)->get();
         echo json_encode(array('core' => $core, 'products' => $products, 'poc' => $pocs, 'competitions' => $competitions));
     }
 
@@ -977,9 +977,9 @@ class ReportManagment extends ParentController
                     ]);
                 }
     
-                DB::table('svr_competition')->where('svr_id', $request->svr_id)->delete();
+                DB::table('cvr_competition')->where('svr_id', $request->svr_id)->delete();
                 foreach($request->competition_list as $comp){
-                    $insert_comp = DB::table('svr_competition')->insert([
+                    $insert_comp = DB::table('cvr_competition')->insert([
                         'svr_id' => $request->svr_id,
                         'name' => $comp["name"],
                         'strength' => $request->competitions_strength
@@ -1061,7 +1061,7 @@ class ReportManagment extends ParentController
         if($core){
             $products = DB::table('svr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('svr_id', $id)->get();
             $pocs = DB::table('svr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('svr_id', $id)->get();
-            $competitions = DB::table('svr_competition')->where('svr_id', $id)->get();
+            $competitions = DB::table('cvr_competition')->where('svr_id', $id)->get();
 
             $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
 
