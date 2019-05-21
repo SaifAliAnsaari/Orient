@@ -35,22 +35,31 @@
                 @foreach($all_notif as $notifications)
                 <a
                     href="{{ ($notifications->cvr_id ? '/edit_cvr'.'/'.$notifications->cvr_id : ($notifications->customer_id ? '/CustomerProfile'.'/'.$notifications->customer_id : ($notifications->svr_id ? '/edit_svr'.'/'.$notifications->svr_id : '/complaints_list'))) }}">
+                    {{-- src="{{($notifications->cvr_id ? '/images/CVR-icon.svg' : ($notifications->svr_id ? '/images/SVR-icon.svg' : ($notifications->customer_id ? '/images/customer-icon.svg' : '/images/complaint-icon.svg')))}}" --}}
                     <div class="alert alert-warning alert-dismissible fade show alert-color _NF-se" role="alert">
-                        <img src="{{'/images/profile-img--.jpg'}}" class="NU-img float-none mb-0" alt="">
+                        <img src="{{($notifications->message == 'New CVR added' ? '/images/CVR-icon.svg' : ($notifications->message == 'CVR Updated' ? '/images/CVR-icon.svg' : ($notifications->message == 'New SVR added' ? '/images/SVR-icon.svg' : ($notifications->message == 'SVR Updated' ? '/images/SVR-icon.svg' : ($notifications->message == 'New Customer Added' ? '/images/customer-icon.svg' : ($notifications->message == 'Customer Updated' ? '/images/customer-icon.svg' : ($notifications->message == 'New Complain Added' ? '/images/complaint-icon.svg' : ($notifications->message == 'Complain Resolved' ? '/images/complaint-resolve.svg' : ($notifications->message == 'CVR has been approved' ? '/images/svr-cvr-approve.svg' : ($notifications->message == 'SVR has been approved' ? '/images/svr-cvr-approve.svg' : '/images/svr-cvr-disapprove.svg'))))))))))}}" class="NU-img float-none mb-0" alt="">
                         <strong class="notifications_list_all"
-                            id="{{$notifications->id}}"> </strong><strong>{{($notifications->customer_nameOrCvr ? $notifications->customer_nameOrCvr : '--')}}</strong> 
+                            id="{{$notifications->id}}"> </strong><strong>{{($notifications->message == 'CVR has been disapproved' || $notifications->message == 'SVR has been disapproved' || $notifications->message == 'CVR has been approved' || $notifications->message == 'SVR has been approved' ? '' : ($notifications->customer_nameOrCvr ? $notifications->customer_nameOrCvr : '--'))}}</strong> 
                             <?php 
                             if($notifications->message == "New Customer Added"){
                                 echo " Created a ";
                             }else if($notifications->message == "New CVR added"){
                                 echo " Created a ";
+                            }else if($notifications->message == "New Complain Added"){
+                                echo " Created a ";
+                            }else if($notifications->message == "Complain Resolved"){
+                                echo " has Ressolved this ";
                             }else if($notifications->message == "New SVR added"){
                                 echo " Created a ";
+                            }else if($notifications->message == "CVR has been disapproved" || $notifications->message == 'SVR has been disapproved'){
+                                echo "Disapproved ";
+                            }else if($notifications->message == 'CVR has been approved' || $notifications->message == 'SVR has been approved'){
+                                echo "Approved ";
                             }else{
                                 echo " Updated a ";
                             }
                             ?>
-                             {{ ($notifications->cvr_id ? "Customer Visit Report" : ($notifications->svr_id ? "Service Visit Report" : "Customer")) }} {{ ($notifications->notif_for ? " For ".$notifications->notif_for : "") }}  
+                             {{ ($notifications->cvr_id ? "Customer Visit Report" : ($notifications->svr_id ? "Service Visit Report" : ($notifications->customer_id ? 'Customer' : 'Complain'))) }} {{ ($notifications->notif_for ? " For ".$notifications->notif_for : "") }}  
                         <div class="row" style="margin-left:5%;">{{$notifications->created_at}}</div>
 
                     </div>
