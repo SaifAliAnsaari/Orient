@@ -167,12 +167,17 @@
                             <div class="col-12 p-0">
                                 <h3 class="_head03">Competition</h3>
                                 <div class="row">
-                                        @if(!empty($competition))
+                                       
+                                    <?php 
+                                    if($competition->isEmpty()){
+                                        $strength = 'NA';
+                                    }else{ ?>
                                         @foreach ($competition as $comp)
                                         <?php $strength = $comp->strength; ?>
                                             <div class="col-md-6"><strong>Competition Name:</strong> {{ $comp->name }} </div>
                                         @endforeach
-                                        @endif
+                                    <?php }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +186,7 @@
                             <div class="col-12 p-0">
                                 <h3 class="_head03">Competitor’s Strength</h3>
                                 <div class="row">
-                                    <div class="col-md-12"><i class="fa fa-check"></i> {{ $strength }}</div>
+                                    <div class="col-md-12"><i class="fa fa-check"></i> {{ $strength  }}</div>
                                 </div>
                             </div>
                         </div>
