@@ -42,37 +42,29 @@
                 <div class="col-md-6 mb-30">
                     <div class="card cp-stats">
                         <div class="cp-stats-icon"> <i class="fa fa-chart-pie"></i> </div>
-                        <h5 class="text-muted">Orders</h5>
-                        <h3 class="cp-stats-value">36,254</h3>
-                        <p class="mb-0"><span class="weight600 text-success"><i class="fa fa-arrow-up"> </i>
-                                5.27%</span> <span class="bm_text"> Since last month</span> </p>
+                        <h5 class="text-muted">Visits</h5>
+                        <h3 class="cp-stats-value">{{sizeof($cvrs) + sizeof($svrs)}}</h3>
                     </div>
                 </div>
                 <div class="col-md-6 mb-30">
                     <div class="card cp-stats">
                         <div class="cp-stats-icon"> <i class="fa fa-chart-bar"></i> </div>
-                        <h5 class="text-muted">Growth</h5>
-                        <h3 class="cp-stats-value">36,254</h3>
-                        <p class="mb-0"><span class="weight600 text-danger"><i class="fa fa-arrow-down"> </i>
-                                5.27%</span> <span class="bm_text"> Since last month</span> </p>
+                        <h5 class="text-muted">Sales Reports</h5>
+                        <h3 class="cp-stats-value">{{sizeof($cvrs)}}</h3>
                     </div>
                 </div>
                 <div class="col-md-6 mb-30">
                     <div class="card cp-stats">
                         <div class="cp-stats-icon"> <i class="fa fa-chart-area"></i> </div>
-                        <h5 class="text-muted">Revenue</h5>
-                        <h3 class="cp-stats-value">36,254</h3>
-                        <p class="mb-0"><span class="weight600 text-danger"><i class="fa fa-arrow-down"> </i>
-                                5.27%</span> <span class="bm_text"> Since last month</span> </p>
+                        <h5 class="text-muted">Service Reports</h5>
+                        <h3 class="cp-stats-value">{{sizeof($svrs)}}</h3>
                     </div>
                 </div>
                 <div class="col-md-6 mb-30">
                     <div class="card cp-stats">
                         <div class="cp-stats-icon"> <i class="fa fa-chart-line"></i> </div>
-                        <h5 class="text-muted">Customers</h5>
-                        <h3 class="cp-stats-value">36,254</h3>
-                        <p class="mb-0"><span class="weight600 text-success"><i class="fa fa-arrow-up"> </i>
-                                5.27%</span> <span class="bm_text"> Since last month</span> </p>
+                        <h5 class="text-muted">Complaints</h5>
+                        <h3 class="cp-stats-value">{{sizeof($complains)}}</h3>
                     </div>
                 </div>
             </div>
@@ -89,6 +81,14 @@
                     <li class="nav-item">
                         <a class="nav-link" id="tab2" data-toggle="tab" href="#tab02" role="tab" aria-controls="tab02"
                             aria-selected="false">POC List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab3" data-toggle="tab" href="#tab03" role="tab" aria-controls="tab03"
+                            aria-selected="false">Service Visit List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab4" data-toggle="tab" href="#tab04" role="tab" aria-controls="tab04"
+                            aria-selected="false">Complaints List</a>
                     </li>
                 </ul>
                 <div class="tab-content tab-style" id="myTabContent">
@@ -118,17 +118,7 @@
                                     <td>{{$cvr->opportunity}}</td>
                                     <td>{{$cvr->bussiness_value}}</td>
                                     <td>
-                                            <a href="/cvr_preview/{{$cvr->id}}" id="' + element['id'] + '" class="btn btn-default">Preview</a>
-                                        {{-- <a href="/cvr_preview/{{$cvr->id}}"><button class="btn btn-default" data-toggle="modal"
-                                            data-target=".modal-order-detail" title="CVR Preview"><i
-                                                class="fa fa-list"></i></button></a> --}}
-                                        {{-- <button class="btn btn-default" data-toggle="modal"
-                                            data-target=".modal-cust-detail" title="Customer Detail"><i
-                                                class="fa fa-user-check"></i></button>
-                                        <button class="btn btn-default bg-success" title="Confirm Order"><i
-                                                class="fa fa-check"></i></button>
-                                        <button class="btn btn-default bg-danger" title="Cancel"><i
-                                                class="fa fa-times"></i></button> --}}
+                                        <a href="/cvr_preview/{{$cvr->id}}" id="' + element['id'] + '" class="btn btn-default">Preview</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -168,6 +158,58 @@
                                         <button class="btn btn-default bg-danger" title="Cancel"><i
                                                 class="fa fa-times"></i></button> --}}
                                     </td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade show" id="tab03" role="tabpane3" aria-labelledby="tab3">
+                        <table class="table table-hover dt-responsive nowrap data" id="example3" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Created At</th>
+                                    <th>Created By</th>
+                                    <th>Date of Visit</th>
+                                    <th>Time Spent</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!empty($svrs))
+                                @foreach ($svrs as $svr)
+                                <tr>
+                                    <td>{{$svr->report_created_at}}</td>
+                                    <td>{{$svr->report_created_by}}</td>
+                                    <td>{{$svr->date_of_visit}}</td>
+                                    <td>{{$svr->time_spent}}</td>
+                                    <td>
+                                        <a href="/svr_preview/{{$svr->id}}" id="' + element['id'] + '" class="btn btn-default">Preview</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade show" id="tab04" role="tabpane4" aria-labelledby="tab4">
+                        <table class="table table-hover dt-responsive nowrap data" id="example4" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Created At</th>
+                                    <th>Created By</th>
+                                    <th>Remarks</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!empty($complains))
+                                @foreach ($complains as $complain)
+                                <tr>
+                                    <td>{{$complain->created_at}}</td>
+                                    <td>{{$complain->created_by}}</td>
+                                    <td>{{($complain->remarks ? $complain->remarks : "NA")}}</td>
+                                    <td> <span class="{{($complain->resolved == 0 ? 'lab-pending' : 'lab-line') }}">{{($complain->resolved == 0 ? 'Pending' : 'Resolved') }}</span></td>
                                 </tr>
                                 @endforeach
                                 @endif

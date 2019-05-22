@@ -14,6 +14,8 @@ $(document).ready(function() {
         fetchCompaniesList();
         fetchParentCompanies(company_id);
     }else if(action == 'CustomerProfile'){
+        $('#example3').DataTable();
+        $('#example4').DataTable();
         fetchCompanyInfoForUpdate($('#companyIdForUpdate').val());
     }else if(action == 'poc_list'){
         fetchPOCList();

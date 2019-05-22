@@ -60,7 +60,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab2" data-toggle="tab" href="#tab02" role="tab"
-                                    aria-controls="tab02" aria-selected="false">Setting</a>
+                                    aria-controls="tab02" aria-selected="false">Password</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab3" data-toggle="tab" href="#tab03" role="tab"
