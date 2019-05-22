@@ -25,6 +25,15 @@ $(document).ready(function () {
         }
     });
 
+    
+    //Reverse action if . entered by user in TAT
+    // $(document).on('keyup', '#complain_tat', function(){
+    //     alert($(this).val().substr($(this).val().length-1));
+    //     if($(this).val().substr($(this).val().length-1) == '.'){
+    //         alert('asa');
+    //     }
+    // });
+
 
     //Save Complaint Type
     $(document).on('click', '.save_complaint_type', function () {
@@ -391,16 +400,14 @@ function fetchcomplain_List() {
                 //console.log(JSON.parse(element['assign_to']));
                 JSON.parse(element['assign_to']).map(function (idx, ele) {
                     if(idx == response.id){
-
+                        var daystohours = element['tat'] * 24;
                         var timeSinceComplain = find_difference(element['created_at'], current_date_time);
-                        var valuestop = moment.duration(element['tat']+":00", "HH:mm");
+                        var valuestop = moment.duration(daystohours+":00", "HH:mm");
                         var difference = valuestop.subtract(timeSinceComplain);
         
                         $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (element['resolved'] == 1 ? 'disabled' : '') }>Resolve</button> <button id="${element['id']}" class="btn btn-default view_detail_modal" data-toggle="modal" data-target=".competition-lg2">View Detail</button></td></tr>`);
                     }
                  });
-               
-                //  $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (difference.hours() > 0 ? (difference.minutes() >= 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled') : ( difference.minutes() > 0 ? (element['resolved'] == 1 ? 'disabled' : '') : 'disabled' )) }>Resolve</button> </td></tr>`);
                 
             });
             $('#tblLoader').hide();

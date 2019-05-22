@@ -31,11 +31,12 @@
                         <div class="form-s2">
                             <select class="form-control formselect" id="employee_id" placeholder="Select Employee">
                                 <option value="0" selected disabled>Select Employee</option>
-                                @if(!$emp->isEmpty())
+                                {{-- @if(!$emp->isEmpty())
                                 @foreach($emp as $employe)
                                 <option value="{{ $employe->id }}">{{ $employe->name }}</option>
                                 @endforeach
-                                @endif
+                                @endif --}}
+                                <option value="{{Auth::user()->id}}" selected>{{Auth::user()->name}}</option>
                             </select>
                         </div>
                     </div>

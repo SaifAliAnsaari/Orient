@@ -13,7 +13,7 @@
             <span>Dashboard</span>
         </a>
     </li>
-    @if(in_array("/register", $test_array) || in_array("/SCFAR", $test_array))
+    @if(in_array("/register", $test_array) || in_array("/SCFAR", $test_array) || in_array("/cities", $test_array) || in_array("/designations", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -33,6 +33,9 @@
                 @if(in_array("/designations", $test_array))
                     <a class="dropdown-item" href="/designations">Designations</a>
                 @endif
+                {{-- @if(in_array("/notification_prefrences", $test_array))
+                    <a class="dropdown-item" href="/notification_prefrences">Notification Prefrences</a>
+                @endif --}}
             </div>
         </li>
     @endif
@@ -127,7 +130,7 @@
             </div>
         </li>
     @endif
-    @if(in_array("/notification_prefrences", $test_array))
+    {{-- @if(in_array("/notification_prefrences", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -140,7 +143,7 @@
                 @endif
             </div>
         </li>
-    @endif
+    @endif --}}
     <?php }
     ?>
 </ul>

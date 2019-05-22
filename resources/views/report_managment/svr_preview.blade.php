@@ -7,7 +7,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content top_border">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Approve <span> SVR</span></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Approve <span> Service Visit Report</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

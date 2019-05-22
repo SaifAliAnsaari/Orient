@@ -66,6 +66,10 @@
                                 <a class="nav-link" id="tab3" data-toggle="tab" href="#tab03" role="tab"
                                     aria-controls="tab03" aria-selected="false">Profile Picture</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab4" data-toggle="tab" href="#tab04" role="tab"
+                                    aria-controls="tab04" aria-selected="false">Notifications</a>
+                            </li>
                         </ul>
                         <div class="tab-content tab-style" id="myTabContent">
 
@@ -233,21 +237,88 @@
                                             {!! Form::hidden('tokenForAjaxReq', csrf_token()) !!}
                                             @csrf
                                             <input type="text" hidden name="user_id" value="{{ Auth::user()->id  }}" />
-                                            <div >
+                                            <div>
                                                 <div class="col-md-6">
                                                     <div class="form-wrap up_h" style="width:100px;">
-                                                        <div class="upload-pic" ></div>
-                                                        <input type="file" id="input-file-now"  class="dropify" 
+                                                        <div class="upload-pic"></div>
+                                                        <input type="file" id="input-file-now" class="dropify"
                                                             name="employeePicture"
                                                             data-default-file="{{ Auth::user()->picture ? URL::to(Auth::user()->picture) : '' }}" />
                                                     </div>
-																										<button type="button" class="btn btn-primary" id="save_pic_user_profile">Save</button>
-																								</div>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="save_pic_user_profile">Save</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+                            <div class="tab-pane fade show" id="tab04" role="tabpanel" aria-labelledby="tab4">
+                                <div class="form-wrap p-0">
+                                    <div class="row">
+                                        @csrf
+                                        <table class="table table-bordered dt-responsive AssNotification"
+                                            style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>General Notification</th>
+                                                    <th>Email</th>
+                                                    <th>Web</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table_notif" style="display:none;">
+                                                @if(!empty($notifications_code))
+                                                @foreach($notifications_code as $notif)
+                                                <tr>
+                                                    <td>{{ $notif->name }}</td>
+                                                    <td>
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="notification_permissions"
+                                                                value="email" id="{{ $notif->code }}"
+                                                                class="check_box {{ $notif->code }}">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="notification_permissions"
+                                                                value="web" id="{{ $notif->code }}"
+                                                                class="check_box {{ $notif->code }}">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                        <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-s2" style="display:none">
+                                                            <select class="form-control formselect" id="employee_id"
+                                                                placeholder="Select Employee">
+                                                                <option value="0" selected disabled>Select Employee</option>
+                                                                <option value="{{Auth::user()->id}}" selected>
+                                                                    {{Auth::user()->name}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <button type="button" style="position:relative; margin: -20px -50px; top:50%; left:50%;" class="btn btn-primary sm-mt15"
+                                                            id="update_emp_pref">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
 
                         </div>

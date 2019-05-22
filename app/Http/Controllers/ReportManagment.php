@@ -780,10 +780,10 @@ class ReportManagment extends ParentController
                 }
                 foreach($get_email_addresses as $email){
                     if($email->id == $svr){
-                        $message = 'Dear <strong> '.$email->name. '</strong>, <br> <br> A new SVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
+                        $message = '<strong> Dear '.$email->name. '</strong>, <br> <br> A new Service Visit Report has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
 
 
-                        Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                        Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Service Visit Report: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                     }
                 }
                 $path = public_path()."/". $file_name;
@@ -1023,9 +1023,9 @@ class ReportManagment extends ParentController
 
                         foreach($get_email_addresses as $email){
                             if($email->id == $svr){
-                                $message = 'Dear <strong>'.$email->name. '</strong>, <br> <br> A SVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
+                                $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A Service Visit Report has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service Visit Report for your reference.";
                                 //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
-                                Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
+                                Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Service Visit Report Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                             }
                         }
                         $path = public_path()."/". $file_name;
@@ -1095,7 +1095,7 @@ class ReportManagment extends ParentController
                     $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from svr_core where id = "'.$request->id.'")')->first();
                     if($get_email_addresses){
     
-                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your SVR against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your Service Visit Report against the customer: <strong>'.$cust_name->company_name."</strong> has been approved by your line manager : <strong>".Auth::user()->name."</strong>.";
 
                         Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Approved: SVR for ".$cust_name->company_name]));
                         
@@ -1114,7 +1114,7 @@ class ReportManagment extends ParentController
                     $cust_name = DB::table('customers')->select('company_name')->whereRaw('id = (Select customer_visited from svr_core where id = "'.$request->id.'")')->first();
                     if($get_email_addresses){
     
-                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your SVR against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager : <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;;
+                        $message = '<strong>Dear '.$get_email_addresses->name. '</strong>, <br> <br> Your Service Visit Report against the customer: <strong>'.$cust_name->company_name."</strong> has been disapproved by your line manager : <strong>".Auth::user()->name."</strong>, with the following remarks: <br> <br>".$request->remarks;;
 
                         Mail::to($get_email_addresses->email)->send(new SendMailable(["message" => $message, "subject" => "SVR Approved: SVR for ".$cust_name->company_name]));
                         

@@ -18,10 +18,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h2>SVR <span> List</span></h2>
+                <h2>Service Visit Report <span> List</span></h2>
                 <select class="custom-select custom-select-sm select_svr_type" style="float:right; width:150px;">
                         <option selected disabled>Please Select SVR Type</option>
-                        <option value="1" selected>All SVRs</option>
+                        <option value="1" selected>All Service Visit Reports</option>
                         <option value="2">Approved</option>
                         <option value="3">Disapproved</option>
                         <option value="4">Pending</option>

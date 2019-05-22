@@ -837,17 +837,17 @@ $(document).ready(function () {
 
     //Save Approval
     $(document).on('click', '.save_approval', function(){
-        // if($('textarea[name=remarks]').val() == ''){
-        //     $('#notifDiv').fadeIn();
-        //     $('#notifDiv').css('background', 'red');
-        //     $('#notifDiv').text('Please Enter Remarks!');
-        //     setTimeout(() => {
-        //         $('#notifDiv').fadeOut();
-        //     }, 3000);
-        //     return;
-        // }
-
+       
         var approval = $("input[name='approval_radio']:checked").val();
+        if(approval == 2 && $('textarea[name="remarks"]').val() == ""){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Enter Remarks');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
         var id = $(this).attr('id');
         var thisRef = $(this);
         thisRef.attr('disabled', 'disabled');
@@ -1222,6 +1222,15 @@ $(document).ready(function () {
     $(document).on('click', '.save_svr_approval', function(){
 
         var approval = $("input[name='approval_radio']:checked").val();
+        if(approval == 2 && $('textarea[name="remarks"]').val() == ""){
+            $('#notifDiv').fadeIn();
+            $('#notifDiv').css('background', 'red');
+            $('#notifDiv').text('Please Enter Remarks');
+            setTimeout(() => {
+                $('#notifDiv').fadeOut();
+            }, 3000);
+            return;
+        }
         var id = $(this).attr('id');
         var thisRef = $(this);
         thisRef.attr('disabled', 'disabled');

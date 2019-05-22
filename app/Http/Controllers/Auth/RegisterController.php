@@ -156,12 +156,13 @@ class RegisterController extends ParentController
     public function edit_profile($id){
         parent::get_notif_data();
         parent::VerifyRights();
+        $notifications_name = DB::table('notifications_code')->get();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
 
         if($id != Auth::id()){
             return redirect('/');
         }
-        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif]);
+        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'notifications_code' => $notifications_name]);
     }
 
 
