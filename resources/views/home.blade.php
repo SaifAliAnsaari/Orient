@@ -24,7 +24,7 @@ if(!empty($check_rights)){
     @if(in_array("/new_svr", $test_array))
     <div class="col-md-4">
         <a href="/new_svr" class="box-sec">
-            <span class="img-svg"><img src="/images/add-report-icon.svg" alt=""></span>
+            <span class="img-svg"><img src="/images/svr-home-icon.svg" alt=""></span>
             <strong>Add</strong> Service Report
         </a>
     </div>

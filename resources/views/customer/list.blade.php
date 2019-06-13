@@ -26,8 +26,6 @@
                                             class="form-control required_company" style="font-size:13px">
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

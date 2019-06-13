@@ -15,7 +15,10 @@
                             $counter++;
                         } ?>
                         @if(in_array("/new_cvr", $test_array))
-                        <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New CVR</a>
+                        <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New Sales Report</a>
+                        @endif
+                        @if(in_array("/new_svr", $test_array))
+                        <a href="/new_svr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New Service Report</a>
                         @endif
                         @if(in_array("/Customer_list", $test_array))
                         <a href="/Customer_list"><img src="{{ URL::to('/images/customer-list.svg') }}" alt=""> Add Customer</a>
@@ -54,8 +57,12 @@
                                     echo $interval->format('%d days %H hours %i minutes %s seconds ago');
                                 ?>
                         </p></a>
-                        @endforeach     
+                        @endforeach 
+                     
                     @endif
+                    
+
+
                     @if(!empty($approval_notif))
                         @foreach($approval_notif as $notifications)
                         <a href='/cvr_preview/{{$notifications->cvr_id}}'><img src="{{'/images/profile-img--.jpg'}} " class="NU-img" alt=""><strong class="notifications_list" id="{{$notifications->id}}">{{'CVR ('.$notifications->cvr_id.') has been '. ($notifications->approval == 1 ? "approved" : "disapproved") }} </strong><p>
@@ -67,6 +74,11 @@
                                 ?>
                         </p></a>
                         @endforeach     
+                    @endif
+                    @if(!sizeof($notif_data) && !sizeof($approval_notif))
+                        <span style="display: block; width:100%; text-align:left; font-weight: normal; font-size: 8pt;
+                        color: grey;
+                        padding: 14px;">No new notification</span>
                     @endif
                     <a href="/notifications" class="all-NF">View All ( {{ sizeof($all_notif) + sizeof($unread_notif) }} )</a>
                 </div> 

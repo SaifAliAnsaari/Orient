@@ -374,12 +374,12 @@
 
             <div class="row mt-2 mb-3">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <h2 class="_head01">CUSTOMER <span>VISIT REPORT</span></h2>
+                    <h2 class="_head01">SERVICE <span>VISIT REPORT</span></h2>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <ol class="breadcrumb">
-                        <li><a href="#"><span>Customer Visit Report</span></a></li>
+                        <li><a href="#"><span>Service Visit Report</span></a></li>
                         <li><span>Add Report</span></li>
                     </ol>
                 </div>

@@ -349,9 +349,12 @@ $(document).ready(function () {
                 //console.log(response);
                 $('#customer_detail_modal').val(response.cust_name);
                 $('#customer_detail_modal').focus();
+                $('#customer_detail_modal').attr('disabled', 'disabled');
                 $('#complain_detail_modal').val(response.complain);
                 $('#complain_detail_modal').focus();
+                $('#complain_detail_modal').attr('disabled', 'disabled');
                 $('#remarks_detail_modal').val(response.remarks);
+                $('#remarks_detail_modal').attr('disabled', 'disabled');
             }
         });
     });
@@ -365,7 +368,7 @@ function fetchcomplain_types() {
         success: function (response) {
             //console.log(JSON.parse(response));
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Complaint Head</th><th>TAT</th><th>Assign To</th><th>Actions</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Complaint Head</th><th>Resolution Time</th><th>Assign To</th><th>Actions</th></tr></thead><tbody></tbody></table>');
             $('#employeesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
@@ -390,7 +393,7 @@ function fetchcomplain_List() {
             // console.log(JSON.parse(response));
             // return;
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Date</th><th>Customer</th><th>Complain</th><th>Created By</th><th>TAT</th><th>Remaining Time</th><th>Status</th><th>Actions</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Date</th><th>Customer</th><th>Type</th><th>Created By</th><th>Resolution Time</th><th>Remaining Time</th><th>Status</th><th>Actions</th></tr></thead><tbody></tbody></table>');
             $('#employeesListTable tbody').empty();
             var response = JSON.parse(response);
             var currentdate = new Date();
@@ -424,7 +427,7 @@ function fetchresolvedcomplains() {
         url: '/get_resolved_complains_list',
         success: function (response) {
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Date</th><th>Customer</th><th>Complain</th><th>Created By</th><th>TAT</th><th>Resolved Time</th><th>Resolved By</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="employeesListTable" style="width:100%"><thead><tr><th>Date</th><th>Customer</th><th>Type</th><th>Created By</th><th>Resolution Time</th><th>Resolved Time</th><th>Resolved By</th></tr></thead><tbody></tbody></table>');
             $('#employeesListTable tbody').empty();
             var response = JSON.parse(response);
             var currentdate = new Date();

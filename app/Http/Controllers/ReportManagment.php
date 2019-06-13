@@ -174,7 +174,7 @@ class ReportManagment extends ParentController
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                         }
                     }
-                    $path = public_path()."/". $file_name;
+                    $path = str_replace("core", "", base_path())."public/".$file_name;
                     if(file_exists($path)) {
                         unlink($path);
                     }
@@ -209,101 +209,67 @@ class ReportManagment extends ParentController
         return view('report_managment.cvr_list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
     }
 
-    public function GetCVRList(Request $request){
-        
-        $check = DB::table('cvr_core')->get();
-       
-        if($request->type == '1'){
-            if(!$check->isEmpty()){
-                foreach($check as $_check){
-                    if($_check->report_created_by == Auth::user()->id){
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END)')->get(), 'editable' => 0));
-                        die;
-                    }else{
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END)')->get(), 'editable' => 1));
-                        die;
-                    }
-                }
-            }else{
-                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END)')->get(), 'editable' => 1));
-                die;
-            }
-            
-            // die;
-            // if(Auth::user()->id == DB::table('cvr_core')->where()){
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->get(), 'editable' => 1));
-               
-            // }else{
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('report_created_by', Auth::user()->id)->get(), 'editable' => 0));
-            // }
-        }else if($request->type == '2'){
-            if(!$check->isEmpty()){
-                foreach($check as $_check){
-                    if($_check->report_created_by == Auth::user()->id){
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 1')->get(), 'editable' => 0));
-                        die;
-                    }else{
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 1')->get(), 'editable' => 1));
-                        die;
-                    }
-                }
-            }else{
-                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 1')->get(), 'editable' => 1));
-                die;
-            }
-           
-            // if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 1)->get(), 'editable' => 1));
-            // }else{
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 1')->get(), 'editable' => 0));
-            // }
-        }else if($request->type == '3'){
-            if(!$check->isEmpty()){
-                foreach($check as $_check){
-                    if($_check->report_created_by == Auth::user()->id){
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 2')->get(), 'editable' => 0));
-                        die;
-                    }else{
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 2')->get(), 'editable' => 1));
-                        die;
-                    }
-                }
-            }else{
-                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 2')->get(), 'editable' => 1));
-                die;
-            }
-            
-            // if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 2)->get(), 'editable' => 1));
-            // }else{
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 2')->get(), 'editable' => 0));
-            // }
-        }else if($request->type == '4'){
-            if(!$check->isEmpty()){
-                foreach($check as $_check){
-                    if($_check->report_created_by == Auth::user()->id){
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 0')->get(), 'editable' => 0));
-                        die;
-                    }else{
-                        echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 0')->get(), 'editable' => 1));
-                        die;
-                    }
-                }
-            }else{
-                echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('(Case When report_created_by = '.Auth::user()->id.' Then report_created_by = '.Auth::user()->id.' Else '.Auth::user()->id.' IN (Select cvr from subecribed_notif_new where emp_id = cc.report_created_by) END) AND is_approved = 0')->get(), 'editable' => 1));
-                die;
-            }
-            
-            // if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('is_approved', 0)->get(), 'editable' => 1));
-            // }else{
-            //     echo json_encode(array('info' => DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->whereRaw('report_created_by = "'.Auth::user()->id.'" AND is_approved = 0')->get(), 'editable' => 0));
-            // }
-        }
-        
-        
-    }
 
+    public function GetCVRList(Request $request){
+        //$check = json_decode(json_encode(DB::table('cvr_core')->get()), TRUE);
+        $check = json_decode(json_encode(DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->get()), TRUE);
+        //$cvr_core = DB::table('cvr_core as cc')->selectRaw('id, report_created_by, customer_visited, report_created_at, date_of_visit, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->get();
+
+        $edit_able = 0;
+
+        $data = [];
+        $counter = 0;
+        $sub_cvr = DB::table('subecribed_notif_new')->get()->toArray();
+        array_map(function($item) use(&$data, &$counter){
+            if($item->cvr){
+                foreach (explode(",", $item->cvr) as $cvrid) {
+                    if(!in_array($cvrid, $data) && $cvrid == Auth::user()->id)
+                        $data[] = $item->emp_id;
+                }
+            }
+            $counter++;
+        }, $sub_cvr);
+
+        $statement = 'return $item';
+        $resultSet = [];
+        $loogedInUserCvrs = array_values(array_filter($check, function(&$item) use(&$data, &$edit_able, $request, &$resultSet){
+            if($item['report_created_by'] == Auth::user()->id){
+                $item['editable'] = 0;
+            }else{
+                $item['editable'] = 1;
+            }
+
+            if($data){
+                if( $item['report_created_by'] == Auth::user()->id || in_array($item['report_created_by'], $data) ){
+                    if($request->type == '1'){
+                        $resultSet[] = $item;
+                    }
+                    elseif($request->type == '2'){
+                        $item['is_approved'] == 1 ? $resultSet[] = $item : null;
+                    }
+                    elseif($request->type == '3'){
+                        $item['is_approved'] == 2 ? $resultSet[] = $item : null;
+                    }
+                    elseif($request->type == '4'){
+                        $item['is_approved'] == 0 ? $resultSet[] = $item : null;
+                    }
+                }
+            }else{
+                if($item['report_created_by'] == Auth::user()->id){
+                    if($request->type == '1'){
+                        $resultSet[] = $item;
+                    }elseif($request->type == '2'){
+                        $item['is_approved'] == 1 ? $resultSet[] = $item : null;
+                    }elseif($request->type == '3'){
+                        $item['is_approved'] == 2 ? $resultSet[] = $item : null;
+                    }elseif($request->type == '4'){
+                        $item['is_approved'] == 0 ? $resultSet[] = $item : null;
+                    }
+                }
+            }        
+        }));
+        echo json_encode($resultSet);
+    }
 
     //CVR Preview
     public function cvr_preview($id){
@@ -318,10 +284,33 @@ class ReportManagment extends ParentController
 
             $data = array('core' => $core, 'products' => $products, 'pocs' => $pocs, 'competitions' => $competitions);
 
-            $sub_cvr = DB::table('subecribed_notif_new')->whereRaw(Auth::user()->id.' IN (cvr) and emp_id = '.$core->report_created_by)->first();
+            $data;
+            $sub_cvr = DB::table('subecribed_notif_new')->get()->toArray();
+            array_map(function($item) use(&$data, $core){
+                if($item->cvr && $item->emp_id == $core->report_created_by){
+                //if($item->cvr && $item->emp_id == 51){
+                    // if(strpos($item->cvr, ',') !== false){
+                    //     $data = [ 'employee_id' => $item->emp_id, 'cvr_id' => explode(",", $item->cvr), 'data' => $item ];
+                    // }else{
+                    //     $data = [ 'employee_id' => $item->emp_id, 'cvr_id' => $item->cvr, 'data' => $item ];
+                    // }
+                    $data = [ 'employee_id' => $item->emp_id, 'cvr_id' => explode(",", $item->cvr), 'data' => $item ];
+                }
+            }, $sub_cvr);
+
+            //dd ($data);
+            // if(in_array(48, $data["cvr_id"])){
+            //     echo "TRUE";
+            // }else{
+            //     echo "FAlse";
+            // }
+            //print_r($data["cvr_id"]); die;
+           // echo $core->report_created_by; die;
+            
             if(Auth::user()->id == $core->report_created_by){
                 return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions, 'id' => $id, 'testData' => $data, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'approval_able' => 0]);
-            }else if($sub_cvr){
+            //}else if($sub_cvr){
+            }else if(in_array(Auth::user()->id, $data["cvr_id"])){
                 return view('report_managment.cvr_preview', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'core' => $core, 'products' => $products, 'poc' => $pocs, 'competition' => $competitions, 'id' => $id, 'testData' => $data, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'approval_able' => 1]);
             }else{
                 return redirect('/');
@@ -332,7 +321,6 @@ class ReportManagment extends ParentController
         } 
     }
 
-
     //Edit CVR
     public function edit_cvr($id){
         parent::get_notif_data();
@@ -341,24 +329,30 @@ class ReportManagment extends ParentController
         $core = DB::table('cvr_core as cc')->where('id', $id)->first();
         $customers = DB::table('customers')->get();
         $competitions = DB::table('cvr_competition')->get();
+        // if($core){
+        //     if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+        //         if($core){
+        //             return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
+        //         }else{
+        //             return redirect('/');
+        //         }
+        //     }else{
+        //         if($core->report_created_by == Auth::user()->id && $core->is_approved == 2){
+        //             if($core){
+        //                 return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
+        //             }else{
+        //                 return redirect('/');
+        //             }
+        //         }else{
+        //             return redirect('/');
+        //         }
+        //     }
+        // }else{
+        //     return redirect('/');
+        // }
+
         if($core){
-            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
-                if($core){
-                    return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
-                }else{
-                    return redirect('/');
-                }
-            }else{
-                if($core->report_created_by == Auth::user()->id && $core->is_approved == 2){
-                    if($core){
-                        return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
-                    }else{
-                        return redirect('/');
-                    }
-                }else{
-                    return redirect('/');
-                }
-            }
+            return view('report_managment.edit_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
         }else{
             return redirect('/');
         }
@@ -443,7 +437,7 @@ class ReportManagment extends ParentController
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                         }
                     }
-                    $path = public_path()."/". $file_name;
+                    $path = str_replace("core", "", base_path())."public/".$file_name;
                     if(file_exists($path)) {
                         unlink($path);
                     }
@@ -541,7 +535,7 @@ class ReportManagment extends ParentController
         // if(is_file(public_path($file_name))){
         //     File::delete($file_name);
         // }
-        $path = public_path()."/". $file_name;
+        $path = str_replace("core", "", base_path())."public/".$file_name;
         if(file_exists($path)) {
             unlink($path);
         }
@@ -786,7 +780,7 @@ class ReportManagment extends ParentController
                         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Service Visit Report: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                     }
                 }
-                $path = public_path()."/". $file_name;
+                $path = str_replace("core", "", base_path())."public/".$file_name;
                 if(file_exists($path)) {
                     unlink($path);
                 }
@@ -919,24 +913,29 @@ class ReportManagment extends ParentController
         $core = DB::table('svr_core as cc')->where('id', $id)->first();
         $customers = DB::table('customers')->get();
         $competitions = DB::table('cvr_competition')->get();
+        // if($core){
+        //     if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
+        //         if($core){
+        //             return view('report_managment.edit_svr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
+        //         }else{
+        //             return redirect('/');
+        //         }
+        //     }else{
+        //         if($core->report_created_by == Auth::user()->id && $core->is_approved == 2){
+        //             if($core){
+        //                 return view('report_managment.edit_svr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
+        //             }else{
+        //                 return redirect('/');
+        //             }
+        //         }else{
+        //             return redirect('/');
+        //         }
+        //     }
+        // }else{
+        //     return redirect('/');
+        // }
         if($core){
-            if(Auth::user()->designation == '1' || Auth::user()->designation == '2'){
-                if($core){
-                    return view('report_managment.edit_svr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
-                }else{
-                    return redirect('/');
-                }
-            }else{
-                if($core->report_created_by == Auth::user()->id && $core->is_approved == 2){
-                    if($core){
-                        return view('report_managment.edit_svr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
-                    }else{
-                        return redirect('/');
-                    }
-                }else{
-                    return redirect('/');
-                }
-            }
+            return view('report_managment.edit_svr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'categories' => DB::table('sub_categories')->get(), 'id' => $id, 'competitions' => $competitions, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'cust' => $customers]);
         }else{
             return redirect('/');
         }
@@ -1028,7 +1027,7 @@ class ReportManagment extends ParentController
                                 Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Service Visit Report Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
                             }
                         }
-                        $path = public_path()."/". $file_name;
+                        $path = str_replace("core", "", base_path())."public/".$file_name;
                         if(file_exists($path)) {
                             unlink($path);
                         }
@@ -1155,7 +1154,7 @@ class ReportManagment extends ParentController
         $message = 'SVR Attachment';
         Mail::to(Auth::user()->email)->send(new SendMailable(["message" => $message, "subject" => "SVR", "attachment" => URL::to('/').'/'.$file_name]));
 
-        $path = public_path()."/". $file_name;
+        $path = str_replace("core", "", base_path())."public/".$file_name;
         if(file_exists($path)) {
             unlink($path);
         }

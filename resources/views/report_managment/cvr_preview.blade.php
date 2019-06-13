@@ -206,7 +206,7 @@
                                             data-target=".competition-lg">Approve CVR</button>
                                     @endif
                                 @endif --}}
-                                @if($approval_able == 1)
+                                @if($approval_able == 1 && $core->is_approved != 1)
                                 <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
                                 data-target=".competition-lg">Approve CVR</button>
                                 @endif

@@ -39,7 +39,7 @@
                             <p><i
                                     class="fa fa-envelope-square"></i>{{ (Auth::user()->email != null ? Auth::user()->email : "NA") }}
                             </p>
-                            <p><i class="fa fa-globe"></i>{{ (Auth::user()->city != null ? Auth::user()->city : "NA") }}
+                            <p><i class="fa fa-globe"></i>{{ (Auth::user()->city != null ? Auth::user()->address : "NA") }}
                             </p>
 
                         </div>

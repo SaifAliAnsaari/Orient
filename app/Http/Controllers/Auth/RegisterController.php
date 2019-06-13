@@ -141,6 +141,16 @@ class RegisterController extends ParentController
                     'customer' => $data['hidden_customers_emp'],
                     'emp_id' => $status->id
                 ]);
+                $codes = DB::table('notifications_code')->get();
+                foreach($codes as $cd){
+                    DB::table('subscribed_notifications')->insert([
+                        'notification_code_id' => $cd->code,
+                        'email' => 0,
+                        'web' => 1,
+                        'emp_id' => $status->id
+                    ]);
+                }
+                
                 echo json_encode($status->id);
                 die;
             }else{

@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label mb-10">TAT - Turn Around Time (Days)</label>
+                                    <label class="control-label mb-10">Resolution Time (Days)</label>
                                     <input type="number" id="complain_tat"  class="form-control required" placeholder=""
                                         style="font-size: 13px">
                                 </div>

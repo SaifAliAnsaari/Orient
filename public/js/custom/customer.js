@@ -890,7 +890,7 @@ function fetchCompanyInfoForUpdate(id) {
             $('.con_info p:eq(2)').append('<strong>' + (response.info.city ? response.info.city : "NA") + '</strong>');
             $('.con_info p:eq(3)').append('<strong>' + (response.info.country).toUpperCase() + '</strong>');
 
-            $('._cut-img img').attr('src', '/storage/company/profile-img--.jpg');
+            $('._cut-img img').attr('src', '/images/avatar.svg');
 
             $('#tblLoader').hide();
             $('#contentDiv').fadeIn();
