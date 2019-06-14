@@ -41,7 +41,7 @@ Route::get('/notification_prefrences', 'NotificationCenter@notification_prefrenc
 Route::get('/notifications', 'NotificationCenter@notifications');
 Route::get('/SCFAR', 'AccessRights@select_employee');
 Route::get('/access_rights/{id}', 'AccessRights@access_rights');
-Route::get('/cvr_list', 'ReportManagment@cvr_list');
+Route::get('/cvr_list/{id}', 'ReportManagment@cvr_list');
 Route::get('/cvr_preview/{id}', 'ReportManagment@cvr_preview');
 Route::get('/edit_cvr/{id}', 'ReportManagment@edit_cvr');
 Route::get('/complaints_settings', 'ComplaintsManagment@complaints_settings');
@@ -52,7 +52,7 @@ Route::get('/disapproved_detail/{id}', 'ReportManagment@disapproved_detail');
 Route::get('/cities', 'Auth\RegisterController@pick_up');
 Route::get('/designations', 'Auth\RegisterController@designations');
 Route::get('/new_svr', 'ReportManagment@new_svr');
-Route::get('/svr_list', 'ReportManagment@svr_list');
+Route::get('/svr_list/{id}', 'ReportManagment@svr_list');
 Route::get('/edit_svr/{id}', 'ReportManagment@edit_svr');
 Route::get('/svr_preview/{id}', 'ReportManagment@svr_preview');
 Route::get('/disapproved_svr_detail/{id}', 'ReportManagment@disapproved_svr_detail');

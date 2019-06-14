@@ -85,7 +85,16 @@
                     <a class="dropdown-item" href="/new_cvr">Add New CVR</a>
                 @endif
                 @if(in_array("/cvr_list", $test_array))
-                    <a class="dropdown-item" href="/cvr_list">CVR List</a>
+                    <a class="dropdown-item" href="/cvr_list/all_cvr">CVR List</a>
+                @endif
+                @if(in_array("/cvr_list", $test_array))
+                    <a class="dropdown-item" href="/cvr_list/approved">Approved CVR List</a>
+                @endif
+                @if(in_array("/cvr_list", $test_array))
+                    <a class="dropdown-item" href="/cvr_list/disapproved">Disapproved CVR List</a>
+                @endif
+                @if(in_array("/cvr_list", $test_array))
+                    <a class="dropdown-item" href="/cvr_list/pending">Pending CVR List</a>
                 @endif
             </div>
         </li>
@@ -102,7 +111,16 @@
                 <a class="dropdown-item" href="/new_svr">New Service Report</a>
             @endif
             @if(in_array("/svr_list", $test_array))
-                <a class="dropdown-item" href="/svr_list">Service Reports List</a>
+                <a class="dropdown-item" href="/svr_list/all_svr">Service Reports List</a>
+            @endif
+            @if(in_array("/svr_list", $test_array))
+                <a class="dropdown-item" href="/svr_list/approved">Approved Service Reports List</a>
+            @endif
+            @if(in_array("/svr_list", $test_array))
+                <a class="dropdown-item" href="/svr_list/disapproved">Disapproved Service Reports List</a>
+            @endif
+            @if(in_array("/svr_list", $test_array))
+                <a class="dropdown-item" href="/svr_list/pending">Pending Service Reports List</a>
             @endif
         </div>
     </li>

@@ -22,9 +22,23 @@ $(document).ready(function () {
         fetchCustomersforCVR('0');
         fetchParentCompanies(company_id);
     }else if(action == 'cvr_list'){
-        var type = "1";
-        $('.select_cvr_type').val('1').trigger('change');
-        fetchCvrList(type);
+        if(segments[4] == 'all_cvr'){
+            var type = "1";
+            $('.select_cvr_type').val('1').trigger('change');
+            fetchCvrList(type);
+        }else if(segments[4] == 'approved'){
+            var type = "2";
+            $('.select_cvr_type').hide();
+            fetchCvrList(type);
+        }else if(segments[4] == 'disapproved'){
+            var type = "3";
+            $('.select_cvr_type').hide();
+            fetchCvrList(type);
+        }else if(segments[4] == 'pending'){
+            var type = "4";
+            $('.select_cvr_type').hide();
+            fetchCvrList(type);
+        }
     }else if(action == 'edit_cvr'){
         fetchCustomersforCVR('0');
         fetchParentCompanies(company_id);
@@ -35,9 +49,24 @@ $(document).ready(function () {
         fetchCustomersforCVR('0');
         fetchParentCompanies(company_id);
     }else if(action == 'svr_list'){
-        var type = "1";
-        $('.select_svr_type').val('1').trigger('change');
-        fetchSvrList(type);
+        if(segments[4] == 'all_svr'){
+            var type = "1";
+            $('.select_svr_type').val('1').trigger('change');
+            fetchSvrList(type);
+        }else if(segments[4] == 'approved'){
+            var type = "2";
+            $('.select_svr_type').hide();
+            fetchSvrList(type);
+        }else if(segments[4] == 'disapproved'){
+            var type = "3";
+            $('.select_svr_type').hide();
+            fetchSvrList(type);
+        }else if(segments[4] == 'pending'){
+            var type = "4";
+            $('.select_svr_type').hide();
+            fetchSvrList(type);
+        }
+        
     }else if(action == 'edit_svr'){
         fetchCustomersforCVR('0');
         fetchParentCompanies(company_id);
@@ -1354,7 +1383,7 @@ function fetchCvrList(type){
                     }else if(element['is_approved'] == 1){
                         $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Approved</td><td><a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
                     }else{
-                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Pending</td><td><a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Pending</td><td><a href="/edit_cvr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/cvr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
                     }
                 }
             });
@@ -1374,19 +1403,28 @@ function fetchSvrList(type){
             type: type
         },
         success: function(response) {
-           // console.log(response); 
+            // console.log(response); 
+            // return;
             $('.body').empty();
-            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Sales Engineer</th><th>Customer</th><th>Date Of Report</th><th>Date Of Visit</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Sales Engineer</th><th>Customer</th><th>Date Of Report</th><th>Date Of Visit</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
-            response.info.forEach(element => {
-                // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-               // $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>'+ (response.editable == 1 ? '<a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a>': (element['is_approved'] == 2 ? '<a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_svr_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default">View Detail</button></a>' : "")) +'<a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
-                if(response.editable == 1){
+            response.forEach(element => {
+                if(element.editable == 1){
                     if(element['is_approved'] == 2){
-                        $('#companiesListTable tbody').append('<tr style="color:red;"><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td><a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_svr_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default red-bg">View Remarks</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                        $('#companiesListTable tbody').append('<tr style="color:red;"><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Disapproved</td><td><a href="/disapproved_svr_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default red-bg">View Remarks</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                    }else if(element['is_approved'] == 1){
+                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Approved</td><td><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
                     }else{
-                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td><a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Pending</td><td><a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                    }
+                }else{
+                    if(element['is_approved'] == 2){
+                        $('#companiesListTable tbody').append('<tr style="color:red;"><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Disapproved</td><td><a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/disapproved_svr_detail/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default red-bg">View Remarks</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                    }else if(element['is_approved'] == 1){
+                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Approved</td><td><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
+                    }else{
+                        $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['created_by'] + '</td><td>' + element['customer_name'] + '</td><td>' + element['report_created_at'] + '</td><td>' + element['date_of_visit'] + '</td><td>Pending</td><td><a href="/edit_svr/'+ element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Edit</button></a><a href="/svr_preview/'+ element['id'] +'" id="' + element['id'] + '" class="btn btn-default">Preview</a></td></tr>');
                     }
                 }
             });
@@ -1500,7 +1538,7 @@ function fetchCurrentSvrData(){
             _token: '{!! csrf_token() !!}'
         },
         success: function(response) {
-           console.log(response);
+        //    console.log(response);
             var response = JSON.parse(response);
             $('#curr_date').text(response.core.report_created_at);
             $('#user_name').text(response.core.created_by);
