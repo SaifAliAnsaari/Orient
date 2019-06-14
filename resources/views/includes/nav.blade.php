@@ -18,7 +18,7 @@
                         <a href="/new_cvr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New Sales Report</a>
                         @endif
                         @if(in_array("/new_svr", $test_array))
-                        <a href="/new_svr"><img src="{{ URL::to('/images/cr-report-new.svg') }}" alt=""> Add New Service Report</a>
+                        <a href="/new_svr"><img src="{{ URL::to('/images/new-sr-top.svg') }}" alt=""> Add New Service Report</a>
                         @endif
                         @if(in_array("/Customer_list", $test_array))
                         <a href="/Customer_list"><img src="{{ URL::to('/images/customer-list.svg') }}" alt=""> Add Customer</a>
