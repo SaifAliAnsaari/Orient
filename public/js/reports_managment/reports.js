@@ -905,7 +905,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    window.location.replace("/cvr_list");
+                    window.location.replace("/cvr_list/all_cvr");
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Added Successfully');
@@ -1289,7 +1289,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    window.location.replace("/svr_list");
+                    window.location.replace("/svr_list/all_svr");
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Added Successfully');
