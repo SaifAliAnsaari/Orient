@@ -108,6 +108,7 @@ class RegisterController extends ParentController
      */
     protected function create(array $data)
     {
+        // $notification_codes = [101, 102, 103, 104, 105, 106, 107];
         $userPicture = '';
         if(isset($_FILES["employeePicture"])){
             $userPicture = './storage/employees/' . time().'-'.str_replace(' ', '_', basename($_FILES["employeePicture"]["name"]));
@@ -141,6 +142,14 @@ class RegisterController extends ParentController
                     'customer' => $data['hidden_customers_emp'],
                     'emp_id' => $status->id
                 ]);
+               
+                // DB::table('subscribed_notifications')->insert([
+                //     'notification_code_id' => $data['hidden_cvr_emp'],
+                //     'email' => 0,
+                //     'web' => 1,
+                //     'emp_id' => $status->id,
+                //     'subscribed_at' => date('Y-m-d H:i:s')
+                // ]);
                 $codes = DB::table('notifications_code')->get();
                 foreach($codes as $cd){
                     DB::table('subscribed_notifications')->insert([

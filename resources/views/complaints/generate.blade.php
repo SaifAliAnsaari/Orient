@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="bottom-btns pt-0">
-                        <button type="submit" class="btn btn-cancel mr-2 cancel_complain">Cancel</button>
+                        <a href="/"><button type="submit" class="btn btn-cancel mr-2 cancel_complain">Cancel</button></a>
                         <button type="submit" class="btn btn-primary generate_complain">Generate</button>
                     </div>
                 </div>

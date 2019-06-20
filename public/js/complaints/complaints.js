@@ -404,11 +404,20 @@ function fetchcomplain_List() {
                 JSON.parse(element['assign_to']).map(function (idx, ele) {
                     if(idx == response.id){
                         var daystohours = element['tat'] * 24;
+                        let totalDaysToResolve = addDays(element['created_at'], element['tat']);
                         var timeSinceComplain = find_difference(element['created_at'], current_date_time);
                         var valuestop = moment.duration(daystohours+":00", "HH:mm");
                         var difference = valuestop.subtract(timeSinceComplain);
+
+                        const diffTime = Math.abs( new Date().getTime() - new Date(element["created_at"]).getTime());
+                        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                        // debugger;
+                        // if(diffDays == 1 && parseInt(element['tat']) == 1){
+                        //     diffDays = 1;
+                        // }
         
-                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${( difference.hours() < 0 ? 0 : (difference.hours() + (difference._data.days*24)) ) + " hrs " + (difference.minutes() < 0 ? 0 : difference.minutes()) + " mins"}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (element['resolved'] == 1 ? 'disabled' : '') }>Resolve</button> <button id="${element['id']}" class="btn btn-default view_detail_modal" data-toggle="modal" data-target=".competition-lg2">View Detail</button></td></tr>`);
+                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${(parseInt(element['tat']) == 1 && diffDays == 1 ? 1 : (element['tat']-diffDays < 0 ? 0 : element['tat']-diffDays))}</td><td>${(element['resolved'] == 0 ? '<span class="lab-pending">Pending</span>' : '<span class="lab-line">Resolved</span>')}</td><td><button id="${element['id']}" class="btn btn-default resolve_complain" data-toggle="modal" data-target=".competition-lg" ${ (element['resolved'] == 1 ? 'disabled' : '') }>Resolve</button> <button id="${element['id']}" class="btn btn-default view_detail_modal" data-toggle="modal" data-target=".competition-lg2">View Detail</button></td></tr>`);
                     }
                  });
                 
@@ -420,6 +429,11 @@ function fetchcomplain_List() {
     });
 }
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + parseInt(days));
+    return result;
+}
 
 function fetchresolvedcomplains() {
     $.ajax({
@@ -435,10 +449,18 @@ function fetchresolvedcomplains() {
 
                 JSON.parse(element['assign_to']).map(function (idx, ele) {
                     if(idx == response.id){
+                       // debugger;
+
+                        const date1 = new Date(`${element['created_at']}`);
+                        const date2 = new Date(`${element['resolve_at']}`);
+                        const diffTime = Math.abs(date2.getTime() - date1.getTime());
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
                         var timeSinceComplain = find_difference(element['created_at'], element['resolve_at']);
                         var current_format = timeSinceComplain.split(':');
-                        var time_format = current_format[0] + " hrs " + current_format[1] + " mins";
-                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${time_format}</td><td>${element['resolved_by']}</td></tr>`);
+                       // var time_format = current_format[0] + " hrs " + current_format[1] + " mins";
+                        var resoled_days = current_format[0] / 24;
+                        $('#employeesListTable tbody').append(`<tr><td>${element['date']}</td><td>${element['customer']}</td><td>${element['complain']}</td><td>${element['created_by']}</td><td>${element['tat']}</td><td>${diffDays}</td><td>${element['resolved_by']}</td></tr>`);
                     }
                  });
                 
@@ -456,7 +478,6 @@ function find_difference(start_actual_time, end_actual_time) {
     // var end_actual_time    =  "2019-04-17 12:30";
     start_actual_time = new Date(start_actual_time);
     end_actual_time = new Date(end_actual_time);
-
     var diff = end_actual_time - start_actual_time;
     var diffSeconds = diff / 1000;
     var HH = Math.floor(diffSeconds / 3600);

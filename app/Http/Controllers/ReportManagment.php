@@ -560,7 +560,7 @@ class ReportManagment extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        if(DB::table('cvr_core')->whereRaw('id = "'.$id.'" AND is_approved = 2 AND report_created_by = '.Auth::user()->id)->first()){
+        if(DB::table('cvr_core')->whereRaw('id = "'.$id.'" AND is_approved = 2 AND report_created_by = '.Auth::user()->id.' OR (Select approval_by from cvr_approval where cvr_id = '.$id.') = '.Auth::user()->id)->first()){
             $data = DB::table('cvr_approval as ca')->selectRaw('remarks, cvr_id, Date(created_at) as date, (Select name from users where id = ca.approval_by) as approval_by')->where('cvr_id', $id)->orderBy('id','DESC')->first();
             //echo '<pre>'; print_r($data); die;
             return view('report_managment.disapproved_cvr', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'data' => $data]);
