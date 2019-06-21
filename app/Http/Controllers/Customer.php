@@ -183,7 +183,7 @@ class Customer extends ParentController
                         ]);
                     }
                     foreach($get_email_addresses as $email){
-                        if($email->id == $customer){
+                        if(in_array($email->id , $customers)){
                             $message = 'New Customer <strong>'.$request->compName.'</strong> has been added by: <strong>'.Auth::user()->name.'</strong>.';
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Added"]));
                         }
@@ -286,7 +286,7 @@ class Customer extends ParentController
                     }
 
                     foreach($get_email_addresses as $email){
-                        if($email->id == $customer){
+                        if(in_array($email->id , $customers)){
                             $message = 'Customer <strong>'.$request->compName.'</strong> has been updated by: <strong>'.Auth::user()->name.'</strong>.';
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Customer Updated"]));
                         }

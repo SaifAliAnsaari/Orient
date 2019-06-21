@@ -174,7 +174,7 @@ class ComplaintsManagment extends ParentController
                             'notif_to' => $complaint
                         ]);
                         foreach($get_email_addresses as $email){
-                            if($email->id == $complaint){
+                            if(in_array($email->id , $complaints)){
                                 $message = 'A New Complain has been added by: <strong>"'.Auth::user()->name.'"</strong> for customer: <strong>"'.$cust_name->company_name.'"</strong>.';
                                 Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "A New Complain Added"]));
                             }

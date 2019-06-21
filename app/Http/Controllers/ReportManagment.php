@@ -168,7 +168,7 @@ class ReportManagment extends ParentController
                     }
 
                     foreach($get_email_addresses as $email){
-                        if($email->id == $cvr){
+                        if(in_array($email->id , $cvrs)){
                             $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
 
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
@@ -416,7 +416,7 @@ class ReportManagment extends ParentController
                         ]);
                     }
                     foreach($get_email_addresses as $email){
-                        if($email->id == $cvr){
+                        if(in_array($email->id , $cvrs)){
                             $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A CVR has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
                             //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
                             Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
@@ -675,7 +675,7 @@ class ReportManagment extends ParentController
                     ]);
                 }
                 foreach($get_email_addresses as $email){
-                    if($email->id == $svr){
+                    if(in_array($email->id , $svrs)){
                         $message = '<strong> Dear '.$email->name. '</strong>, <br> <br> A new Service Visit Report has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
 
 
@@ -964,7 +964,7 @@ class ReportManagment extends ParentController
                         }
 
                         foreach($get_email_addresses as $email){
-                            if($email->id == $svr){
+                            if(in_array($email->id , $svrs)){
                                 $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A Service Visit Report has been updated for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service Visit Report for your reference.";
                                 //Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR Added"]));
                                 Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "Service Visit Report Updated by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
