@@ -166,7 +166,7 @@ function fetchEmployeesList() {
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['name'] + '</td><td>' + element['email'] + '</td><td>' + element['phone'] + '</td><td>' + element['username'] + '</td><td><a href="/access_rights/' + element['id'] +'"><button id="' + element['id'] + '" class="btn btn-default btn-line">Create Rights</button></a></td></tr>');
+                $('#companiesListTable tbody').append(`<tr><td>${element['id']}</td><td>${element['name']}</td><td>${element['email']}</td><td>${element['phone']}</td><td>${element['username']}</td><td><a href="/access_rights/${element['id']}"><button id="${element['id']}" class="btn btn-default btn-line">${(element['rights'] == 1 ? "Update Rights" : "Create Rights")}</button></a></td></tr>`);
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

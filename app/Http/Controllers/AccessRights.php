@@ -28,7 +28,7 @@ class AccessRights extends ParentController
      }
 
      public function GetEmployeeListForRights(){
-         echo json_encode(DB::table('users')->get());
+         echo json_encode(DB::table('users as u')->selectRaw('id, name, username, email, phone, cnic, (Case When (Select Count(*) from access_rights where employee_id = u.id) > 0 Then 1 Else 0 End) as rights')->get());
      }
 
 
