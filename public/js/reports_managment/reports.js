@@ -1307,7 +1307,47 @@ $(document).ready(function () {
         history.back();
     });
 
-    
+    $('#sendEmailButton').click(function(e){
+        e.preventDefault();
+        let hrefVal = $(this).attr('href');
+        $(this).find('button').attr('disabled', 'disabled');
+        $(this).find('button').text('Please Wait..');
+        $.ajax({
+            context: $(this),
+            type: 'GET',
+            url: hrefVal,
+            success: function(response){
+                setTimeout(function(){
+                    $(this).find('button').removeAttr('disabled');
+                    $(this).find('button').text('Send Email');
+                }.bind($(this)), 3000);
+                if(response == "Success"){
+                    $(this).find('button').text('Email Sent');
+                }
+            }
+        });
+    });
+
+    $('#sendSvrEmailButton').click(function(e){
+        e.preventDefault();
+        let hrefVal = $(this).attr('href');
+        $(this).find('button').attr('disabled', 'disabled');
+        $(this).find('button').text('Please Wait..');
+        $.ajax({
+            context: $(this),
+            type: 'GET',
+            url: hrefVal,
+            success: function(response){
+                setTimeout(function(){
+                    $(this).find('button').removeAttr('disabled');
+                    $(this).find('button').text('Send Email');
+                }.bind($(this)), 3000);
+                if(response == "Success"){
+                    $(this).find('button').text('Email Sent');
+                }
+            }
+        });
+    });
 
 });
 

@@ -108,7 +108,7 @@ class RegisterController extends ParentController
      */
     protected function create(array $data)
     {
-        // $notification_codes = [101, 102, 103, 104, 105, 106, 107];
+        $access_rights = ['/home', '/Customer_list', '/CustomerProfile', '/edit_profile', '/poc_list', '/poc_detail', '/new_cvr', '/cvr_list', '/cvr_preview', '/edit_cvr', '/disapproved_detail', '/notifications', '/notification_prefrences', '/complaints_settings', '/generate_complaints', '/complaints_list', '/resolved_complains', '/new_svr', '/svr_list', '/edit_svr', '/svr_preview', '/disapproved_svr_detail'];
         $userPicture = '';
         if(isset($_FILES["employeePicture"])){
             $userPicture = './storage/employees/' . time().'-'.str_replace(' ', '_', basename($_FILES["employeePicture"]["name"]));
@@ -157,6 +157,12 @@ class RegisterController extends ParentController
                         'email' => 0,
                         'web' => 1,
                         'emp_id' => $status->id
+                    ]);
+                }
+                foreach($access_rights as $rights){
+                    DB::table('access_rights')->insert([
+                        "employee_id" => $status->id,
+                        "access" => $rights
                     ]);
                 }
                 
