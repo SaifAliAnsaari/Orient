@@ -69,7 +69,8 @@ class RegisterController extends ParentController
     }
 
     public function EmployeesList(){
-        echo json_encode(User::all());
+        echo json_encode(DB::table('users as u')->selectRaw('id, name, username, email, phone, (Select city_name from pick_up_delivery where id = u.city) as city')->get());
+        // echo json_encode(User::all());
     }
 
     public function UploadUserImage(Request $request){
@@ -184,10 +185,11 @@ class RegisterController extends ParentController
         $notifications_name = DB::table('notifications_code')->get();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
 
+        $data = DB::table('users as us')->selectRaw('(Select city_name from pick_up_delivery where id = us.city) as city_name, (Select name from users where id = us.reporting_to) as reporting_to, (Select name from designations where id = us.designation) as designation')->where('id', Auth::user()->id)->first();
         if($id != Auth::id()){
             return redirect('/');
         }
-        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'notifications_code' => $notifications_name]);
+        return view('includes.edit_profile', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'unread_notif' => $this->unread_notif_approval, 'approval_notif' => $this->approval_notif, 'notifications_code' => $notifications_name, 'data' => $data]);
     }
 
 

@@ -4,7 +4,7 @@ $(document).ready(function() {
     var action = segments[3];
     var notifications = [];
     if (action == 'edit_profile'){
-        debugger;
+       // debugger;
        
     }else if(action == 'cities'){
         fetchPickUpLocation();

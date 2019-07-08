@@ -110,7 +110,7 @@
                                         <div class="col-md-6 p-col-L">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">City</label>
-                                                <p>{{ (Auth::user()->city != null ? Auth::user()->city : "NA") }}</p>
+                                                <p>{{ ($data->city_name ? $data->city_name : "NA") }}</p>
                                             </div>
                                         </div>
 
@@ -127,7 +127,7 @@
                                         <div class="col-md-6 p-col-L">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Designation</label>
-                                                <p>{{ (Auth::user()->designation == 1 ? "Admin" : (Auth::user()->designation == 2 ? "Manager" : (Auth::user()->designation == 3 ? "Salesman" : (Auth::user()->designation == 4 ? "Rider" : "Cashier" )))) }}
+                                                <p>{{ ( $data->designation ? $data->designation : "NA" ) }}
                                                 </p>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                         <div class="col-md-6 p-col-R">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Reporting To</label>
-                                                <p>{{ (Auth::user()->reporting_to == 1 ? "Admin" : (Auth::user()->reporting_to == 2 ? "Manager" : (Auth::user()->reporting_to == 3 ? "Salesman" : (Auth::user()->reporting_to == 4 ? "Rider" : "Cashier" )))) }}
+                                                <p>{{ ( $data->reporting_to ? $data->reporting_to : "NA" ) }}
                                                 </p>
                                             </div>
                                         </div>
