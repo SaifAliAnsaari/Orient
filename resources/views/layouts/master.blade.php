@@ -111,7 +111,7 @@
     @elseif($controller == "NotificationCenter")
     <script src="/js/notif/notif_pref.js?v=1.0.2"></script>
     @elseif($controller == "AccessRights")
-    <script src="/js/access_rights/access_rights.js?v=1.0.3"></script>
+    <script src="/js/access_rights/access_rights.js?v=1.0.4"></script>
     @elseif($controller == "ComplaintsManagment")
     <script src="/js/complaints/complaints.js?v=1.0.8"></script>
     @endif

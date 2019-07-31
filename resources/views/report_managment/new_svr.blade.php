@@ -61,6 +61,7 @@
                                                             <option value="13">C&I</option>
                                                             <option value="14">Consultant</option>
                                                             <option value="15">Contractor</option>
+                                                            <option value="16">Food & Beverages</option>
                                                         </select>
                                                     </div>
                                                 </div>

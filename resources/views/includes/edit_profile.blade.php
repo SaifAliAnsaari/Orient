@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="con_info lineHeight30">
-                            <p><i class="fa fa-user"></i><strong>{{ (Auth::user()->designation == 1 ? "Admin" : (Auth::user()->designation == 2 ? "Manager" : (Auth::user()->designation == 3 ? "Salesman" : (Auth::user()->designation == 4 ? "Rider" : "Cashier" )))) }}
+                            <p><i class="fa fa-user"></i><strong>{{ ( $data->designation ? $data->designation : "NA" ) }}
                                 </strong></p>
                             <p><i
                                     class="fa fa-phone-square"></i><strong>{{ (Auth::user()->phone != null ? Auth::user()->phone : "NA") }}</strong>

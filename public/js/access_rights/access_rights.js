@@ -6,9 +6,9 @@ $(document).ready(function () {
     }else if(action == "access_rights"){
     }
     var access_rights_array = [];
-    $('input[name="right_boxes"]:checked').each(function() {
-        access_rights_array.push(this.value);
-     });
+    // $('input[name="right_boxes"]:checked').each(function() {
+    //     access_rights_array.push(this.value);
+    //  });
 
     //Save Controllers or Routes
     $(document).on('click', '.save_btn', function(){
@@ -96,6 +96,13 @@ $(document).ready(function () {
 
     //Save Access Rights against employee
     $(document).on('click', '.save_rights', function(){
+        access_rights_array = [];
+        $('input[name="right_boxes"]:checked').each(function() {
+            access_rights_array.push(this.value);
+        });
+        $('#saveAccessRights').find('input[name=access_route]').val(" ");
+        $('#saveAccessRights').find("input[name=access_route]").val(access_rights_array);
+
         if(!$(".routes").is(":checked")){
             $('#notifDiv').fadeIn();
             $('#notifDiv').css('background', 'red');
