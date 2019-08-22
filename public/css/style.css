@@ -2163,8 +2163,8 @@ table.dataTable.cell-border tbody tr:first-child th, table.dataTable.cell-border
 	background-color: #fff;
 	color: #003176;
 	border: solid 1px #003176;
-	font-size: 12px;
-    padding: 5px 16px;
+	/* font-size: 12px; */
+    /* padding: 5px 16px; */
     letter-spacing: 0.5px;
 }
 .L_btn-line:HOVER, .L_btn-line:focus {

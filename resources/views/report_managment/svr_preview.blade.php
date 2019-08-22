@@ -193,25 +193,27 @@
             </div>
             
 
-            <div class="row" style="text-align:center">
-                <div class="col-md-6 p-0 PT-20 order-2 order-md-1">
-                    @if($core->is_approved != 1)
-                    @if(Auth::user()->designation == '1' || Auth::user()->designation == '2')
-                    <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
-                        data-target=".competition-lg">Approve SVR</button>
-                    @endif
-                    @endif
+            <div class="report-preview col-md-12 p-0 mb-10">
+                <div class="row" >
+                    <div class="col-md-6 PT-20 order-2 order-md-1">
+                        @if($core->is_approved != 1)
+                        @if(Auth::user()->designation == '1' || Auth::user()->designation == '2')
+                        <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
+                            data-target=".competition-lg">Approve SVR</button>
+                        @endif
+                        @endif
 
-                    <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button></div>
+                        <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button></div>
 
-                <a href="/download_svr_pdf/{{$id}}">
-                    <div class="col-md-6 p-0 _RtextP PT-20 order-1 order-md-2"><button type="button"
-                            class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button>
-                </a>
-                <a id="sendSvrEmailButton" href="/send_svr_mail/{{$id}}"><button type="button"
-                        class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a>
-                <button type="button"
-                    class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button>
+                    <a href="/download_svr_pdf/{{$id}}">
+                        <div class="col-md-6 _RtextP PT-20 order-1 order-md-2"><button type="button"
+                                class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button>
+                    </a>
+                    <a id="sendSvrEmailButton" href="/send_svr_mail/{{$id}}"><button type="button"
+                            class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a>
+                    <button type="button"
+                        class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button>
+                </div>
             </div>
         </div>
     </div>

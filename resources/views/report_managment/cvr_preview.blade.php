@@ -87,7 +87,8 @@
                             </div>
                             <div class="col-md-6 style-bg _RtextP"><strong>Customer Visited: </strong>
                                 {{ $core->customer_name }}</div>
-                            <div class="col-md-6 style-bg"><strong>Location: </strong>{{ $core->cust_address. " , " .$core->cust_city }}</div>
+                            <div class="col-md-6 style-bg"><strong>Location:
+                                </strong>{{ $core->cust_address. " , " .$core->cust_city }}</div>
                             <div class="col-md-6 style-bg _RtextP"><strong> Time Spent: </strong>{{ $core->time_spent }}
                             </div>
 
@@ -206,44 +207,31 @@
                                 <p>{{ $core->description }}</p>
                             </div>
                         </div>
-
-                        
                     </div>
-
-
-
-
                 </div>
-
             </div>
-            <div class="row" style="text-align:center;">
-                <div class="col-md-6 p-0 PT-20 order-2 order-md-1">
-                    {{-- @if($core->is_approved != 1)
-                        @if(Auth::user()->designation == '1' || Auth::user()->designation == '2')
-                            <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
-                                data-target=".competition-lg">Approve CVR</button>
-                        @endif
-                    @endif --}}
+            <div class="report-preview col-md-12 p-0 mb-10">
+            <div class="row">
+                <div class="col-md-6 PT-20 order-2 order-md-1">
                     @if($approval_able == 1 && $core->is_approved != 1)
                     <button type="button" class="btn btn-primary mb-10 mr-2" data-toggle="modal"
                         data-target=".competition-lg">Approve CVR</button>
                     @endif
 
-                    <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button></div>
+                    <button type="button" class="btn btn-cancel mb-10 cancel_cvr">Cancel</button>
+                </div>
 
                 <a href="/download_pdf/{{$id}}">
-                    <div class="col-md-6 p-0 _RtextP PT-20 order-1 order-md-2"><button type="button"
+                    <div class="col-md-6 _RtextP PT-20 order-1 order-md-2"><button type="button"
                             class="btn btn-primary L_btn-line mr-2 mb-10">Save PDF</button>
                 </a>
                 <a id="sendEmailButton" href="/send_mail/{{$id}}"><button type="button"
                         class="btn btn-primary L_btn-line mr-2 mb-10">Send Email</button></a>
-                <button type="button"
-                    class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button>
+                <button type="button" class="btn btn-primary L_btn-line mr-2 mb-10 print_page">Print</button>
             </div>
         </div>
+        </div>
     </div>
-
-
 </div>
 
 @endsection

@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/css/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/css/select2-bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.5">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.6">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
     <link href="/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/dropify.min.css" />
