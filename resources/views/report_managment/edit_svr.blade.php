@@ -437,7 +437,7 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label mb-10">Location*</label>
-                                                <input type="text" id="location" name="location" class="form-control"
+                                                <input readonly type="text" id="location" name="location" class="form-control"
                                                     style="font-size: 13px" style="font-size:13px">
                                             </div>
                                         </div>

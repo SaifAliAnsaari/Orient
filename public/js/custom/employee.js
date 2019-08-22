@@ -64,6 +64,7 @@ $(document).ready(function() {
             $('select[name="select_service_emp"]').val(0).trigger("change");
             $('select[name="select_complaints_emp"]').val(0).trigger("change");
             $('select[name="select_customers_emp"]').val(0).trigger("change");
+            $('.super_admin').prop('checked', false);
         }
         lastOp = 'add';
         $('#operation').val('add');
@@ -292,6 +293,12 @@ $(document).ready(function() {
                 $("#employeePicture").attr("data-height", '100px');
                 $("#employeePicture").attr("data-default-file", imgUrl);
                 $('#employeePicture').dropify();
+
+                if(response.employee.super_admin == 0){
+                    $('.super_admin').prop('checked', false);
+                }else{
+                    $('.super_admin').prop('checked', true);
+                }
             }
         });
 
@@ -401,6 +408,7 @@ $(document).ready(function() {
 
 
     $(document).on('click', '#saveEmployee', function() {
+       
         var verif = [];
         $('.required').css('border', '');
         $('.required').parent().css('border', '');
@@ -457,6 +465,11 @@ $(document).ready(function() {
                 return;
             }
         }
+        if($('.super_admin').prop('checked')){
+            $('#hidden_super_admin').val('1');
+         }else{
+             $('#hidden_super_admin').val('0');
+         }
 
         $('input[name="hidden_cvr_emp"]').val($('select[name="select_sales_emp"]').val());
         $('input[name="hidden_svr_emp"]').val($('select[name="select_service_emp"]').val());

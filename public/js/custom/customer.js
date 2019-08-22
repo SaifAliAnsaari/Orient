@@ -19,7 +19,10 @@ $(document).ready(function() {
         fetchCompanyInfoForUpdate($('#companyIdForUpdate').val());
     }else if(action == 'poc_list'){
         fetchPOCList();
+    }else if(action == 'delete_customer'){
+        fetchCompaniesList();
     }
+
     var lastOp = "add";
 
     $(document).on('click', '.openDataSidebarForAddingCustomer', function() {
@@ -874,6 +877,43 @@ $(document).ready(function() {
         });
 
     });
+
+
+
+
+    //Delete Customer
+    $(document).on('click', '.delete_customer', function(){
+        var thisRef = $(this);
+        thisRef.attr('disabled', 'disabled');
+        thisRef.text('Processing...');
+        $.ajax({
+            type: 'GET',
+            url: '/delete_cust/'+thisRef.attr('id'),
+            data: {
+                _token: '{!! csrf_token() !!}'
+           },
+            success: function(response) {
+                if(JSON.parse(response) == "success"){
+                    thisRef.parent().parent().remove();
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'green');
+                    $('#notifDiv').text('Deleted successfully');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }else if(JSON.parse(response) == "failed"){
+                    thisRef.removeAttr('disabled');
+                    thisRef.text('Delete');
+                    $('#notifDiv').fadeIn();
+                    $('#notifDiv').css('background', 'red');
+                    $('#notifDiv').text('Unable to delete at the moment');
+                    setTimeout(() => {
+                        $('#notifDiv').fadeOut();
+                    }, 3000);
+                }    
+            }
+        });
+    });
     
 });
 
@@ -900,6 +940,7 @@ function fetchCompanyInfoForUpdate(id) {
 }
 
 function fetchCompaniesList() {
+    var segments = location.href.split('/');
     $.ajax({
         type: 'GET',
         url: '/GetCustomersList',
@@ -907,14 +948,15 @@ function fetchCompaniesList() {
             _token: '{!! csrf_token() !!}'
         },
         success: function(response) {
-           //console.log(response);
+           console.log(response);
             $('.body').empty();
             $('.body').append('<table class="table table-hover dt-responsive nowrap" id="companiesListTable" style="width:100%;"><thead><tr><th>ID</th><th>Company Name</th><th>Address</th><th>City</th><th>Country</th><th>Parent Company</th><th>Action</th></tr></thead><tbody></tbody></table>');
             $('#companiesListTable tbody').empty();
             var response = JSON.parse(response);
             response.forEach(element => {
+
                 // <td>' + (element['home_phone'] != null ?  element['home_phone']  : element['business_phone'] ) + '</td>
-                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['address'] + '</td><td>' + element['city'] + '</td><td>' + element['country'] + '</td><td>' + (element['parent_company'] ? element['parent_company'] : "NA") + '</td><td><button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') +'</td></tr>');
+                $('#companiesListTable tbody').append('<tr><td>' + element['id'] + '</td><td>' + element['company_name'] + '</td><td>' + element['address'] + '</td><td>' + element['city'] + '</td><td>' + element['country'] + '</td><td>' + (element['parent_company'] ? element['parent_company'] : "NA") + '</td><td>'+ (segments[3] == 'Customer_list' ?  ' <button id="' + element['id'] + '" class="btn btn-default btn-line openDataSidebarForUpdateCustomer">Edit</button><a href="/CustomerProfile/' + element['id'] + '" id="' + element['id'] + '" class="btn btn-default">Profile</a>'+ (element["is_active"] == 1 ? '<button id="' + element['id'] + '" class="btn btn-default red-bg  deactivate_btn" title="View Detail">Deactivate</button>' : '<button id="' + element['id'] + '" class="btn btn-default activate_btn">Activate</button>') : '<button id="' + element['id'] + '" class="btn btn-default red-bg delete_customer">Delete</button>' ) +'</td></tr>');
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();

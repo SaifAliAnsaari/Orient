@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-md-6 style-bg _RtextP"><strong>Customer Visited: </strong>
                                 {{ $core->customer_name }}</div>
-                            <div class="col-md-6 style-bg"><strong>Location: </strong>{{ $core->location }}</div>
+                            <div class="col-md-6 style-bg"><strong>Location: </strong>{{ $core->cust_address. " , " .$core->cust_city }}</div>
                             <div class="col-md-6 style-bg _RtextP"><strong> Time Spent: </strong>{{ $core->time_spent }}
                             </div>
 

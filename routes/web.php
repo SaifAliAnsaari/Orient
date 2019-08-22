@@ -56,6 +56,8 @@ Route::get('/svr_list/{id}', 'ReportManagment@svr_list');
 Route::get('/edit_svr/{id}', 'ReportManagment@edit_svr');
 Route::get('/svr_preview/{id}', 'ReportManagment@svr_preview');
 Route::get('/disapproved_svr_detail/{id}', 'ReportManagment@disapproved_svr_detail');
+Route::get('/industries', 'IndustryManagement@industries');
+Route::get('/delete_customer', 'Customer@delete_customer_view');
 
 //Save
 Route::post('/save_poc', 'Customer@save_poc');
@@ -79,6 +81,7 @@ Route::get('/save_parent_company', 'Customer@save_parent_company');
 Route::post('/save_svr', 'ReportManagment@save_svr');
 Route::post('/update_svr', 'ReportManagment@update_svr');
 Route::post('/save_svr_approval', 'ReportManagment@save_svr_approval');
+Route::post('/save_industry', 'IndustryManagement@save_industry');
 
 //update
 Route::post('/update_user_profile', 'Employee@update_user_profile');
@@ -121,12 +124,15 @@ Route::get('/GetSVRList', 'ReportManagment@GetSVRList');
 Route::get('/GetCurrentSvr/{id}', 'ReportManagment@GetCurrentSvr');
 Route::get('/download_svr_pdf/{id}', 'ReportManagment@download_svr_pdf');
 Route::get('/send_svr_mail/{id}', 'ReportManagment@send_svr_mail');
+Route::get('/GetIndustries', 'IndustryManagement@GetIndustries');
+Route::get('/GetSelectedIndustry/{id}', 'IndustryManagement@GetSelectedIndustry');
 
 //Delete
 Route::get('/delete_main_cat/{id}', 'Categories@delete_main_cat');
 Route::get('/delete_sub_cat/{id}', 'Categories@delete_sub_cat');
 Route::get('/delete_pickUp', 'Auth\RegisterController@delete_pickUp');
 Route::get('/delete_designation', 'Auth\RegisterController@delete_designation');
+Route::get('/delete_industry/{id}', 'IndustryManagement@delete_industry');
 
 //Deactive or Active Employee
 Route::get('/activate_employee', 'Employee@activate_employee');
@@ -135,6 +141,7 @@ Route::get('/deactivate_employee', 'Employee@deactivate_employee');
 //Deactive or Active Customer
 Route::get('/activate_customer', 'Customer@activate_customer');
 Route::get('/deactivate_customer', 'Customer@deactivate_customer');
+Route::get('/delete_cust/{id}', 'Customer@delete_cust');
 
 //Activate or Deactive POC
 Route::get('/activate_poc', 'Customer@activate_poc');

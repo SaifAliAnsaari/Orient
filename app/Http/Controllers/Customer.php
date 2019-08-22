@@ -44,8 +44,10 @@ class Customer extends ParentController
         
         $filtered_privinces = $this->unique_multidim_array($provinces, "province");
 
+        $industries = DB::table('industry')->get();
+
         // echo '<pre>'; print_r($cities); die;
-        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data]);
+        return view('customer.list', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'parent_comp' => $parent_comp, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval, 'provinces' => $filtered_privinces, 'data' => $data, 'industries' => $industries]);
      }
 
      function unique_multidim_array($array, $key) { 
@@ -65,7 +67,7 @@ class Customer extends ParentController
 
     //Ajax Call from list-customers.js
     public function CustomersList(Request $request){
-        echo json_encode(DB::table('customers as cust')->selectRaw('id, company_name, address, country, (Select city_name from pick_up_delivery where id = cust.city) as city, (Select name from parent_companies where id = cust.parent_company) as parent_company')->get());
+        echo json_encode(DB::table('customers as cust')->selectRaw('id, company_name, is_active, address, country, (Select city_name from pick_up_delivery where id = cust.city) as city, (Select name from parent_companies where id = cust.parent_company) as parent_company')->get());
     }
 
     public function activate_customer(Request $request){
@@ -99,6 +101,15 @@ class Customer extends ParentController
             
         }catch(\Illuminate\Database\QueryException $ex){ 
             echo json_encode('failed'); 
+        }
+    }
+
+    public function delete_cust($id){
+        $delete = DB::table('customers')->where('id', $id)->delete();
+        if($delete){
+            echo json_encode('success');
+        }else{
+            echo json_encode('failed');
         }
     }
 
@@ -511,6 +522,16 @@ class Customer extends ParentController
        
     }
     
+
+
+
+
+    public function delete_customer_view(){
+        parent::get_notif_data();
+        parent::VerifyRights();
+        if($this->redirectUrl){return redirect($this->redirectUrl);}
+        return view('customer.delete_customers', ['notifications_counts' => $this->notif_counts, 'notif_data' => $this->notif_data, 'all_notif' => $this->all_notification, 'check_rights' => $this->check_employee_rights, 'approval_notif' => $this->approval_notif, 'unread_notif' => $this->unread_notif_approval]);
+    }
 
 
 }

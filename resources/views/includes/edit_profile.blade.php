@@ -39,7 +39,8 @@
                             <p><i
                                     class="fa fa-envelope-square"></i>{{ (Auth::user()->email != null ? Auth::user()->email : "NA") }}
                             </p>
-                            <p><i class="fa fa-globe"></i>{{ (Auth::user()->city != null ? Auth::user()->address : "NA") }}
+                            <p><i
+                                    class="fa fa-globe"></i>{{ (Auth::user()->city != null ? Auth::user()->address : "NA") }}
                             </p>
 
                         </div>
@@ -297,23 +298,25 @@
                                             </tbody>
                                         </table>
                                         <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-s2" style="display:none">
-                                                            <select class="form-control formselect" id="employee_id"
-                                                                placeholder="Select Employee">
-                                                                <option value="0" selected disabled>Select Employee</option>
-                                                                <option value="{{Auth::user()->id}}" selected>
-                                                                    {{Auth::user()->name}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <button type="button" style="position:relative; margin: -20px -50px; top:50%; left:50%;" class="btn btn-primary sm-mt15"
-                                                            id="update_emp_pref">Save</button>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-s2" style="display:none">
+                                                        <select class="form-control formselect" id="employee_id"
+                                                            placeholder="Select Employee">
+                                                            <option value="0" selected disabled>Select Employee</option>
+                                                            <option value="{{Auth::user()->id}}" selected>
+                                                                {{Auth::user()->name}}</option>
+                                                        </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <button type="button"
+                                                        style="position:relative; margin: -20px -50px; top:50%; left:50%;"
+                                                        class="btn btn-primary sm-mt15"
+                                                        id="update_emp_pref">Save</button>
+                                                </div>
                                             </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

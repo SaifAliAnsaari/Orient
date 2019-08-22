@@ -37,6 +37,7 @@ class Employee extends ParentController
             $employee->company = $request->company;
             $employee->address = $request->address;
             $employee->username = $request->username;
+            $employee->super_admin = $request->super_admin;
             if($request->password){
                 $password = bcrypt($request->password);
                 $employee->password = $password;

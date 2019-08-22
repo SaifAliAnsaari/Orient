@@ -109,6 +109,7 @@ class RegisterController extends ParentController
      */
     protected function create(array $data)
     {
+        $test = $data['super_admin'];
         $access_rights = ['/home', '/Customer_list', '/CustomerProfile', '/edit_profile', '/poc_list', '/poc_detail', '/new_cvr', '/cvr_list', '/cvr_preview', '/edit_cvr', '/disapproved_detail', '/notifications', '/notification_prefrences', '/complaints_settings', '/generate_complaints', '/complaints_list', '/resolved_complains', '/new_svr', '/svr_list', '/edit_svr', '/svr_preview', '/disapproved_svr_detail'];
         $userPicture = '';
         if(isset($_FILES["employeePicture"])){
@@ -130,6 +131,7 @@ class RegisterController extends ParentController
                 'hiring' => $data['hiring'],
                 'designation' => $data['designation'],
                 'department_id' => $data['department'],
+                'super_admin' => $data['super_admin'],
                 //'salary' => $data['salary'],
                 'division' => $data['division'],
                 'picture' => $userPicture,

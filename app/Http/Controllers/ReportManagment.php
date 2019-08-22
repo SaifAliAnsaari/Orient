@@ -56,7 +56,7 @@ class ReportManagment extends ParentController
 
     //Get Customer Address
     public function get_cust_address(Request $request){
-        echo json_encode(array('address' => DB::table('customers')->where('id', $request->id)->first(), 'pocs' => DB::table('poc')->where('company_name', $request->id)->get()));
+        echo json_encode(array('address' => DB::table('customers as cust')->selectRaw('id, address, (Select city_name from pick_up_delivery where id = cust.city) as city')->where('id', $request->id)->first(), 'pocs' => DB::table('poc')->where('company_name', $request->id)->get()));
     }
 
     //Save Modal POC
@@ -110,7 +110,8 @@ class ReportManagment extends ParentController
                 'opportunity' => $request->opportunity,
                 'bussiness_value' => $request->annualBusiness,
                 'relationship' => $request->relationship,
-                'description' => $request->description
+                'description' => $request->description,
+                'is_approved' => (Auth::user()->super_admin == 0 ? 0 : 1)
                 //'created_at' =>  date('Y-m-d H:i:s')
                 ]);
        // }
@@ -143,8 +144,6 @@ class ReportManagment extends ParentController
         // ]);
 
         if($insert_core){
-
-
             $check_sub_emp = DB::table('subecribed_notif_new')->whereRaw('emp_id = '.Auth::user()->id.' And cvr IS NOT NULL')->first();
             if($check_sub_emp){
                 if($check_sub_emp->cvr){
@@ -180,19 +179,6 @@ class ReportManagment extends ParentController
                     }
                 }
             }
-
-
-            
-            // if(!$get_email_addresses->isEmpty()){
-            //     foreach($get_email_addresses as $email){
-
-            //         $message = '<strong>Dear '.$email->name. '</strong>, <br> <br> A new CVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Customer visit report for your reference.";
-
-            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "CVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
-            //     }
-            // }
-            
-           
 
             echo json_encode('success');
         }else{
@@ -275,7 +261,7 @@ class ReportManagment extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name, (Select address from customers where id = cc.customer_visited) as cust_address, (Select city_name from pick_up_delivery where id = (Select city from customers where id = cc.customer_visited)) as cust_city')->where('id', $id)->first();
         if($core){
             $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
             $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
@@ -344,7 +330,7 @@ class ReportManagment extends ParentController
     }
 
     public function GetCurrentCvr($id){
-        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        $core = DB::table('cvr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, opportunity, bussiness_value, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name, (Select address from customers where id = cc.customer_visited) as cust_address, (Select city_name from pick_up_delivery where id = (Select city from customers where id = cc.customer_visited)) as cust_city')->where('id', $id)->first();
         $products = DB::table('cvr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('cvr_id', $id)->get();
         $pocs = DB::table('cvr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('cvr_id', $id)->get();
         $competitions = DB::table('cvr_competition')->where('cvr_id', $id)->get();
@@ -625,7 +611,8 @@ class ReportManagment extends ParentController
                 'time_spent' => $request->time_spent,
                 'purpose_of_visit' => $request->purpose,
                 'relationship' => $request->relationship,
-                'description' => $request->description
+                'description' => $request->description,
+                'is_approved' => (Auth::user()->super_admin == 0 ? 0 : 1)
                 //'created_at' =>  date('Y-m-d H:i:s')
                 ]);
         //}
@@ -694,17 +681,6 @@ class ReportManagment extends ParentController
 
         if($insert_core){
            
-            // if(!$get_email_addresses->isEmpty()){
-            //     foreach($get_email_addresses as $email){
-
-            //         $message = 'Dear <strong> '.$email->name. '</strong>, <br> <br> A new SVR has been added for the customer: <strong>'.$cust_name->company_name."</strong> by: <strong>".Auth::user()->name."</strong>. <br> <br> Attached is the complete Service visit report for your reference.";
-
-
-            //         Mail::to($email->email)->send(new SendMailable(["message" => $message, "subject" => "SVR: Added by ".Auth::user()->name, "attachment" => URL::to('/').'/'.$file_name]));
-            //     }
-            // }
-           
-
             echo json_encode('success');
         }else{
             echo json_encode('failed');
@@ -799,7 +775,7 @@ class ReportManagment extends ParentController
 
     //Get Current SVR Data
     public function GetCurrentSvr($id){
-        $core = DB::table('svr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        $core = DB::table('svr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, relationship, description, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name, (Select address from customers where id = cc.customer_visited) as cust_address, (Select city_name from pick_up_delivery where id = (Select city from customers where id = cc.customer_visited)) as cust_city')->where('id', $id)->first();
         $products = DB::table('svr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('svr_id', $id)->get();
         $pocs = DB::table('svr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('svr_id', $id)->get();
         $competitions = DB::table('cvr_competition')->where('svr_id', $id)->get();
@@ -912,7 +888,7 @@ class ReportManagment extends ParentController
         parent::get_notif_data();
         parent::VerifyRights();
         if($this->redirectUrl){return redirect($this->redirectUrl);}
-        $core = DB::table('svr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, relationship, description, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name')->where('id', $id)->first();
+        $core = DB::table('svr_core as cc')->selectRaw('id, report_created_at, report_created_by, date_of_visit, customer_visited, location, time_spent, purpose_of_visit, relationship, description, is_approved, (Select name from users where id = cc.report_created_by) as created_by, (Select company_name from customers where id = cc.customer_visited) as customer_name, (Select address from customers where id = cc.customer_visited) as cust_address, (Select city_name from pick_up_delivery where id = (Select city from customers where id = cc.customer_visited)) as cust_city')->where('id', $id)->first();
         if($core){
             $products = DB::table('svr_products as cp')->selectRaw('id, category_id, (Select name from sub_categories where id = cp.category_id) as cat_name')->where('svr_id', $id)->get();
             $pocs = DB::table('svr_poc as c_p')->selectRaw('id, poc_id, (Select poc_name from poc where id = c_p.poc_id) as poc_name')->where('svr_id', $id)->get();

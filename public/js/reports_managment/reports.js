@@ -96,9 +96,9 @@ $(document).ready(function () {
                
                 $('.cvr_poc_list').find('option').remove();
                 $('.cvr_poc_list').append('<option selected disabled value="0">Select POC</option>');
+                $('#location').val(response.address.address + ", " + response.address.city);
+                $('#location').focus();  
                 if(response.pocs != ''){
-                    $('#location').val(response.address.address + ", " + response.address.city);
-                    $('#location').focus();  
                     response.pocs.forEach(element => {
                         $('.cvr_poc_list').append('<option name="' + element.poc_name + '" value="' + element.id + '">' + element.poc_name + '</option>');
                     });
@@ -905,7 +905,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    window.location.replace("/cvr_list/all_cvr");
+                    window.location.replace("/cvr_list/pending");
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Added Successfully');
@@ -1289,7 +1289,7 @@ $(document).ready(function () {
                         $('#notifDiv').fadeOut();
                     }, 3000);
                 } else {
-                    window.location.replace("/svr_list/all_svr");
+                    window.location.replace("/svr_list/pending");
                     $('#notifDiv').fadeIn();
                     $('#notifDiv').css('background', 'green');
                     $('#notifDiv').text('Added Successfully');
@@ -1392,6 +1392,7 @@ function fetchCustomersforCVR(cust_id) {
 }
 
 function fetchCvrList(type){
+    var segments = location.href.split('/');
     $.ajax({
         type: 'GET',
         url: '/GetCVRList',
@@ -1429,12 +1430,19 @@ function fetchCvrList(type){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            if(segments[4] == 'pending'){
+                $('#companiesListTable').DataTable( {
+                    "pageLength": 50
+                } );
+            }else{
+                $('#companiesListTable').DataTable();
+            }
         }
     });
 }
 
 function fetchSvrList(type){
+    var segments = location.href.split('/');
     $.ajax({
         type: 'GET',
         url: '/GetSVRList',
@@ -1470,7 +1478,13 @@ function fetchSvrList(type){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            if(segments[4] == 'pending'){
+                $('#companiesListTable').DataTable( {
+                    "pageLength": 50
+                } );
+            }else{
+                $('#companiesListTable').DataTable();
+            }
         }
     });
 }
@@ -1492,7 +1506,7 @@ function fetchCurrentCvrData(){
             //$('#datepicker').val(response.core.date_of_visit);
             $('#datepicker').datepicker("setDate", new Date(response.core.date_of_visit));
             $('#cvr_customers_list').val(response.core.customer_visited).trigger('change');
-            $('#location').val(response.core.location);
+            $('#location').val(response.core.cust_address + " , " + response.core.cust_city);
             $('#time_spent').val(response.core.time_spent);
             $('.opportunity').filter(function(){
                 return this.value === response.core.opportunity ;
@@ -1585,7 +1599,7 @@ function fetchCurrentSvrData(){
             //$('#datepicker').val(response.core.date_of_visit);
             $('#datepicker').datepicker("setDate", new Date(response.core.date_of_visit));
             $('#cvr_customers_list').val(response.core.customer_visited).trigger('change');
-            $('#location').val(response.core.location);
+            $('#location').val(response.core.cust_address + " , " + response.core.cust_city);
             $('#time_spent').val(response.core.time_spent);
             $('.relationship').filter(function(){
                 return this.value === response.core.relationship ;

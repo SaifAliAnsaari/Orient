@@ -6,14 +6,19 @@
         foreach($check_rights as $rights){
             $test_array[$counter] = $rights->access;
             $counter++;
-        } ?>
+        } 
+       // dd($test_array); die;
+        ?>
     <li class="nav-item">
         <a class="nav-link" href="/">
             <img src="/images/icon-dash-board.svg" alt="" />
             <span>Dashboard</span>
         </a>
     </li>
-    @if(in_array("/register", $test_array) || in_array("/SCFAR", $test_array) || in_array("/cities", $test_array) || in_array("/designations", $test_array))
+
+    
+
+    @if(in_array("/register", $test_array) || in_array("/SCFAR", $test_array) || in_array("/cities", $test_array) || in_array("/designations", $test_array) || in_array("/industries", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -33,13 +38,16 @@
                 @if(in_array("/designations", $test_array))
                     <a class="dropdown-item" href="/designations">Designations</a>
                 @endif
+                @if(in_array("/industries", $test_array))
+                    <a class="dropdown-item" href="/industries">Industry</a>
+                @endif
                 {{-- @if(in_array("/notification_prefrences", $test_array))
                     <a class="dropdown-item" href="/notification_prefrences">Notification Prefrences</a>
                 @endif --}}
             </div>
         </li>
     @endif
-    @if(in_array("/Customer_list", $test_array) || in_array("/poc_list", $test_array))
+    @if(in_array("/Customer_list", $test_array) || in_array("/poc_list", $test_array) || in_array("/delete_customer", $test_array))
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navi-l1" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -52,6 +60,9 @@
                 @endif
                 @if(in_array("/poc_list", $test_array))
                     <a class="dropdown-item" href="/poc_list">POC List</a>
+                @endif
+                @if(in_array("/delete_customer", $test_array))
+                    <a class="dropdown-item" href="/delete_customer">Delete Customer</a>
                 @endif
             </div>
         </li>

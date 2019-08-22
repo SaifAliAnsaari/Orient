@@ -15,7 +15,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-wrap p-0">
-
                     <div id="floating-label" class="pl-15 pr-15">
                         <div class="form-wrap p-0">
                             <div class="row">
@@ -29,15 +28,11 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="modal-footer  border-0">
                         <button type="submit" class="btn btn-cancel cancel_company_modal" data-dismiss="modal"
                             aria-label="Close">Close</button>
                         <button type="button" class="btn btn-primary add_company_modal">Add</button>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -94,7 +89,12 @@
                                                     <div>
                                                         <select class="form-control formselect required" name="industry" placeholder="Select Zone*" required>
                                                             <option value="0" disabled selected>Select Industry*</option>
-                                                            <option value="1">Refinery</option>
+                                                            @if(!empty($industries))
+                                                                @foreach ($industries as $industry)
+                                                                    <option value="{{$industry->id}}">{{$industry->industry_name}}</option> 
+                                                                @endforeach
+                                                            @endif
+                                                            {{-- <option value="1">Refinery</option>
                                                             <option value="2">Fertilizer</option>
                                                             <option value="3">Oil & Gas</option>
                                                             <option value="4">Textile</option>
@@ -109,7 +109,7 @@
                                                             <option value="13">C&I</option>
                                                             <option value="14">Consultant</option>
                                                             <option value="15">Contractor</option>
-                                                            <option value="16">Food & Beverages</option>
+                                                            <option value="16">Food & Beverages</option> --}}
                                                         </select>
                                                     </div>
                                                 </div>
