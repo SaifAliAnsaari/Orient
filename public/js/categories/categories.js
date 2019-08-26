@@ -542,7 +542,10 @@ function fetchMainCats(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            //$('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -566,7 +569,10 @@ function fetchSubCats(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            //$('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -590,7 +596,10 @@ function fetchProductCats(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            //$('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }

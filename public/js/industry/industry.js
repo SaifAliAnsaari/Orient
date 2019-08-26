@@ -208,7 +208,10 @@ function fetchIndustries(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#industriesListTable').DataTable();
+            //$('#industriesListTable').DataTable();
+            $('#industriesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }

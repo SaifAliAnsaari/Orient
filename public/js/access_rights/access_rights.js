@@ -177,7 +177,10 @@ function fetchEmployeesList() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            //$('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }

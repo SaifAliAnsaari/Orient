@@ -1430,13 +1430,13 @@ function fetchCvrList(type){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            if(segments[4] == 'pending'){
+            //if(segments[4] == 'pending'){
                 $('#companiesListTable').DataTable( {
                     "pageLength": 50
                 } );
-            }else{
-                $('#companiesListTable').DataTable();
-            }
+            // }else{
+            //     $('#companiesListTable').DataTable();
+            // }
         }
     });
 }
@@ -1478,13 +1478,13 @@ function fetchSvrList(type){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            if(segments[4] == 'pending'){
+           // if(segments[4] == 'pending'){
                 $('#companiesListTable').DataTable( {
                     "pageLength": 50
                 } );
-            }else{
-                $('#companiesListTable').DataTable();
-            }
+            // }else{
+            //     $('#companiesListTable').DataTable();
+            // }
         }
     });
 }

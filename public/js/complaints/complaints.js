@@ -380,7 +380,10 @@ function fetchcomplain_types() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#employeesListTable').DataTable();
+            //$('#employeesListTable').DataTable();
+            $('#employeesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -424,7 +427,10 @@ function fetchcomplain_List() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#employeesListTable').DataTable();
+            //$('#employeesListTable').DataTable();
+            $('#employeesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -467,7 +473,10 @@ function fetchresolvedcomplains() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#employeesListTable').DataTable();
+            //$('#employeesListTable').DataTable();
+            $('#employeesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }

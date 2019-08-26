@@ -29,12 +29,18 @@
 // $(".select-cat").select2({width: '100%'});
 
 $(document).ready(function() {
-    $('#example').DataTable();
+   // $('#example').DataTable();
+    $('#example').DataTable( {
+        "pageLength": 50
+    });
 } ); 
 	
 $(document).ready(function() {
-    $('#example2').DataTable();
-} );
+    //$('#example2').DataTable();
+    $('#example2').DataTable( {
+        "pageLength": 50
+    });
+});
 
 
 $(document).ready(function () { 

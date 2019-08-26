@@ -1284,7 +1284,10 @@ function fetchEmployeesList() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#employeesListTable').DataTable();
+            //$('#employeesListTable').DataTable();
+            $('#employeesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -1304,7 +1307,10 @@ function fetchPickUpLocation(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#clientsListTable').DataTable();
+            //$('#clientsListTable').DataTable();
+            $('#clientsListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -1323,7 +1329,10 @@ function fetchDesignations(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#DesignationsListTable').DataTable();
+            //$('#DesignationsListTable').DataTable();
+            $('#DesignationsListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }

@@ -14,8 +14,14 @@ $(document).ready(function() {
         fetchCompaniesList();
         fetchParentCompanies(company_id);
     }else if(action == 'CustomerProfile'){
-        $('#example3').DataTable();
-        $('#example4').DataTable();
+        $('#example3').DataTable( {
+            "pageLength": 50
+        });
+        $('#example4').DataTable( {
+            "pageLength": 50
+        });
+        //$('#example3').DataTable();
+        //$('#example4').DataTable();
         fetchCompanyInfoForUpdate($('#companyIdForUpdate').val());
     }else if(action == 'poc_list'){
         fetchPOCList();
@@ -960,7 +966,10 @@ function fetchCompaniesList() {
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+            //$('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
@@ -984,7 +993,10 @@ function fetchPOCList(){
             });
             $('#tblLoader').hide();
             $('.body').fadeIn();
-            $('#companiesListTable').DataTable();
+           // $('#companiesListTable').DataTable();
+            $('#companiesListTable').DataTable( {
+                "pageLength": 50
+            });
         }
     });
 }
